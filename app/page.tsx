@@ -3,7 +3,7 @@ import React from 'react'
 const page = () => {
   return (
     <div>
-      COMPOSIT 2026 Website Coming Soon! ........ .......
+      COMPOSIT 2026 Website Coming Soon!
     </div>
   )
 }
