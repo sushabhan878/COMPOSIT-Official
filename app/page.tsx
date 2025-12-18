@@ -1,10 +1,10 @@
 import React from 'react'
-
+import LandingPage from '@/components/LandingPage';
 const page = () => {
   return (
-    <div>
-      COMPOSIT 2026 Website Coming Soon!
-    </div>
+    <main>
+      <LandingPage/>
+    </main>
   )
 }
 
