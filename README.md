@@ -1,36 +1,143 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 COMPOSIT Official
 
-## Getting Started
+Welcome to the **official repository of COMPOSIT** — the technical society platform built to manage events, content, users, Campus Ambassador (CA) operations, and administration through a unified, scalable web application.
 
-First, run the development server:
+This repository contains the **entire codebase**, including:
+- 🌐 Frontend (Public Website)
+- 🛠 Admin Portal
+- 🎓 Campus Ambassador (CA) Portal
+- 🔧 Backend APIs & Database Logic
+
+## 🧩 Tech Stack
+
+The project is built using modern, scalable technologies:
+
+### Frontend
+- **Next.js** – Server-side rendering & optimized routing
+- **React.js** – Component-based UI development
+- **TypeScript** – Type safety & better maintainability
+- **Tailwind CSS** – Utility-first styling
+- **Framer Motion** – Smooth animations & transitions
+- **Spline** – Interactive 3D components
+
+### Backend
+- **Node.js** – Runtime environment
+- **Next.js API Routes / Custom Backend** – Server logic
+- **MongoDB** – NoSQL database
+- **Mongoose** – MongoDB object modeling
+
+## 📂 Project Structure
 
 ```bash
+composit-official/
+│
+├── app/                    # Next.js app router
+├── components/             # Reusable UI components
+├── lib/                    # Utility functions & configs
+├── models/                 # MongoDB models
+├── pages/api/              # Backend API routes
+├── admin/                  # Admin portal
+├── ca-portal/              # Campus Ambassador portal
+├── public/                 # Static assets
+├── styles/                 # Global styles
+├── .env.example            # Environment variables template
+├── tailwind.config.ts      # Tailwind configuration
+├── tsconfig.json           # TypeScript configuration
+└── README.md               # Project documentation
+```
+
+## ⚙️ Prerequisites
+- Make sure you have the following installed:
+- Node.js (v18+ recommended)
+- npm or yarn
+- MongoDB (local or cloud – Atlas)
+- Git
+
+
+## 🛠 Installation & Setup
+
+### 1️⃣ Fork the Repository
+
+Click on the Fork button at the top-right of this repository.
+
+### 2️⃣ Clone Your Fork
+
+``` 
+git clone https://github.com/<your-username>/composit-official.git
+cd composit-official
+```
+### 3️⃣ Install Dependencies
+
+```
+npm install
+# or
+yarn install
+```
+### 4️⃣ Setup Environment Variables
+
+Create a ```.env``` file using the example:
+```
+cp .env.example .env
+```
+Add required values:
+```
+MONGODB_URI=your_mongodb_connection_string
+NEXTAUTH_SECRET=your_secret_key
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
+
+### ▶️ Running the Project
+Development Mode
+```
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+The app will run on:
+```
+http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🧑‍💻 Portals Overview
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Public Website** – Landing pages, event listings, announcements
+- **Admin Portal** – Event management, user control, content updates
+- **CA Portal** – CA registrations, referrals, dashboards
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🌐 3D & Animations
 
-## Learn More
+- Spline is used for interactive 3D visuals
+- Framer Motion powers page transitions and micro-interactions
+These enhance user engagement while maintaining performance.
 
-To learn more about Next.js, take a look at the following resources:
+## ✅ Contribution Rules
+- Follow existing code style
+- Write clean, readable code
+- Test before submitting PRs
+- One feature or fix per PR
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🐞 Reporting Issues
+If you find a bug or have a feature request:
+- Open an issue
+- Provide clear steps to reproduce
+- Attach screenshots if applicable
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📜 License
+This project is maintained by SME/COMPOSIT
 
-## Deploy on Vercel
+Usage and distribution are subject to the organization’s policies.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📞 Contact Us
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Have questions, suggestions, or want to collaborate with COMPOSIT?  
+We’d love to hear from you!
+
+📧 **Email:** composit.official@gmail.com  
+🌐 **Website:** https://composit.in  
+
+---
+For technical issues or contributions:
+- Open an issue in this repository
+- Or reach out directly to the maintainers
+
+> We aim to respond as quickly as possible. Your feedback helps us grow 🚀
