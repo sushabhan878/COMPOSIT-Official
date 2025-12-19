@@ -41,7 +41,7 @@ const CountDown = () => {
       className="flex items-center justify-center pointer-events-auto"
       initial={{ x: 400, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: "easeOut", delay: 0.8 }}
+      transition={{ duration: 0.2, ease: "easeOut", delay: 0.8 }}
     >
       <div className="bg-black p-8 rounded-2xl shadow-[0_0_40px_rgba(139,0,0,0.7),0_0_80px_rgba(139,0,0,0.4)]">
         <h2 className="text-xl font-mono font-bold text-center text-white mb-5 tracking-wider">
