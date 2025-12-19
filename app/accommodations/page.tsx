@@ -1,7 +1,7 @@
 import Navbar from '@/components/Navbar'
 import React from 'react'
 
-const Team = () => {
+const Accommodations = () => {
   return (
     <main>
       <Navbar/>
@@ -9,4 +9,4 @@ const Team = () => {
   )
 }
 
-export default Team
+export default Accommodations

@@ -1,10 +1,11 @@
+import Navbar from '@/components/Navbar'
 import React from 'react'
 
 const AboutComposit = () => {
   return (
-    <div>
-      About Composit
-    </div>
+    <main>
+      <Navbar/>
+    </main>
   )
 }
 

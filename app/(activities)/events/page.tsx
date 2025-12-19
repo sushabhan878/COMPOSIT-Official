@@ -1,10 +1,11 @@
+import Navbar from '@/components/Navbar'
 import React from 'react'
 
 const Events = () => {
   return (
-    <div>
-      Fest Events Page
-    </div>
+    <main>
+      <Navbar/>
+    </main>
   )
 }
 
