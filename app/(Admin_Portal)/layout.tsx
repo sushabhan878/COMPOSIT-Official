@@ -1,9 +1,9 @@
 import React from 'react'
 
-const layout = () => {
+const layout = ({children}: {children: React.ReactNode}) => {
   return (
     <main>
-      Admin Portal Layout
+      {children}
     </main>
   )
 }

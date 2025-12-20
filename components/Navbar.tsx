@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
@@ -9,6 +9,32 @@ const Navbar = () => {
   const pathname = usePathname()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isActivitiesDropdownOpen, setIsActivitiesDropdownOpen] = useState(false)
+  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+
+  const getAuthState = () => {
+    if (typeof window === 'undefined') return false
+    const token =
+      localStorage.getItem('authToken') ||
+      sessionStorage.getItem('authToken') ||
+      document.cookie.split(';').some((c) => c.trim().startsWith('authToken='))
+    return !!token
+  }
+
+  useEffect(() => {
+    const updateAuth = () => setIsAuthenticated(getAuthState())
+    updateAuth()
+    window.addEventListener('storage', updateAuth)
+    return () => window.removeEventListener('storage', updateAuth)
+  }, [])
+
+  const handleLogout = () => {
+    localStorage.removeItem('authToken')
+    sessionStorage.removeItem('authToken')
+    setIsAuthenticated(false)
+    setIsProfileDropdownOpen(false)
+    setIsMenuOpen(false)
+  }
 
   const navItems = [
     { name: 'About', path: '/about' },
@@ -16,7 +42,6 @@ const Navbar = () => {
     { name: 'Activities', path: '', hasDropdown: true },
     { name: 'Sponsorships', path: '/sponsorships' },
     { name: 'Accommodations', path: '/accommodations' },
-    { name: 'Profile', path: '/profile' },
   ]
 
   const activitiesDropdown = [
@@ -75,6 +100,54 @@ const Navbar = () => {
                 )}
               </div>
             ))}
+
+            {/* Profile / Auth */}
+            <div
+              className="relative"
+              onMouseEnter={() => setIsProfileDropdownOpen(true)}
+              onMouseLeave={() => setIsProfileDropdownOpen(false)}
+            >
+              {isAuthenticated ? (
+                <button
+                  className={`px-6 py-2 rounded-4xl text-lg font-light transition-all duration-300 border block ${
+                    pathname.startsWith('/profile')
+                      ? 'border-[#5c0a0a] text-white/90 bg-white/10 shadow-[0_10px_30px_rgba(92,10,10,0.35)]'
+                      : 'border-transparent text-white/90 hover:border-[#5c0a0a] hover:-translate-y-0.5 hover:shadow-[0_12px_30px_rgba(92,10,10,0.35)]'
+                  }`}
+                >
+                  Profile
+                </button>
+              ) : (
+                <Link
+                  href="/signin"
+                  className={`px-6 py-2 rounded-4xl text-lg font-light transition-all duration-300 border block ${
+                    pathname === '/signin'
+                      ? 'border-[#5c0a0a] text-white/90 bg-white/10 shadow-[0_10px_30px_rgba(92,10,10,0.35)]'
+                      : 'border-transparent text-white/90 hover:border-[#5c0a0a] hover:-translate-y-0.5 hover:shadow-[0_12px_30px_rgba(92,10,10,0.35)]'
+                  }`}
+                >
+                  Sign In
+                </Link>
+              )}
+
+              {isAuthenticated && isProfileDropdownOpen && (
+                <div className="absolute right-0 mt-2 w-44 bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-[0_10px_40px_rgba(92,10,10,0.35)] py-2 z-10">
+                  <Link
+                    href="/profile"
+                    className="px-4 py-2 text-sm text-white/90 transition-all duration-200 block hover:text-[#5c0a0a]"
+                    onClick={() => setIsProfileDropdownOpen(false)}
+                  >
+                    Profile
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="w-full px-4 py-2 text-left text-sm text-white/90 transition-all duration-200 hover:text-[#5c0a0a]"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
@@ -151,6 +224,43 @@ const Navbar = () => {
                   )}
                 </div>
               ))}
+
+              {/* Profile / Auth mobile */}
+              <div className="bg-white/5 rounded-xl mt-2 py-2 border border-white/10">
+                {isAuthenticated ? (
+                  <>
+                    <Link
+                      href="/profile"
+                      onClick={() => setIsMenuOpen(false)}
+                      className={`px-4 py-2 text-sm text-white/90 block transition-all duration-200 ${
+                        pathname.startsWith('/profile')
+                          ? 'text-[#5c0a0a]'
+                          : 'hover:text-[#5c0a0a]'
+                      }`}
+                    >
+                      Profile
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="w-full text-left px-4 py-2 text-sm text-white/90 hover:text-[#5c0a0a] transition-all duration-200"
+                    >
+                      Logout
+                    </button>
+                  </>
+                ) : (
+                  <Link
+                    href="/signin"
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`px-4 py-2 text-sm text-white/90 block transition-all duration-200 ${
+                      pathname === '/signin'
+                        ? 'text-[#5c0a0a]'
+                        : 'hover:text-[#5c0a0a]'
+                    }`}
+                  >
+                    Sign In
+                  </Link>
+                )}
+              </div>
             </div>
           </div>
         )}
