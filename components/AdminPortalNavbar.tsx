@@ -15,6 +15,7 @@ const AdminPortalNavbar = () => {
     { name: 'Manage SA', path: '/admin/manage-sa' },
     { name: 'Manage Events', path: '/admin/manage-events' },
     { name: 'Issue Cirtificates', path: '/admin/issue-cirtificates' },
+    { name: 'logout', path: '/home'}
   ]
 
   return (
