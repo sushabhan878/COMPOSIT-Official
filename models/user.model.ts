@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 interface IUser {
     _id?: mongoose.Types.ObjectId;
+    name: string;
     username: string;
     email: string;
     phone: string;
@@ -16,9 +17,20 @@ interface IUser {
     state: string;
     saId: string;    // The id by which the user was referred
     referredBy: string;
+    password: string,
+    team?: mongoose.Types.ObjectId; // Reference to Team model
+    registeredEvents: mongoose.Types.ObjectId[]; // Array of references to Event model
+    cirtificateGenerated: boolean;
+    cirtificates: {
+        cirtificateLink: string;
+    }[];
 }
 
 const userSchema = new mongoose.Schema<IUser>({
+    name: {
+        type: String,
+        required: true
+    },
     username: {
         type: String, 
         required: true
@@ -81,7 +93,36 @@ const userSchema = new mongoose.Schema<IUser>({
     referredBy: {
         type: String,
         required: false,
-    }
+    },
+    password: {
+        type: String,
+        required: true,
+    },
+    team: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Team",
+        required: false,
+    },
+    registeredEvents: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Event",
+            required: false,
+        }
+    ],
+    cirtificateGenerated: {
+        type: Boolean,
+        required: true,
+        default: false,
+    },
+    cirtificates: [
+        {
+            cirtificateLink: {
+                type: String,
+                unique: true,
+            },
+        }
+    ]
 }, { timestamps: true })
 
 const User = mongoose.models.User || mongoose.model<IUser>("User", userSchema);
