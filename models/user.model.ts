@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 interface IUser {
     _id?: mongoose.Types.ObjectId;
     name: string;
-    username: string;
     email: string;
     phone: string;
     image?: string;
@@ -31,10 +30,6 @@ const userSchema = new mongoose.Schema<IUser>({
         type: String,
         required: true
     },
-    username: {
-        type: String, 
-        required: true
-    },
     email: {
         type: String,
         required: true,
@@ -43,7 +38,7 @@ const userSchema = new mongoose.Schema<IUser>({
     },
     phone: {
         type: String,
-        required: true,
+        required: false,
         unique: true,
     },
     image: {
@@ -53,38 +48,38 @@ const userSchema = new mongoose.Schema<IUser>({
     gender: {
         type: String,
         enum: ["male", "female", "other"],
-        required: true,
+        required: false,
     },
     role: {
         type: String,
         enum: ["user", "admin", "sa"],
-        required: true,
+        required: false,
         default: "user",
     },
     collegeName: {
         type: String,
-        required: true,
+        required: false,
     },
     collegeId: {
         type: String,
-        required: true,
+        required: false,
         unique: true,
     },
     department: {
         type: String,
-        required: true,
+        required: false,
     },
     yearOfStudy: {
         type: String,
-        required: true,
+        required: false,
     },
     city: {
         type: String,
-        required: true,
+        required: false,
     },
     state: {
         type: String,
-        required: true,
+        required: false,
     },
     saId: {
         type: String,
@@ -112,7 +107,7 @@ const userSchema = new mongoose.Schema<IUser>({
     ],
     cirtificateGenerated: {
         type: Boolean,
-        required: true,
+        required: false,
         default: false,
     },
     cirtificates: [
