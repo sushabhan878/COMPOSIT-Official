@@ -1,58 +1,68 @@
 "use client"
 
 import React, { useState } from "react"
+import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
 import GridBackground from "@/components/GridBackground"
 import { signIn } from "next-auth/react"
-import { useRouter } from "next/navigation"
 import { Eye, EyeOff } from "lucide-react"
 
-const Signin: React.FC = () => {
+const Signup: React.FC = () => {
   const router = useRouter()
+  const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [success, setSuccess] = useState<string | null>(null)
   const [showPassword, setShowPassword] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setError(null)
+    setSuccess(null)
 
-    if (!email.trim() || !password.trim()) {
-      setError("Please enter your email and password.")
+    if (!name.trim() || !email.trim() || !password.trim()) {
+      setError("Please fill out all fields.")
       return
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setError("Please enter a valid email address.")
       return
     }
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters.")
+      return
+    }
 
     try {
       setLoading(true)
-      const res = await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
+      const res = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password }),
       })
 
-      if (res?.error) {
-        throw new Error(res.error)
+      const data = await res.json()
+      if (!res.ok) {
+        throw new Error(data?.message || "Signup failed")
       }
-      // Successful sign in
-      router.push("/home")
+
+      setSuccess("Account created! Redirecting to sign in…")
+      setTimeout(() => router.push("/home"), 1000)
     } catch (err: any) {
-      setError(err?.message || "Invalid email or password.")
+      setError(err?.message || "Something went wrong.")
     } finally {
       setLoading(false)
     }
   }
 
-  const onGoogleSignin = async () => {
+  const onGoogleSignup = async () => {
     try {
+      // If Google provider isn't configured, NextAuth will route to error page.
       await signIn("google")
     } catch (err) {
-      setError("Google sign-in is currently unavailable.")
+      setError("Google signup is currently unavailable.")
     }
   }
 
@@ -62,12 +72,23 @@ const Signin: React.FC = () => {
 
       <div className="w-full max-w-md">
         <div className="mb-8 text-center">
-          <h1 className="text-3xl font-semibold tracking-wide text-white/90">Welcome back</h1>
-          <p className="mt-2 text-sm text-white/60">Sign in to continue to COMPOSIT.</p>
+          <h1 className="text-3xl font-semibold tracking-wide text-white/90">Create your COMPOSIT account</h1>
+          <p className="mt-2 text-sm text-white/60">Join the community and stay in sync with events.</p>
         </div>
 
         <div className="rounded-2xl border border-white/10 bg-black/40 backdrop-blur-md p-6 shadow-2xl">
           <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block text-sm text-white/70 mb-1">Name</label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Your full name"
+                className="w-full rounded-lg border border-white/10 bg-black/60 px-4 py-2 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-red-700/60"
+              />
+            </div>
+
             <div>
               <label className="block text-sm text-white/70 mb-1">Email</label>
               <input
@@ -86,14 +107,14 @@ const Signin: React.FC = () => {
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Your password"
+                  placeholder="At least 6 characters"
                   className="w-full rounded-lg border border-white/10 bg-black/60 px-4 py-2 pr-11 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-red-700/60"
                 />
                 <button
                   type="button"
                   aria-label={showPassword ? "Hide password" : "Show password"}
                   onClick={() => setShowPassword((v) => !v)}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 inline-flex items-center justify-center rounded-md p-1 text-white/60 hover:text-white/90 focus:outline-none"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 inline-flex items-center justify-center rounded-md p-1 text-white/20 hover:text-white/50 focus:outline-none"
                 >
                   {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                 </button>
@@ -103,6 +124,11 @@ const Signin: React.FC = () => {
             {error && (
               <div className="rounded-md border border-red-800/40 bg-red-950/40 px-3 py-2 text-sm text-red-200">
                 {error}
+              </div>
+            )}
+            {success && (
+              <div className="rounded-md border border-emerald-800/40 bg-emerald-950/40 px-3 py-2 text-sm text-emerald-200">
+                {success}
               </div>
             )}
 
@@ -120,12 +146,13 @@ const Signin: React.FC = () => {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
                     </svg>
-                    Signing in…
+                    Signing up…
                   </>
                 ) : (
-                  <>Sign in</>
+                  <>Sign up</>
                 )}
               </span>
+              {/* Shimmer overlay */}
               <motion.span
                 aria-hidden
                 initial={{ x: "-100%" }}
@@ -144,27 +171,28 @@ const Signin: React.FC = () => {
 
           <button
             type="button"
-            onClick={onGoogleSignin}
+            onClick={onGoogleSignup}
             className="mt-4 w-full rounded-lg border border-white/15 bg-black/50 px-5 py-3 text-white hover:border-white/30 hover:bg-black/60 transition-colors"
           >
             <span className="inline-flex items-center justify-center gap-2">
+              {/* Google G icon */}
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" className="h-5 w-5">
                 <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303C33.44 31.91 29.043 35 24 35 16.268 35 10 28.732 10 21s6.268-14 14-14c3.59 0 6.845 1.351 9.348 3.552l5.657-5.657C35.743 1.676 30.128 0 24 0 10.745 0 0 10.745 0 24s10.745 24 24 24c12.132 0 22.236-8.86 23.743-20.327.171-1.192.257-2.415.257-3.673 0-1.245-.086-2.466-.259-3.644z"/>
                 <path fill="#FF3D00" d="M6.306 14.691l6.586 4.823C14.094 16.257 18.68 13 24 13c3.59 0 6.845 1.351 9.348 3.552l5.657-5.657C35.743 1.676 30.128 0 24 0 15.315 0 7.762 4.512 3.294 11.29l3.012 3.401z"/>
                 <path fill="#4CAF50" d="M24 48c5.996 0 11.464-2.293 15.616-6.024l-7.211-5.994C30.611 37.668 27.427 39 24 39c-5.018 0-9.397-3.053-11.307-7.438l-6.52 5.02C10.588 43.424 16.82 48 24 48z"/>
                 <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303c-1.673 3.827-5.92 6.917-11.303 6.917-5.018 0-9.397-3.053-11.307-7.438l-6.52 5.02C10.588 43.424 16.82 48 24 48c12.132 0 22.236-8.86 23.743-20.327.171-1.192.257-2.415.257-3.673 0-1.245-.086-2.466-.259-3.644z"/>
               </svg>
-              Sign in with Google
+              Sign up with Google
             </span>
           </button>
         </div>
 
         <p className="mt-6 text-center text-sm text-white/50">
-          New here? <a href="/signup" className="text-red-400 hover:text-red-300">Create an account</a>
+          Already have an account? <a href="/signin" className="text-red-400 hover:text-red-300">Sign in</a>
         </p>
       </div>
     </div>
   )
 }
 
-export default Signin
+export default Signup
