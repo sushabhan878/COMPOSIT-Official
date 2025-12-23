@@ -6,6 +6,7 @@ import { motion } from "framer-motion"
 import GridBackground from "@/components/GridBackground"
 import { signIn } from "next-auth/react"
 import { Eye, EyeOff } from "lucide-react"
+import axios from "axios"
 
 const Signup: React.FC = () => {
   const router = useRouter()
@@ -37,15 +38,10 @@ const Signup: React.FC = () => {
 
     try {
       setLoading(true)
-      const res = await fetch("/api/auth/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password }),
-      })
+      const res = await axios.post("/api/auth/signup", { name, email, password })
 
-      const data = await res.json()
-      if (!res.ok) {
-        throw new Error(data?.message || "Signup failed")
+      if (res.status !== 200) {
+        throw new Error(res.data?.message || "Signup failed")
       }
 
       setSuccess("Account created! Redirecting to sign in…")
@@ -60,7 +56,7 @@ const Signup: React.FC = () => {
   const onGoogleSignup = async () => {
     try {
       // If Google provider isn't configured, NextAuth will route to error page.
-      await signIn("google")
+      await signIn("google", { callbackUrl: "/home" })
     } catch (err) {
       setError("Google signup is currently unavailable.")
     }

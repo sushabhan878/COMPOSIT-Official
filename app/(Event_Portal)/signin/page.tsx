@@ -3,11 +3,13 @@
 import React, { useState } from "react"
 import { motion } from "framer-motion"
 import GridBackground from "@/components/GridBackground"
-import { signIn } from "next-auth/react"
+import { signIn, useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { Eye, EyeOff } from "lucide-react"
 
 const Signin: React.FC = () => {
+  const session = useSession()
+  console.log(session)
   const router = useRouter()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -50,7 +52,8 @@ const Signin: React.FC = () => {
 
   const onGoogleSignin = async () => {
     try {
-      await signIn("google")
+      await signIn("google", { callbackUrl: "/home" })
+
     } catch (err) {
       setError("Google sign-in is currently unavailable.")
     }

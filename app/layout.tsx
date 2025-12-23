@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Josefin_Sans, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Provider from "@/Provider";
 
 const josefinSans = Josefin_Sans({
   variable: "--font-josefin-sans",
@@ -28,7 +29,9 @@ export default function RootLayout({
       <body
         className={`${josefinSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <Provider>
+          {children}
+      </Provider>
       </body>
     </html>
   );
