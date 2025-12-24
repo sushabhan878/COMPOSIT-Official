@@ -6,7 +6,18 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) { 
     try {
         await connectDb();
-        const { name, email, password } = await req.json();
+        const {
+            name,
+            email,
+            mobile,
+            role,
+            gender,
+            collegeName,
+            collegeId,
+            department,
+            city,
+            state,
+            password } = await req.json();
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return NextResponse.json(
@@ -22,7 +33,19 @@ export async function POST(req: NextRequest) {
         }
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = await User.create(
-            {name, email, password: hashedPassword}
+            {
+                name,
+                email,
+                mobile,
+                gender,
+                role,
+                collegeName,
+                collegeId,
+                department,
+                city,
+                state,
+                password: hashedPassword
+            }
         )
         return NextResponse.json(
             { message: "User created successfully", user },

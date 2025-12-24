@@ -4,7 +4,14 @@ declare module "next-auth" {
         name: string,
         email: string,
         role: string,
-
+        mobile?: string,
+        gender?: string,
+        state?: string,
+        city?: string,
+        college?: string,
+        collegeId?: string,
+        department?: string,
+        image?: string
     }
 }
 

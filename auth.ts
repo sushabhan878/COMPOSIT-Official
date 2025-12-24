@@ -11,7 +11,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             credentials: {
                 name: { label: "Name", type: "text" },
                 email: { label: "Email", type: "text" },
-                password: { label: "Password", type: "password" }
+                password: { label: "Password", type: "password" },
+
             },
             async authorize(credentials, request) { 
                 try {
@@ -31,7 +32,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                         id: user._id,
                         name: user.name,
                         email: user.email,
-                        role: user.role
+                        role: user.role,
+                        mobile: user.mobile,
+                        gender: user.gender,
+                        state: user.state,
+                        city: user.city,
+                        college: user.collegeName,
+                        collegeId: user.collegeId,
+                        department: user.department
                     }
                 } catch (error) {
                     throw new Error(`Authentication failed: ${error}`)
@@ -47,10 +55,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         // It will dump user data into token
         jwt({ token, user }) {
             if (user) {
-                token.id = user.id,
-                token.name = user.name,
-                token.email = user.email,
+                token.id = user.id
+                token.name = user.name
+                token.email = user.email
+                token.mobile = user.mobile
                 token.role = user.role
+                token.gender = user.gender
+                token.state = user.state
+                token.city = user.city
+                token.college = user.college
+                token.collegeId = user.collegeId
+                token.department = user.department
+                token.image = user.image
+                    
             }
             return token
         },
@@ -62,6 +79,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 session.user.name = token.name as string
                 session.user.email = token.email as string
                 session.user.role = token.role as string
+                session.user.mobile = token.mobile as string
+                session.user.gender = token.gender as string
+                session.user.state = token.state as string
+                session.user.city = token.city as string
+                session.user.college = token.college as string
+                session.user.collegeId = token.collegeId as string
+                session.user.department = token.department as string
+                session.user.image = token.image as string
             }
             return session
         },
@@ -76,10 +101,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                         name: user.name,
                         email: user.email,
                         image: user.image,
+
                     })
                 }
                 user.id = dbUser._id.toString()
                 user.role = dbUser.role
+                user.mobile = dbUser.mobile
+                user.gender = dbUser.gender 
+                user.state = dbUser.state
+                user.city = dbUser.city
+                user.college = dbUser.collegeName
+                user.collegeId = dbUser.collegeId
+                user.department = dbUser.department
             }
             return true
         }

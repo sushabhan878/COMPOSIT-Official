@@ -38,7 +38,7 @@ const Signup: React.FC = () => {
 
     try {
       setLoading(true)
-      const res = await axios.post("/api/auth/signup", { name, email, password })
+      const res = await axios.post("/api/auth/signup", { name, email, password, role: "user" })
 
       if (res.status !== 200) {
         throw new Error(res.data?.message || "Signup failed")
