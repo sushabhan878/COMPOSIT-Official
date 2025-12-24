@@ -45,7 +45,12 @@ const Signup: React.FC = () => {
       }
 
       setSuccess("Account created! Redirecting to sign in…")
-      setTimeout(() => router.push("/home"), 1000)
+      await signIn("credentials", {
+        email,
+        password,
+        redirect: true,
+        callbackUrl: "/home"
+      })
     } catch (err: any) {
       setError(err?.message || "Something went wrong.")
     } finally {

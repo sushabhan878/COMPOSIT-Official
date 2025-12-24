@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
         )
         return NextResponse.json(
             { message: "User created successfully", user },
-            { status: 201 }
+            { status: 200 }
         )
     } catch (error) {
         return NextResponse.json(

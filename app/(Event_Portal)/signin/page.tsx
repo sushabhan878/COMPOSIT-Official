@@ -8,8 +8,6 @@ import { useRouter } from "next/navigation"
 import { Eye, EyeOff } from "lucide-react"
 
 const Signin: React.FC = () => {
-  const session = useSession()
-  console.log(session)
   const router = useRouter()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
