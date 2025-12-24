@@ -3,9 +3,10 @@ import LandingPage from '@/components/LandingPage';
 import CountDown from '@/components/CountDown';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import connectDb from '@/lib/db';
+import { auth } from '@/auth';
 
-const page = () => {
-
+async function page() {
   return (  
     <main className='relative w-full h-screen overflow-hidden'>
       {/* Full-screen background landing page */}

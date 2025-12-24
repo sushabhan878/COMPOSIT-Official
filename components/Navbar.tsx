@@ -1,40 +1,42 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
+import { signOut, useSession } from 'next-auth/react'
+
 
 const Navbar = () => {
+  const { data: session, status } = useSession()
+  const user = session?.user
   const pathname = usePathname()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isActivitiesDropdownOpen, setIsActivitiesDropdownOpen] = useState(false)
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false)
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const profileCloseTimer = useRef<NodeJS.Timeout | null>(null)
 
-  const getAuthState = () => {
-    if (typeof window === 'undefined') return false
-    const token =
-      localStorage.getItem('authToken') ||
-      sessionStorage.getItem('authToken') ||
-      document.cookie.split(';').some((c) => c.trim().startsWith('authToken='))
-    return !!token
+  const openProfileMenu = () => {
+    if (profileCloseTimer.current) {
+      clearTimeout(profileCloseTimer.current)
+      profileCloseTimer.current = null
+    }
+    setIsProfileDropdownOpen(true)
+  }
+
+  const scheduleCloseProfileMenu = () => {
+    if (profileCloseTimer.current) clearTimeout(profileCloseTimer.current)
+    profileCloseTimer.current = setTimeout(() => {
+      setIsProfileDropdownOpen(false)
+    }, 180)
   }
 
   useEffect(() => {
-    const updateAuth = () => setIsAuthenticated(getAuthState())
-    updateAuth()
-    window.addEventListener('storage', updateAuth)
-    return () => window.removeEventListener('storage', updateAuth)
+    return () => {
+      if (profileCloseTimer.current) clearTimeout(profileCloseTimer.current)
+    }
   }, [])
-
-  const handleLogout = () => {
-    localStorage.removeItem('authToken')
-    sessionStorage.removeItem('authToken')
-    setIsAuthenticated(false)
-    setIsProfileDropdownOpen(false)
-    setIsMenuOpen(false)
-  }
+  const isAuthenticated = !!user?.email
 
   const navItems = [
     { name: 'About', path: '/about' },
@@ -104,18 +106,28 @@ const Navbar = () => {
             {/* Profile / Auth */}
             <div
               className="relative"
-              onMouseEnter={() => setIsProfileDropdownOpen(true)}
-              onMouseLeave={() => setIsProfileDropdownOpen(false)}
+              onMouseEnter={openProfileMenu}
+              onMouseLeave={scheduleCloseProfileMenu}
             >
               {isAuthenticated ? (
                 <button
-                  className={`px-6 py-2 rounded-4xl text-lg font-light transition-all duration-300 border block ${
+                  className={`px-4 py-2 rounded-4xl text-lg font-light transition-all duration-300 border block flex items-center gap-2 ${
                     pathname.startsWith('/profile')
                       ? 'border-[#5c0a0a] text-white/90 bg-white/10 shadow-[0_10px_30px_rgba(92,10,10,0.35)]'
                       : 'border-transparent text-white/90 hover:border-[#5c0a0a] hover:-translate-y-0.5 hover:shadow-[0_12px_30px_rgba(92,10,10,0.35)]'
                   }`}
                 >
-                  Profile
+                  <span className="w-8 h-8 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-xs text-white/90">
+                    {user?.name?.trim()
+                      ? user.name
+                          .split(' ')
+                          .map((n) => n[0])
+                          .slice(0, 2)
+                          .join('')
+                          .toUpperCase()
+                      : user?.email?.[0]?.toUpperCase() || 'P'}
+                  </span>
+                  <span className="text-base">Profile</span>
                 </button>
               ) : (
                 <Link
@@ -131,19 +143,29 @@ const Navbar = () => {
               )}
 
               {isAuthenticated && isProfileDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-44 bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-[0_10px_40px_rgba(92,10,10,0.35)] py-2 z-10">
+                <div
+                  className="absolute right-0 mt-2 w-44 bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-[0_10px_40px_rgba(92,10,10,0.35)] py-2 z-10"
+                  onMouseEnter={openProfileMenu}
+                  onMouseLeave={scheduleCloseProfileMenu}
+                >
                   <Link
                     href="/profile"
-                    className="px-4 py-2 text-sm text-white/90 transition-all duration-200 block hover:text-[#5c0a0a]"
+                    className="px-4 py-2 text-sm text-white/90 transition-all duration-200 block relative overflow-hidden group/item"
                     onClick={() => setIsProfileDropdownOpen(false)}
                   >
                     Profile
+                    <span className="absolute bottom-0 left-1/24 w-0 h-0.5 bg-[#5c0a0a] group-hover/item:w-full transition-all duration-500 ease-out"></span>
                   </Link>
                   <button
-                    onClick={handleLogout}
-                    className="w-full px-4 py-2 text-left text-sm text-white/90 transition-all duration-200 hover:text-[#5c0a0a]"
+                    onClick={() => {
+                      setIsProfileDropdownOpen(false)
+                      signOut({ callbackUrl: '/' })
+
+                    }}
+                    className="w-full px-4 py-2 text-left text-sm text-white/90 transition-all duration-200 relative overflow-hidden group/item"
                   >
                     Logout
+                    <span className="absolute bottom-0 left-1/24 w-0 h-0.5 bg-[#5c0a0a] group-hover/item:w-full transition-all duration-500 ease-out"></span>
                   </button>
                 </div>
               )}
@@ -238,10 +260,25 @@ const Navbar = () => {
                           : 'hover:text-[#5c0a0a]'
                       }`}
                     >
-                      Profile
+                      <span className="inline-flex items-center gap-2">
+                        <span className="w-7 h-7 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-[10px] text-white/90">
+                          {user?.name?.trim()
+                            ? user.name
+                                .split(' ')
+                                .map((n) => n[0])
+                                .slice(0, 2)
+                                .join('')
+                                .toUpperCase()
+                            : user?.email?.[0]?.toUpperCase() || 'P'}
+                        </span>
+                        <span>Profile</span>
+                      </span>
                     </Link>
                     <button
-                      onClick={handleLogout}
+                      onClick={() => {
+                        setIsMenuOpen(false)
+                        signOut({ callbackUrl: '/' })
+                      }}
                       className="w-full text-left px-4 py-2 text-sm text-white/90 hover:text-[#5c0a0a] transition-all duration-200"
                     >
                       Logout
