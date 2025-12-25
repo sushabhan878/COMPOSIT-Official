@@ -58,7 +58,7 @@ const RegisterSA: React.FC = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phone: "",
+    mobile: "",
     gender: "",
     collegeName: "",
     collegeId: "",
@@ -89,7 +89,7 @@ const RegisterSA: React.FC = () => {
       setError("Please enter a valid email address.")
       return false
     }
-    if (!formData.phone.trim() || !/^\d{10}$/.test(formData.phone)) {
+    if (!formData.mobile.trim() || !/^\d{10}$/.test(formData.mobile)) {
       setError("Please enter a valid 10-digit phone number.")
       return false
     }
@@ -124,6 +124,29 @@ const RegisterSA: React.FC = () => {
     return true
   }
 
+  function generateSAId() {
+    const prefix = "SA-2026-";
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let randomPart = "";
+
+    for (let i = 0; i < 4; i++) {
+      randomPart += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+
+    const SaId = prefix + randomPart;
+    return SaId;
+  }
+
+
+  function generateReferralLink(SaId: string) {
+    const baseUrl = "https://composit.in/ca/referral";
+    return `${baseUrl}?ref=${SaId}`;
+  }
+  
+  function generateReferralQrLink(referralLink: string) {
+    const baseUrl = "https://api.qrserver.com/v1/create-qr-code/";
+    return `${baseUrl}?data=${encodeURIComponent(referralLink)}&size=200x200`;
+  }
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setError(null)
@@ -138,7 +161,13 @@ const RegisterSA: React.FC = () => {
       // TODO: Update this endpoint to your specific SA registration endpoint
       const res = await axios.post("/api/auth/signup", {
         ...formData,
-        role: "sa"
+        role: "sa",
+        saId: generateSAId(),
+        joinDate: new Date(),
+        referralLink: generateReferralLink(generateSAId()),
+        referralQrLink: generateReferralQrLink(generateReferralLink(generateSAId())),
+        numberOfReferrals: 0,
+        SARank: null,
       })
 
       if (res.status !== 200) {
@@ -218,8 +247,8 @@ const RegisterSA: React.FC = () => {
                 <label className="block text-sm text-white/70 mb-1">Phone Number *</label>
                 <input
                   type="tel"
-                  name="phone"
-                  value={formData.phone}
+                  name="mobile"
+                  value={formData.mobile}
                   onChange={handleChange}
                   placeholder="10-digit phone number"
                   maxLength={10}

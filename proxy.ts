@@ -4,7 +4,7 @@ import { auth } from "./auth";
 
 export async function proxy(req: NextRequest) {
     const session = await auth();
-    console.log("Session in middleware:", session);
+    // console.log("Session in middleware:", session);
     const role = session?.user?.role
     const { pathname } = req.nextUrl;
     const publicRoute = [

@@ -32,14 +32,25 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                         id: user._id,
                         name: user.name,
                         email: user.email,
-                        role: user.role,
                         mobile: user.mobile,
+                        image: user.image,
+                        role: user.role,
                         gender: user.gender,
                         state: user.state,
                         city: user.city,
-                        college: user.collegeName,
+                        collegeName: user.collegeName,
                         collegeId: user.collegeId,
-                        department: user.department
+                        department: user.department,
+                        yearOfStudy: user.yearOfStudy,
+                        joinDate: user.joinDate,
+                        saId: user.saId,
+                        referralLink: user.referralLink,
+                        referralQrLink: user.referralQrLink,
+                        SARank: user.SARank,
+                        numberOfReferrals: user.numberOfReferrals,
+                        team: user.team,
+                        registeredEvents: user.registeredEvents,
+                        cirtificates: user.cirtificates
                     }
                 } catch (error) {
                     throw new Error(`Authentication failed: ${error}`)
@@ -59,15 +70,24 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 token.name = user.name
                 token.email = user.email
                 token.mobile = user.mobile
+                token.image = user.image
                 token.role = user.role
                 token.gender = user.gender
                 token.state = user.state
                 token.city = user.city
-                token.college = user.college
+                token.collegeName = user.collegeName
                 token.collegeId = user.collegeId
                 token.department = user.department
-                token.image = user.image
-                    
+                token.yearOfStudy = user.yearOfStudy
+                token.joinDate= user.joinDate?.toString()
+                token.saId= user.saId
+                token.referralLink= user.referralLink
+                token.referralQrLink= user.referralQrLink
+                token.SARank= user.SARank
+                token.numberOfReferrals= user.numberOfReferrals
+                token.team= user.team
+                token.registeredEvents= user.registeredEvents?.map(String)
+                token.cirtificates= user.cirtificates ?.map(String)
             }
             return token
         },
@@ -83,10 +103,20 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 session.user.gender = token.gender as string
                 session.user.state = token.state as string
                 session.user.city = token.city as string
-                session.user.college = token.college as string
+                session.user.collegeName = token.collegeName as string
                 session.user.collegeId = token.collegeId as string
                 session.user.department = token.department as string
                 session.user.image = token.image as string
+                session.user.yearOfStudy = token.yearOfStudy as string
+                session.user.joinDate = token.joinDate as string
+                session.user.saId = token.saId as string
+                session.user.referralLink = token.referralLink as string
+                session.user.referralQrLink = token.referralQrLink as string
+                session.user.SARank = token.SARank as number
+                session.user.numberOfReferrals = token.numberOfReferrals as number
+                session.user.team = token.team as string
+                session.user.registeredEvents = token.registeredEvents as string[]
+                session.user.cirtificates = token.cirtificates as string[]
             }
             return session
         },
@@ -110,9 +140,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 user.gender = dbUser.gender 
                 user.state = dbUser.state
                 user.city = dbUser.city
-                user.college = dbUser.collegeName
+                user.collegeName = dbUser.collegeName
                 user.collegeId = dbUser.collegeId
                 user.department = dbUser.department
+                user.yearOfStudy = dbUser.yearOfStudy
+                user.joinDate = dbUser.joinDate
+                user.saId = dbUser.saId
+                user.referralLink = dbUser.referralLink
+                user.referralQrLink = dbUser.referralQrLink
+                user.SARank = dbUser.SARank
+                user.numberOfReferrals = dbUser.numberOfReferrals
+                user.team = dbUser.team
+                user.registeredEvents = dbUser.registeredEvents
+                user.cirtificates = dbUser.cirtificates
             }
             return true
         }

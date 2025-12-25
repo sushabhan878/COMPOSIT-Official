@@ -17,7 +17,15 @@ export async function POST(req: NextRequest) {
             department,
             city,
             state,
-            password } = await req.json();
+            password,
+            saId,
+            joinDate,
+            referralLink,
+            referralQrLink,
+            numberOfReferrals,
+            SARank,
+            
+        } = await req.json();
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return NextResponse.json(
@@ -44,7 +52,14 @@ export async function POST(req: NextRequest) {
                 department,
                 city,
                 state,
-                password: hashedPassword
+                password: hashedPassword,
+                saId,
+                joinDate: new Date(),
+                referralLink,
+                referralQrLink,
+                numberOfReferrals,
+                SARank,
+
             }
         )
         return NextResponse.json(

@@ -22,6 +22,11 @@ export interface IUser {
 
   saId?: string;
   referredBy?: string;
+  referralLink?: string;
+  referralQrLink?: string;
+  numberOfReferrals?: number;
+  SARank?: number;
+  joinDate?: Date;
 
   team?: Types.ObjectId;
   registeredEvents?: Types.ObjectId[];
@@ -62,6 +67,7 @@ const userSchema = new Schema<IUser>(
 
     image: {
       type: String,
+      trim: true,
     },
 
     gender: {
@@ -93,22 +99,58 @@ const userSchema = new Schema<IUser>(
 
     yearOfStudy: {
       type: String,
+      trim: true,
     },
 
     city: {
       type: String,
+      trim: true,
     },
 
     state: {
       type: String,
+      trim: true,
     },
 
     saId: {
       type: String,
+      unique: true,
+      sparse: true, // ✅ optional + unique
+      trim: true,
+    },
+
+    referralLink: {
+      type: String,
+      trim: true,
+      unique: true,
+      sparse: true,
+    },
+
+    referralQrLink: {
+      type: String,
+      trim: true,
+      unique: true,
+      sparse: true,
     },
 
     referredBy: {
       type: String,
+      trim: true,
+    },
+
+    numberOfReferrals: {
+      type: Number,
+      default: 0,
+    },
+
+    SARank: {
+      type: Number,
+      default: null,
+    },
+
+    joinDate: {
+      type: Date,
+      default: Date.now,
     },
 
     team: {

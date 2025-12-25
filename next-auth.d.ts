@@ -3,15 +3,25 @@ declare module "next-auth" {
         id: string,
         name: string,
         email: string,
-        role: string,
         mobile?: string,
+        image?: string
+        role: string,
         gender?: string,
         state?: string,
         city?: string,
-        college?: string,
+        collegeName?: string,
         collegeId?: string,
         department?: string,
-        image?: string
+        yearOfStudy?: string,
+        joinDate?: string,
+        saId?: string,
+        referralLink?: string,
+        referralQrLink?: string,
+        SARank?: number,
+        numberOfReferrals?: number,
+        team?: string,
+        registeredEvents?: string[],
+        cirtificates?: string[]
     }
 }
 
