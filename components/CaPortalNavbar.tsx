@@ -15,8 +15,8 @@ const CaPortalNavbar = () => {
   const baseNavItems = [
     { name: 'About', path: '/ca/about' },
     { name: 'Responsibilities', path: '/ca/responsibilities' },
-    { name: 'Registrations', path: '/ca/registrations' },
     { name: 'Leader Board', path: '/ca/leaderboard' },
+    { name: 'Contact Us', path: '/ca/contact-us' },
   ]
 
   const isSA = user?.role === 'sa'
@@ -32,7 +32,7 @@ const CaPortalNavbar = () => {
       <div className="backdrop-blur-3xl bg-white/5 border border-white/15 rounded-4xl shadow-[0_20px_60px_rgba(92,10,10,0.35)] px-6 py-4 transition-all duration-300">
         <div className="flex items-center justify-between">
           {/* Logo/Brand */}
-          <Link href="/home" className="transition-opacity hover:opacity-80">
+          <Link href="/ca" className="transition-opacity hover:opacity-80">
             <Image
               src="/Composit without text_ white.png"
               alt="COMPOSIT Logo"

@@ -47,6 +47,12 @@ const INDIAN_STATES = [
   "West Bengal"
 ]
 
+const riseProps = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const },
+}
+
 const RegisterSA: React.FC = () => {
   const router = useRouter()
   const [formData, setFormData] = useState({
@@ -154,19 +160,28 @@ const RegisterSA: React.FC = () => {
   }
 
   return (
-    <div className="relative min-h-[100dvh] flex items-center justify-center px-6 py-10">
+    <div className="relative min-h-dvh flex items-center justify-center px-6 py-10 mt-28">
       <GridBackground />
 
       <div className="w-full max-w-2xl">
-        <div className="mb-8 text-center">
+        <motion.div {...riseProps} className="mb-8 text-center">
           <h1 className="text-3xl font-semibold tracking-wide text-white/90">Register as Student Ambassador</h1>
           <p className="mt-2 text-sm text-white/60">Join our SA program and be a part of COMPOSIT community.</p>
-        </div>
+        </motion.div>
 
-        <div className="rounded-2xl border border-white/10 bg-black/40 backdrop-blur-md p-6 shadow-2xl">
+        <motion.div
+          {...riseProps}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as const, delay: 0.1 }}
+          className="rounded-2xl border border-white/10 bg-black/40 backdrop-blur-md p-6 shadow-2xl"
+        >
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Name and Email - Row */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as const, delay: 0.12 }}
+              className="grid grid-cols-1 md:grid-cols-2 gap-4"
+            >
               <div>
                 <label className="block text-sm text-white/70 mb-1">Name *</label>
                 <input
@@ -175,7 +190,7 @@ const RegisterSA: React.FC = () => {
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="Your full name"
-                  className="w-full rounded-lg border border-white/10 bg-black/60 px-4 py-2 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-red-700/60"
+                  className="w-full rounded-lg border border-white/10 bg-black/60 px-4 py-2 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-red-700/60 transition-all duration-200 hover:bg-black/75"
                 />
               </div>
 
@@ -187,13 +202,18 @@ const RegisterSA: React.FC = () => {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="you@example.com"
-                  className="w-full rounded-lg border border-white/10 bg-black/60 px-4 py-2 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-red-700/60"
+                  className="w-full rounded-lg border border-white/10 bg-black/60 px-4 py-2 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-red-700/60 transition-all duration-200 hover:bg-black/75"
                 />
               </div>
-            </div>
+            </motion.div>
 
             {/* Phone and Gender - Row */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as const, delay: 0.14 }}
+              className="grid grid-cols-1 md:grid-cols-2 gap-4"
+            >
               <div>
                 <label className="block text-sm text-white/70 mb-1">Phone Number *</label>
                 <input
@@ -203,7 +223,7 @@ const RegisterSA: React.FC = () => {
                   onChange={handleChange}
                   placeholder="10-digit phone number"
                   maxLength={10}
-                  className="w-full rounded-lg border border-white/10 bg-black/60 px-4 py-2 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-red-700/60"
+                  className="w-full rounded-lg border border-white/10 bg-black/60 px-4 py-2 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-red-700/60 transition-all duration-200 hover:bg-black/75"
                 />
               </div>
 
@@ -214,7 +234,7 @@ const RegisterSA: React.FC = () => {
                   name="gender"
                   value={formData.gender}
                   onChange={handleChange}
-                  className="w-full rounded-lg border border-white/10 bg-black/60 px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-red-700/60 [&>option]:bg-black [&>option]:text-white [&>option]:py-2"
+                  className="w-full rounded-lg border border-white/10 bg-black/60 px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-red-700/60 [&>option]:bg-black [&>option]:text-white [&>option]:py-2 transition-all duration-200 hover:bg-black/75"
                 >
                   <option value="" className="text-white/40">Select gender</option>
                   <option value="male">Male</option>
@@ -222,10 +242,15 @@ const RegisterSA: React.FC = () => {
                   <option value="other">Other</option>
                 </select>
               </div>
-            </div>
+            </motion.div>
 
             {/* College Name and College ID - Row */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as const, delay: 0.16 }}
+              className="grid grid-cols-1 md:grid-cols-2 gap-4"
+            >
               <div>
                 <label className="block text-sm text-white/70 mb-1">College Name *</label>
                 <input
@@ -234,7 +259,7 @@ const RegisterSA: React.FC = () => {
                   value={formData.collegeName}
                   onChange={handleChange}
                   placeholder="Your college name"
-                  className="w-full rounded-lg border border-white/10 bg-black/60 px-4 py-2 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-red-700/60"
+                  className="w-full rounded-lg border border-white/10 bg-black/60 px-4 py-2 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-red-700/60 transition-all duration-200 hover:bg-black/75"
                 />
               </div>
 
@@ -246,13 +271,17 @@ const RegisterSA: React.FC = () => {
                   value={formData.collegeId}
                   onChange={handleChange}
                   placeholder="Your college ID"
-                  className="w-full rounded-lg border border-white/10 bg-black/60 px-4 py-2 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-red-700/60"
+                  className="w-full rounded-lg border border-white/10 bg-black/60 px-4 py-2 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-red-700/60 transition-all duration-200 hover:bg-black/75"
                 />
               </div>
-            </div>
+            </motion.div>
 
             {/* Department - Full Width */}
-            <div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as const, delay: 0.18 }}
+            >
               <label className="block text-sm text-white/70 mb-1">Department *</label>
               <input
                 type="text"
@@ -260,12 +289,17 @@ const RegisterSA: React.FC = () => {
                 value={formData.department}
                 onChange={handleChange}
                 placeholder="e.g., Computer Science, Mechanical, etc."
-                className="w-full rounded-lg border border-white/10 bg-black/60 px-4 py-2 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-red-700/60"
+                className="w-full rounded-lg border border-white/10 bg-black/60 px-4 py-2 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-red-700/60 transition-all duration-200 hover:bg-black/75"
               />
-            </div>
+            </motion.div>
 
             {/* City and State - Row */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as const, delay: 0.2 }}
+              className="grid grid-cols-1 md:grid-cols-2 gap-4"
+            >
               <div>
                 <label className="block text-sm text-white/70 mb-1">City *</label>
                 <input
@@ -274,7 +308,7 @@ const RegisterSA: React.FC = () => {
                   value={formData.city}
                   onChange={handleChange}
                   placeholder="Your city"
-                  className="w-full rounded-lg border border-white/10 bg-black/60 px-4 py-2 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-red-700/60"
+                  className="w-full rounded-lg border border-white/10 bg-black/60 px-4 py-2 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-red-700/60 transition-all duration-200 hover:bg-black/75"
                 />
               </div>
 
@@ -285,7 +319,7 @@ const RegisterSA: React.FC = () => {
                   name="state"
                   value={formData.state}
                   onChange={handleChange}
-                  className="w-full rounded-lg border border-white/10 bg-black/60 px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-red-700/60 [&>option]:bg-black [&>option]:text-white [&>option]:py-2"
+                  className="w-full rounded-lg border border-white/10 bg-black/60 px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-red-700/60 [&>option]:bg-black [&>option]:text-white [&>option]:py-2 transition-all duration-200 hover:bg-black/75"
                 >
                   <option value="" className="text-white/40">Select state</option>
                   {INDIAN_STATES.map((state) => (
@@ -295,10 +329,14 @@ const RegisterSA: React.FC = () => {
                   ))}
                 </select>
               </div>
-            </div>
+            </motion.div>
 
             {/* Password - Full Width */}
-            <div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as const, delay: 0.22 }}
+            >
               <label className="block text-sm text-white/70 mb-1">Password *</label>
               <div className="relative">
                 <input
@@ -307,7 +345,7 @@ const RegisterSA: React.FC = () => {
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="At least 6 characters"
-                  className="w-full rounded-lg border border-white/10 bg-black/60 px-4 py-2 pr-11 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-red-700/60"
+                  className="w-full rounded-lg border border-white/10 bg-black/60 px-4 py-2 pr-11 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-red-700/60 transition-all duration-200 hover:bg-black/75"
                 />
                 <button
                   type="button"
@@ -318,17 +356,27 @@ const RegisterSA: React.FC = () => {
                   {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                 </button>
               </div>
-            </div>
+            </motion.div>
 
             {error && (
-              <div className="rounded-md border border-red-800/40 bg-red-950/40 px-3 py-2 text-sm text-red-200">
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                className="rounded-md border border-red-800/40 bg-red-950/40 px-3 py-2 text-sm text-red-200"
+              >
                 {error}
-              </div>
+              </motion.div>
             )}
             {success && (
-              <div className="rounded-md border border-emerald-800/40 bg-emerald-950/40 px-3 py-2 text-sm text-emerald-200">
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                className="rounded-md border border-emerald-800/40 bg-emerald-950/40 px-3 py-2 text-sm text-emerald-200"
+              >
                 {success}
-              </div>
+              </motion.div>
             )}
 
             <motion.button
@@ -336,7 +384,7 @@ const RegisterSA: React.FC = () => {
               disabled={loading}
               whileHover={{ scale: 1.02, boxShadow: "0 0 24px rgba(139,0,0,0.45)" }}
               whileTap={{ scale: 0.98 }}
-              className="relative w-full overflow-hidden rounded-lg bg-gradient-to-r from-[#5c0a0a] via-[#8b0000] to-[#5c0a0a] px-5 py-3 text-center font-medium text-white shadow-lg focus:outline-none disabled:opacity-70"
+              className="relative w-full overflow-hidden rounded-lg bg-linear-to-r from-[#5c0a0a] via-[#8b0000] to-[#5c0a0a] px-5 py-3 text-center font-medium text-white shadow-lg focus:outline-none disabled:opacity-70"
             >
               <span className="relative z-10 inline-flex items-center justify-center gap-2">
                 {loading ? (
@@ -357,12 +405,12 @@ const RegisterSA: React.FC = () => {
                 initial={{ x: "-100%" }}
                 animate={{ x: loading ? "100%" : "-100%" }}
                 transition={{ repeat: Infinity, duration: 1.8, ease: "linear" }}
-                className="absolute inset-0 -skew-x-12 bg-gradient-to-r from-transparent via-white/15 to-transparent"
+                className="absolute inset-0 -skew-x-12 bg-linear-to-r from-transparent via-white/15 to-transparent"
               />
             </motion.button>
           </form>
 
-        </div>
+        </motion.div>
 
         <p className="mt-6 text-center text-sm text-white/50">
           Already have an account? <a href="/ca/signin-sa" className="text-red-400 hover:text-red-300">Sign in</a>
