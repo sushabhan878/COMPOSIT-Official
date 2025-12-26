@@ -113,9 +113,7 @@ const userSchema = new Schema<IUser>(
     },
 
     saId: {
-      type: String,
-      unique: true,
-      sparse: true, // ✅ optional + unique
+      type: String, 
       trim: true,
     },
 
@@ -140,12 +138,11 @@ const userSchema = new Schema<IUser>(
 
     numberOfReferrals: {
       type: Number,
-      default: 0,
     },
 
     SARank: {
-      type: Number,
-      default: null,
+      type: String,
+      enum: ["Bronze", "Silver", "Gold", "Platinum"],
     },
 
     joinDate: {

@@ -124,29 +124,29 @@ const RegisterSA: React.FC = () => {
     return true
   }
 
-  function generateSAId() {
-    const prefix = "SA-2026-";
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    let randomPart = "";
+  // function generateSAId() {
+  //   const prefix = "SA-2026-";
+  //   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  //   let randomPart = "";
 
-    for (let i = 0; i < 4; i++) {
-      randomPart += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
+  //   for (let i = 0; i < 4; i++) {
+  //     randomPart += chars.charAt(Math.floor(Math.random() * chars.length));
+  //   }
 
-    const SaId = prefix + randomPart;
-    return SaId;
-  }
+  //   const SaId = prefix + randomPart;
+  //   return SaId;
+  // }
 
 
-  function generateReferralLink(SaId: string) {
-    const baseUrl = "https://composit.in/ca/referral";
-    return `${baseUrl}?ref=${SaId}`;
-  }
+  // function generateReferralLink(SaId: string) {
+  //   const baseUrl = "http://localhost:3000/signup";
+  //   return `${baseUrl}?ref=${SaId}`;
+  // }
   
-  function generateReferralQrLink(referralLink: string) {
-    const baseUrl = "https://api.qrserver.com/v1/create-qr-code/";
-    return `${baseUrl}?data=${encodeURIComponent(referralLink)}&size=200x200`;
-  }
+  // function generateReferralQrLink(referralLink: string) {
+  //   const baseUrl = "https://api.qrserver.com/v1/create-qr-code/";
+  //   return `${baseUrl}?data=${encodeURIComponent(referralLink)}&size=200x200`;
+  // }
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setError(null)
@@ -162,10 +162,9 @@ const RegisterSA: React.FC = () => {
       const res = await axios.post("/api/auth/signup", {
         ...formData,
         role: "sa",
-        saId: generateSAId(),
         joinDate: new Date(),
-        referralLink: generateReferralLink(generateSAId()),
-        referralQrLink: generateReferralQrLink(generateReferralLink(generateSAId())),
+        // referralLink: generateReferralLink(generateSAId()),
+        // referralQrLink: generateReferralQrLink(generateReferralLink(generateSAId())),
         numberOfReferrals: 0,
         SARank: null,
       })

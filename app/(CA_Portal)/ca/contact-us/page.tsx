@@ -3,28 +3,36 @@ import ContactCard from '@/components/ContactCard'
 
 const contacts = [
   {
-    name: 'Aarav Sen',
-    position: 'Head Coordinator',
-    email: 'aarav.sen@kgp.composit.in',
-    contact: '+91 90000 00001',
-    linkedin: 'https://www.linkedin.com',
-    imageUrl: 'https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=300&q=80',
+    name: 'Itisha Roy',
+    position: 'General Secretary',
+    email: 'itisha@composit.in',
+    contact: '+91 9883908829',
+    linkedin: 'https://www.linkedin.com/in/itisha-roy-284985287?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
+    imageUrl: 'https://res.cloudinary.com/dohx1bvom/image/upload/v1766670891/WhatsApp_Image_2025-12-25_at_12.15.22_prmis2.jpg',
   },
   {
-    name: 'Ishita Rao',
-    position: 'PR & Outreach',
-    email: 'ishita.rao@kgp.composit.in',
-    contact: '+91 90000 00002',
-    linkedin: 'https://www.linkedin.com',
-    imageUrl: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=300&q=80',
+    name: 'Omkar Prajapati',
+    position: 'General Secretary',
+    email: 'omkar@composit.in',
+    contact: '+91 8917073738',
+    linkedin: 'https://www.linkedin.com/in/omkar-prajapati-05810a297/',
+    imageUrl: 'https://res.cloudinary.com/dohx1bvom/image/upload/v1766670891/1741552440328_jdmiv4.jpg',
   },
   {
-    name: 'Rohan Mehta',
-    position: 'Industry Relations',
-    email: 'rohan.mehta@kgp.composit.in',
-    contact: '+91 90000 00003',
-    linkedin: 'https://www.linkedin.com',
-    imageUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80',
+    name: 'Jayesh Andhale',
+    position: 'Public Relations Head',
+    email: 'jayesh@composit.in',
+    contact: '+91 9767922637',
+    linkedin: 'https://www.linkedin.com/in/jayesh-andhale-2638b9287?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
+    imageUrl: 'https://res.cloudinary.com/dohx1bvom/image/upload/v1766670890/WhatsApp_Image_2025-12-25_at_12.02.38_rzi98q.jpg',
+  },
+  {
+    name: 'Ayush Ogale',
+    position: 'Public Relations Head',
+    email: 'ayush@composit.in',
+    contact: '+91 8167069056',
+    linkedin: 'https://www.linkedin.com/in/ayush-ogale-9b449528a/',
+    imageUrl: 'https://res.cloudinary.com/dohx1bvom/image/upload/v1766670889/1750253720690_e1g09k.jpg',
   },
 ]
 
@@ -42,7 +50,7 @@ const ContactUs = () => {
           </p>
         </header>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
           {contacts.map((person) => (
             <ContactCard key={person.email} {...person} />
           ))}

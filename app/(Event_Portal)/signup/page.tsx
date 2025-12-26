@@ -1,7 +1,7 @@
 "use client"
 
-import React, { useState } from "react"
-import { useRouter } from "next/navigation"
+import React, { useEffect, useState } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
 import { motion } from "framer-motion"
 import GridBackground from "@/components/GridBackground"
 import { signIn } from "next-auth/react"
@@ -17,6 +17,17 @@ const Signup: React.FC = () => {
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState<string | null>(null)
   const [showPassword, setShowPassword] = useState(false)
+  const searchParams = useSearchParams()
+
+  
+  const [referral, setReferral] = useState<string | null>(null)
+    useEffect(() => {
+    const ref = searchParams.get("ref")
+    if (ref) {
+      setReferral(ref)
+      localStorage.setItem("referralCode", ref)
+    }
+  }, [searchParams])
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -38,7 +49,16 @@ const Signup: React.FC = () => {
 
     try {
       setLoading(true)
-      const res = await axios.post("/api/auth/signup", { name, email, password, role: "user" })
+
+      const referralCode = referral || localStorage.getItem("referralCode")
+      
+      const res = await axios.post("/api/auth/signup", {
+        name,
+        email,
+        password,
+        role: "user",
+        referralCode
+      })
 
       if (res.status !== 200) {
         throw new Error(res.data?.message || "Signup failed")
@@ -52,6 +72,7 @@ const Signup: React.FC = () => {
         callbackUrl: "/home"
       })
     } catch (err: any) {
+      console.log(err?.response?.data);
       setError(err?.message || "Something went wrong.")
     } finally {
       setLoading(false)
@@ -67,6 +88,8 @@ const Signup: React.FC = () => {
     }
   }
 
+
+
   return (
     <div className="relative min-h-[100dvh] flex items-center justify-center px-6 py-10">
       <GridBackground />
@@ -79,6 +102,7 @@ const Signup: React.FC = () => {
 
         <div className="rounded-2xl border border-white/10 bg-black/40 backdrop-blur-md p-6 shadow-2xl">
           <form onSubmit={handleSubmit} className="space-y-4">
+            <input type="hidden" value={referral ?? ""} />
             <div>
               <label className="block text-sm text-white/70 mb-1">Name</label>
               <input

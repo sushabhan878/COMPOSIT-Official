@@ -3,6 +3,45 @@ import User from "@/models/user.model";
 import bcrypt from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 
+
+function generateSAId() {
+    const prefix = "SA-2026-";
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let randomPart = "";
+
+    for (let i = 0; i < 4; i++) {
+      randomPart += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+
+    const SaId = prefix + randomPart;
+    return SaId;
+}
+
+async function generateUniqueSAId() {
+  let saId
+  let exists = true
+
+  while (exists) {
+    saId = generateSAId()
+    exists = (await User.exists({ saId })) !== null
+  }
+
+  return saId
+}
+  
+
+function generateReferralLink(SaId: string) {
+    const baseUrl = "http://localhost:3000/signup";
+    return `${baseUrl}?ref=${SaId}&callbackUrl=/home`;
+}
+
+  
+function generateReferralQrLink(referralLink: string) {
+    const baseUrl = "https://api.qrserver.com/v1/create-qr-code/";
+    return `${baseUrl}?data=${encodeURIComponent(referralLink)}&size=200x200`;
+}
+
+
 export async function POST(req: NextRequest) { 
     try {
         await connectDb();
@@ -18,13 +57,7 @@ export async function POST(req: NextRequest) {
             city,
             state,
             password,
-            saId,
-            joinDate,
-            referralLink,
-            referralQrLink,
-            numberOfReferrals,
-            SARank,
-            
+            referralCode,
         } = await req.json();
         const existingUser = await User.findOne({ email });
         if (existingUser) {
@@ -39,31 +72,97 @@ export async function POST(req: NextRequest) {
                 {status: 400}
             )
         }
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const user = await User.create(
-            {
-                name,
-                email,
-                mobile,
-                gender,
-                role,
-                collegeName,
-                collegeId,
-                department,
-                city,
-                state,
-                password: hashedPassword,
-                saId,
-                joinDate: new Date(),
-                referralLink,
-                referralQrLink,
-                numberOfReferrals,
-                SARank,
 
-            }
-        )
+        if (!["user", "sa", "admin"].includes(role)) {
         return NextResponse.json(
-            { message: "User created successfully", user },
+            { message: "Invalid role" },
+            { status: 400 }
+        )
+        }
+
+        let saId = null;
+
+        if (role === "user") {
+        if (referralCode) {
+            const saExists = await User.findOne({
+            saId: referralCode,
+            role: "sa",
+            })
+
+            if (!saExists) {
+            return NextResponse.json(
+                { message: "Invalid referral code" },
+                { status: 400 }
+            )
+            }
+        }
+        saId = referralCode || null
+        } else if (role === "sa") {
+        saId = await generateUniqueSAId();
+        } else {
+        saId = null;
+        }
+
+        let referralLink = null;
+        let referralQrLink = null;
+
+        if (role === "sa") {
+        referralLink = generateReferralLink(saId);
+        referralQrLink = generateReferralQrLink(referralLink);
+        }
+
+        
+
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+        // const user = await User.create(
+        //     {
+        //         name,
+        //         email,
+        //         mobile,
+        //         gender,
+        //         role,
+        //         collegeName,
+        //         collegeId,
+        //         department,
+        //         city,
+        //         state,
+        //         password: hashedPassword,
+        //         saId,
+        //         joinDate: new Date(),
+        //         referralLink,
+        //         referralQrLink,
+        //         numberOfReferrals: role === "sa" ? 0 : undefined,
+        //         SARank: role === "sa" ? "Bronze" : undefined,
+        //     }
+        // )
+
+        const userData: any = {
+                    name,
+                    email,
+                    mobile,
+                    gender,
+                    role,
+                    collegeName,
+                    collegeId,
+                    department,
+                    city,
+                    state,
+                    password: hashedPassword,
+                    saId,
+                    joinDate: new Date(),
+        };
+
+        if (role === "sa") {
+            userData.referralLink = generateReferralLink(saId);
+            userData.referralQrLink = generateReferralQrLink(userData.referralLink);
+            userData.numberOfReferrals = 0;
+            userData.SARank = "Bronze";
+        }
+        const user = await User.create(userData);
+
+        return NextResponse.json(
+            { message: "User created successfully", user},
             { status: 200 }
         )
     } catch (error) {
