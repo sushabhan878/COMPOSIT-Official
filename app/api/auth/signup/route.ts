@@ -31,15 +31,10 @@ async function generateUniqueSAId() {
   
 
 function generateReferralLink(SaId: string) {
-    const baseUrl = "http://localhost:3000/signup";
+    const baseUrl = process.env.BASE_URL;
     return `${baseUrl}?ref=${SaId}&callbackUrl=/home`;
 }
 
-  
-function generateReferralQrLink(referralLink: string) {
-    const baseUrl = "https://api.qrserver.com/v1/create-qr-code/";
-    return `${baseUrl}?data=${encodeURIComponent(referralLink)}&size=200x200`;
-}
 
 
 export async function POST(req: NextRequest) { 
@@ -108,34 +103,13 @@ export async function POST(req: NextRequest) {
 
         if (role === "sa") {
         referralLink = generateReferralLink(saId);
-        referralQrLink = generateReferralQrLink(referralLink);
         }
 
         
 
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        // const user = await User.create(
-        //     {
-        //         name,
-        //         email,
-        //         mobile,
-        //         gender,
-        //         role,
-        //         collegeName,
-        //         collegeId,
-        //         department,
-        //         city,
-        //         state,
-        //         password: hashedPassword,
-        //         saId,
-        //         joinDate: new Date(),
-        //         referralLink,
-        //         referralQrLink,
-        //         numberOfReferrals: role === "sa" ? 0 : undefined,
-        //         SARank: role === "sa" ? "Bronze" : undefined,
-        //     }
-        // )
+
 
         const userData: any = {
                     name,
@@ -155,11 +129,17 @@ export async function POST(req: NextRequest) {
 
         if (role === "sa") {
             userData.referralLink = generateReferralLink(saId);
-            userData.referralQrLink = generateReferralQrLink(userData.referralLink);
             userData.numberOfReferrals = 0;
             userData.SARank = "Bronze";
         }
         const user = await User.create(userData);
+
+        if (role === "user" && referralCode) {
+        await User.updateOne(
+            { saId: referralCode, role: "sa" },
+            { $inc: { numberOfReferrals: 1 } }
+        );
+        }
 
         return NextResponse.json(
             { message: "User created successfully", user},

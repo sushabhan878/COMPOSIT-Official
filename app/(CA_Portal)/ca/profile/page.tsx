@@ -1,11 +1,12 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { motion } from 'framer-motion'
 import GridBackground from '@/components/GridBackground'
 import { Mail, Phone, MapPin, GraduationCap, Building2, Code2, LogOut, User, Users, Copy, Check } from 'lucide-react'
 import Image from 'next/image'
 import { useSession, signOut } from 'next-auth/react'
+import { QRCodeCanvas } from 'qrcode.react'
 
 const riseProps = {
   initial: { opacity: 0, y: 20 },
@@ -15,55 +16,35 @@ const riseProps = {
 
 const Profile = () => {
   //  SA Data will be fetched from the session 
-  const session = useSession()
-  const saData = session.data?.user as any
+  const {data: session, update} = useSession()
+  const saData = session?.user as any
 
   const [copied, setCopied] = useState(false)
+  const qrCanvasRef = useRef<HTMLCanvasElement | null>(null)
+
+  const downloadQR = () => {
+    try {
+      if (!saData?.referralLink) return
+      const canvas = qrCanvasRef.current
+      if (!canvas) return
+      const dataUrl = canvas.toDataURL("image/png")
+      const link = document.createElement("a")
+      const fileSafeName = (saData?.saId || saData?.name || "referral").toString().replace(/[^a-z0-9_-]/gi, "_")
+      link.href = dataUrl
+      link.download = `${fileSafeName}-qr.png`
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+    } catch (e) {
+      // silently ignore download errors
+    }
+  }
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
-
-  // const detailsSection = [
-  //   {
-  //     icon: Mail,
-  //     label: "Email",
-  //     value: saData.email,
-  //     color: "text-blue-400"
-  //   },
-  //   {
-  //     icon: Phone,
-  //     label: "Phone",
-  //     value: saData.phone,
-  //     color: "text-green-400"
-  //   },
-  //   {
-  //     icon: MapPin,
-  //     label: "Location",
-  //     value: `${saData.city}, ${saData.state}`,
-  //     color: "text-red-400"
-  //   },
-  //   {
-  //     icon: GraduationCap,
-  //     label: "College",
-  //     value: saData.collegeName,
-  //     color: "text-purple-400"
-  //   },
-  //   {
-  //     icon: Building2,
-  //     label: "Department",
-  //     value: saData.department,
-  //     color: "text-yellow-400"
-  //   },
-  //   {
-  //     icon: Code2,
-  //     label: "Roll Number",
-  //     value: saData.collegeId,
-  //     color: "text-cyan-400"
-  //   }
-  // ]
 
   return (
     <div className="relative min-h-dvh py-20 px-6 mt-20">
@@ -364,15 +345,32 @@ const Profile = () => {
                 transition={{ duration: 0.5, delay: 0.4 }}
                 className="bg-white p-3 rounded-lg"
               >
-                <Image
-                  src={saData?.qrCode || "/default-qr.png"}
-                  alt="Referral QR Code"
-                  width={150}
-                  height={150}
-                  className="w-40 h-40 object-contain"
+                <QRCodeCanvas
+                  ref={qrCanvasRef}
+                  value={saData?.referralLink || ""}
+                  size={150}
+                  includeMargin={true}
+                  marginSize={1}
+                  fgColor="#000000"
+                  bgColor="#ffffff"
+                  // imageSettings={{
+                  //   src: "/Composit without text_ white.png",
+                  //   height: 60,
+                  //   width: 60,
+                  //   excavate: true,
+                  // }}
                 />
               </motion.div>
               <p className="text-white/50 text-xs mt-4 text-center">Scan with your phone to share referral</p>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={downloadQR}
+                disabled={!saData?.referralLink}
+                className="mt-3 px-4 py-2 rounded-lg bg-linear-to-r from-[#7a1f2a] to-[#2d4f9e] text-white hover:shadow-lg transition-all duration-300 disabled:opacity-50"
+              >
+                Download QR
+              </motion.button>
             </motion.div>
           </div>
         </motion.div>
@@ -385,8 +383,8 @@ const Profile = () => {
         >
           {[
             { label: "Events Registered", value: saData?.eventsRegistered || "0", color: "from-[#7a1f2a]" },
-            { label: "Number of Students you Referred", value: saData?.referralsCount || "0", color: "from-[#2d4f9e]" },
-            { label: "Rank", value: saData?.rank ? `#${saData.rank}` : "N/A", color: "from-green-600" }
+            { label: "Number of Students you Referred", value: saData?.numberOfReferrals || "0", color: "from-[#2d4f9e]" },
+            { label: "Rank", value: saData?.SARank ? `${saData.SARank}` : "N/A", color: "from-green-600" }
           ].map((stat, idx) => (
             <motion.div
               key={idx}
@@ -402,6 +400,7 @@ const Profile = () => {
           ))}
         </motion.div>
       </div>
+
     </div>
   )
 }
