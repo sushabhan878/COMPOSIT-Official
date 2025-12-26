@@ -99,7 +99,6 @@ export async function POST(req: NextRequest) {
         }
 
         let referralLink = null;
-        let referralQrLink = null;
 
         if (role === "sa") {
         referralLink = generateReferralLink(saId);
