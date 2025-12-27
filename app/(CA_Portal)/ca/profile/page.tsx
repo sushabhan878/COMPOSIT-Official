@@ -272,7 +272,7 @@ const Profile = () => {
             >
               <p className="text-white/50 text-sm mb-2">Joined Date</p>
               <p className="text-white font-medium text-lg">
-                {saData?.joinedDate ? new Date(saData.joinedDate).toLocaleDateString('en-US', {
+                {saData?.joinDate ? new Date(saData.joinDate).toLocaleDateString('en-US', {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric'

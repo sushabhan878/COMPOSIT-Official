@@ -159,14 +159,12 @@ const RegisterSA: React.FC = () => {
     try {
       setLoading(true)
       // TODO: Update this endpoint to your specific SA registration endpoint
-      const res = await axios.post("/api/auth/signup", {
+      const res = await axios.post("/api/auth/signup-sa", {
         ...formData,
-        role: "sa",
-        joinDate: new Date(),
-        // referralLink: generateReferralLink(generateSAId()),
-        // referralQrLink: generateReferralQrLink(generateReferralLink(generateSAId())),
-        numberOfReferrals: 0,
-        SARank: null,
+        // role: "sa",
+        // joinDate: new Date(),
+        // numberOfReferrals: 0,
+        // SARank: null,
       })
 
       if (res.status !== 200) {

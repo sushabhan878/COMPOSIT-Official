@@ -64,7 +64,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     ],
     callbacks: {
         // It will dump user data into token
-        jwt({ token, user }) {
+        jwt({ token, user, trigger, session }) {
             if (user) {
                 token.id = user.id
                 token.name = user.name
@@ -89,6 +89,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 token.registeredEvents= user.registeredEvents?.map(String)
                 token.cirtificates= user.cirtificates ?.map(String)
             }
+
+            // When session.update() is called
+            if (trigger === "update") {
+                token.numberOfReferrals = session.numberOfReferrals
+                token.SARank = session.SARank
+            }
+            
             return token
         },
 
