@@ -5,7 +5,7 @@ const ComingSoon = () => {
     <div className="flex items-center justify-center min-h-screen">
               <div className="text-center px-6">
                 <h1 className="text-5xl md:text-7xl font-bold text-white mb-4 bg-gradient-to-r from-white via-white to-[#5c0a0a] bg-clip-text text-transparent animate-pulse">
-                  Website is under Construction
+                  This page is under Construction
                 </h1>
                 <p className="text-xl md:text-2xl text-white/70 font-light">
                   Stay tuned!

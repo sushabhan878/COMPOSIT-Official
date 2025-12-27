@@ -44,29 +44,32 @@ const AboutComposit = () => {
         {/* Theme Description */}
         <section className="mt-16 lg:mt-24">
           <div className="mb-8 space-y-2">
-            <h2 className="text-2xl font-bold text-white md:text-3xl">Theme 2026: Materials Beyond Boundaries</h2>
+            <h2 className="text-2xl font-bold text-white md:text-3xl">Mischmetal Mystique — Unveiling the Mysteries of Rare Earth Materials</h2>
             <div className="h-1 w-20 rounded-full bg-gradient-to-r from-amber-400 to-orange-500" />
           </div>
           <p className="max-w-4xl text-base text-gray-300 md:text-lg">
-            COMPOSIT 2026 celebrates materials as the engine of breakthrough innovation — spanning space technologies, sustainable manufacturing, biomedical devices, energy systems, and intelligent composites. The theme highlights how interdisciplinary collaboration transforms raw ideas into real-world impact.
+            Mischmetal Mystique explores the fascinating world of rare earth elements and their integral role in shaping modern technology and sustainable innovation. From high-performance magnets and advanced electronics to clean energy systems and next-generation transportation, rare earths quietly power global progress. This theme highlights their science, applications, and strategic importance—while surfacing the challenges of responsible extraction, supply resilience, and circularity.
+          </p>
+          <p className="mt-4 max-w-4xl text-base text-gray-300 md:text-lg">
+            We invite participants to unravel how critical elements enable breakthroughs in EV motors, wind turbines, energy-efficient lighting, and advanced communication systems—and to imagine future applications that keep materials science at the heart of a resilient, energy-efficient, and technologically advanced world.
           </p>
 
           <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
             <div className="rounded-2xl bg-white/5 p-6 backdrop-blur-sm">
-              <h3 className="text-lg font-semibold text-white">Innovation</h3>
-              <p className="mt-2 text-sm text-gray-300">Frontier research driving next-gen alloys, polymers, ceramics, and meta-materials.</p>
+              <h3 className="text-lg font-semibold text-white">Critical Materials</h3>
+              <p className="mt-2 text-sm text-gray-300">Nd, Dy, Tb, and more—rare earths enabling high-performance magnets, sensors, and advanced devices.</p>
             </div>
             <div className="rounded-2xl bg-white/5 p-6 backdrop-blur-sm">
-              <h3 className="text-lg font-semibold text-white">Sustainability</h3>
-              <p className="mt-2 text-sm text-gray-300">Circular design, low-carbon processes, and resilient supply chains.</p>
+              <h3 className="text-lg font-semibold text-white">Clean Energy</h3>
+              <p className="mt-2 text-sm text-gray-300">Powering EV motors, wind turbines, and efficient lighting for a low-carbon future.</p>
             </div>
             <div className="rounded-2xl bg-white/5 p-6 backdrop-blur-sm">
-              <h3 className="text-lg font-semibold text-white">Interdisciplinarity</h3>
-              <p className="mt-2 text-sm text-gray-300">Bridging materials with AI, biotech, aerospace, and energy.</p>
+              <h3 className="text-lg font-semibold text-white">Sustainable Extraction</h3>
+              <p className="mt-2 text-sm text-gray-300">Exploring responsible mining, recycling, and circular supply chains for critical minerals.</p>
             </div>
             <div className="rounded-2xl bg-white/5 p-6 backdrop-blur-sm">
-              <h3 className="text-lg font-semibold text-white">Impact</h3>
-              <p className="mt-2 text-sm text-gray-300">From lab to market: prototypes, pilots, and partnerships.</p>
+              <h3 className="text-lg font-semibold text-white">Future Applications</h3>
+              <p className="mt-2 text-sm text-gray-300">Next-gen communications, aerospace, and quantum technologies driven by rare earth innovation.</p>
             </div>
           </div>
         </section>

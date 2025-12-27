@@ -1,6 +1,8 @@
+"use client"
 import Link from 'next/link'
 import Image from 'next/image'
 import React from 'react'
+import { motion } from 'framer-motion'
 import StatsSection from './StatsSection'
 
 const HomePage = () => {
@@ -19,35 +21,69 @@ const HomePage = () => {
       </video>
 
       <div className="relative flex min-h-screen flex-col items-start justify-center gap-6 px-[5vw] py-24 text-left text-white lg:px-[5vw]">
-        <p className="text-xs uppercase tracking-[0.35em] text-gray-300">IIT Kharagpur • March 2026</p>
-        <h1 className='text-balance text-4xl font-semibold leading-tight drop-shadow md:text-3xl lg:text-5xl'>Ready to experiencem <span className='text-balance text-4xl font-semibold leading-tight drop-shadow md:text-5xl lg:text-6xl underline'>COMPOSIT 2026?</span></h1>
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, ease: 'easeOut' }}
+          className="text-xs uppercase tracking-[0.35em] text-gray-300"
+        >
+          IIT Kharagpur • March 2026
+        </motion.p>
 
-        <p className="max-w-3xl text-pretty text-base text-gray-200 md:text-lg">
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, ease: 'easeOut', delay: 0.1 }}
+          className="text-balance text-4xl font-semibold leading-tight drop-shadow md:text-3xl lg:text-5xl"
+        >
+          Ready to experiencem <span className="text-balance text-4xl font-semibold leading-tight drop-shadow md:text-5xl lg:text-6xl underline decoration-amber-400 decoration-4 underline-offset-4 transition-colors duration-300 hover:text-amber-200">COMPOSIT 2026?</span>
+        </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, ease: 'easeOut', delay: 0.15 }}
+          className="max-w-3xl text-pretty text-base text-gray-200 md:text-lg"
+        >
           A three-day celebration of materials innovation, future-forward research, and the brightest student talent. Dive into
           marquee competitions, flagship talks, and immersive exhibitions that keep COMPOSIT the heartbeat of campus energy.
-        </p>
+        </motion.p>
 
-        <div className="flex flex-wrap items-center gap-3 text-sm md:text-base">
-          <span className="rounded-full bg-white/10 px-4 py-2 backdrop-blur mr-4">Location: IIT Kharagpur</span>
-          <span className="rounded-full bg-white/10 px-4 py-2 backdrop-blur">Dates: 14-16 March 2026</span>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, ease: 'easeOut', delay: 0.2 }}
+          className="flex flex-wrap items-center gap-3 text-sm md:text-base"
+        >
+          <span className="rounded-full bg-white/10 px-4 py-2 backdrop-blur mr-4 transition duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-amber-400/20">Location: IIT Kharagpur</span>
+          <span className="rounded-full bg-white/10 px-4 py-2 backdrop-blur transition duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-amber-400/20">Dates: 14-16 March 2026</span>
+        </motion.div>
 
-        </div>
-
-        <div className="mt-4 md:mt-36 flex flex-wrap items-center gap-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, ease: 'easeOut', delay: 0.25 }}
+          className="mt-4 md:mt-36 flex flex-wrap items-center gap-4"
+        >
           <Link
             href="/signup"
-            className="rounded-full bg-amber-400 px-6 py-3 text-base font-semibold text-slate-900 shadow-lg shadow-amber-400/30 transition hover:-translate-y-0.5 hover:shadow-amber-400/40 lg:px-8 lg:py-4 lg:text-lg"
+            className="rounded-full bg-amber-400 px-6 py-3 text-base font-semibold text-slate-900 shadow-lg shadow-amber-400/30 transition-transform duration-300 hover:-translate-y-1 hover:shadow-amber-400/50 lg:px-8 lg:py-4 lg:text-lg"
           >
             Get your pass
           </Link>
 
           <Link
             href="/about"
-            className="rounded-full border border-white/50 px-6 py-3 text-base font-semibold text-white transition hover:border-white hover:bg-white/10 lg:px-8 lg:py-4 lg:text-lg"
+            className="rounded-full border border-white/50 px-6 py-3 text-base font-semibold text-white transition-transform duration-300 hover:-translate-y-1 hover:border-amber-300 hover:bg-white/10 hover:text-amber-100 lg:px-8 lg:py-4 lg:text-lg"
           >
             Explore events
           </Link>
-        </div>
+        </motion.div>
       </div>
     </section>
 
@@ -124,8 +160,8 @@ const HomePage = () => {
             </div>
 
             {/* Decorative Elements */}
-            <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-amber-500/10 blur-3xl pointer-events-none"></div>
-            <div className="absolute -bottom-10 -left-10 h-40 w-40 rounded-full bg-orange-500/10 blur-3xl pointer-events-none"></div>
+            <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-amber-500/10 blur-3xl pointer-events-none animate-pulse"></div>
+            <div className="absolute -bottom-10 -left-10 h-40 w-40 rounded-full bg-orange-500/10 blur-3xl pointer-events-none animate-pulse"></div>
           </div>
         </div>
       </div>
@@ -148,7 +184,13 @@ const HomePage = () => {
         {/* Cards Grid */}
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
           {/* Competitions Card */}
-          <div className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-white/5 to-white/[0.02] p-8 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:from-white/10 hover:to-white/5 hover:shadow-2xl hover:shadow-amber-500/20">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.05 }}
+            className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-white/5 to-white/[0.02] p-8 backdrop-blur-sm transition-all duration-300 hover:scale-[1.04] hover:from-white/10 hover:to-white/5 hover:shadow-2xl hover:shadow-amber-500/20"
+          >
             <div className="flex flex-col items-center space-y-6 text-center">
               <div className="relative">
                 <div className="absolute inset-0 rounded-full bg-amber-400/20 blur-xl transition-all duration-300 group-hover:bg-amber-400/30"></div>
@@ -163,10 +205,16 @@ const HomePage = () => {
                 A multitude of events ranging from mesmerizing data analytics, stunning photography, compelling case studies and engaging research competitions, unleashing your full potential and developing a spirit of healthy competitiveness.
               </p>
             </div>
-          </div>
+          </motion.div>
 
           {/* Guest Lectures Card */}
-          <div className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-white/5 to-white/[0.02] p-8 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:from-white/10 hover:to-white/5 hover:shadow-2xl hover:shadow-amber-500/20">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+            className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-white/5 to-white/[0.02] p-8 backdrop-blur-sm transition-all duration-300 hover:scale-[1.04] hover:from-white/10 hover:to-white/5 hover:shadow-2xl hover:shadow-amber-500/20"
+          >
             <div className="flex flex-col items-center space-y-6 text-center">
               <div className="relative">
                 <div className="absolute inset-0 rounded-full bg-amber-400/20 blur-xl transition-all duration-300 group-hover:bg-amber-400/30"></div>
@@ -181,10 +229,16 @@ const HomePage = () => {
                 Deliverance of guest lectures by eminent professionals in the field of Materials Science, enriching your learning experience and broadening your horizons.
               </p>
             </div>
-          </div>
+          </motion.div>
 
           {/* Workshops Card */}
-          <div className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-white/5 to-white/[0.02] p-8 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:from-white/10 hover:to-white/5 hover:shadow-2xl hover:shadow-amber-500/20">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.15 }}
+            className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-white/5 to-white/[0.02] p-8 backdrop-blur-sm transition-all duration-300 hover:scale-[1.04] hover:from-white/10 hover:to-white/5 hover:shadow-2xl hover:shadow-amber-500/20"
+          >
             <div className="flex flex-col items-center space-y-6 text-center">
               <div className="relative">
                 <div className="absolute inset-0 rounded-full bg-amber-400/20 blur-xl transition-all duration-300 group-hover:bg-amber-400/30"></div>
@@ -199,7 +253,7 @@ const HomePage = () => {
                 Conductance of informative workshops on captivating concepts, providing you with hands-on experience and practical knowledge about cutting-edge research and innovations in the field of materials and beyond.
               </p>
             </div>
-          </div>
+          </motion.div>
 
           {/* Webinars Card */}
           <div className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-white/5 to-white/[0.02] p-8 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:from-white/10 hover:to-white/5 hover:shadow-2xl hover:shadow-amber-500/20">
