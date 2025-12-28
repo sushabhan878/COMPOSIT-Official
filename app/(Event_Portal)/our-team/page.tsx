@@ -90,19 +90,9 @@ const Team = () => {
   return (
     <main className="relative min-h-screen bg-gradient-to-b lg:py-28">
       <div className="mx-auto max-w-10xl px-[5vw]">
-        <motion.header
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-          className="mt-12 mb-12 space-y-3 text-center"
-        >
-          <h1 className="text-3xl font-bold leading-tight text-white md:text-4xl lg:text-5xl">Our Team</h1>
-          <div className="mx-auto h-1 w-24 rounded-full bg-gradient-to-r from-amber-400 to-orange-500" />
-        </motion.header>
 
         {/* Faculty Advisors */}
-        <section className="space-y-6">
+        <section className="space-y-12 mt-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -146,7 +136,7 @@ const Team = () => {
         </section>
 
         {/* Governors */}
-        <section className="mt-14 space-y-6">
+        <section className="mt-20 space-y-12">
           <div className="space-y-2 text-center">
             <h2 className="text-2xl font-bold text-white md:text-3xl">Governors</h2>
             <div className="mx-auto h-1 w-16 rounded-full bg-gradient-to-r from-amber-400 to-orange-500" />
@@ -177,13 +167,13 @@ const Team = () => {
         </section>
 
         {/* Heads */}
-        <section className="mt-14 space-y-6">
+        <section className="mt-20 space-y-12">
           <div className="space-y-2 text-center">
             <h2 className="text-2xl font-bold text-white md:text-3xl">Heads</h2>
             <div className="mx-auto h-1 w-16 rounded-full bg-gradient-to-r from-amber-400 to-orange-500" />
           </div>
 
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-4 space-y-20">
             {headsData.map((head) => (
               <ProfileCard
                 key={head.name}

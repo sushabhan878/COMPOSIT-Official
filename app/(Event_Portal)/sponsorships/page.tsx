@@ -88,6 +88,15 @@ const benefits = [
   'Campus Ambassador (CA)',
 ]
 
+const sponsorLogos = [
+  'https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=400&q=80',
+  'https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=400&q=80',
+  'https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=400&q=80',
+  'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=400&q=80',
+  'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=400&q=80',
+  'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=400&q=80',
+]
+
 const Check = () => (
   <svg className="h-5 w-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -95,9 +104,32 @@ const Check = () => (
 )
 
 const Sponsorships = () => {
+  const loopedLogos = [...sponsorLogos, ...sponsorLogos]
+
   return (
     <main className="relative mt-20 min-h-screen py-20 lg:py-28">
-      <div className="mx-auto max-w-7xl px-[5vw]">
+      <div className="mx-auto max-w-10xl px-[5vw]">
+        <div className="mb-4 text-white">
+          <p className="text-sm uppercase tracking-[0.35em] text-amber-300/80">Previous Sponsors</p>
+        </div>
+        <div className="relative mb-12 overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-4 shadow-2xl backdrop-blur">
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-amber-500/10 via-transparent to-orange-500/10 blur-xl" />
+          <motion.div
+            className="flex min-w-max gap-6"
+            animate={{ x: ['0%', '-50%'] }}
+            transition={{ duration: 25, ease: 'linear', repeat: Infinity }}
+          >
+            {loopedLogos.map((logo, idx) => (
+              <div
+                key={logo + idx}
+                className="flex h-36 w-56 flex-shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-white/5 ring-1 ring-white/10 transition duration-200 hover:-translate-y-1 hover:ring-amber-400/60 hover:shadow-amber-400/30 hover:shadow-lg"
+              >
+                <img src={logo} alt={`Sponsor logo ${idx + 1}`} className="h-full w-full object-cover opacity-90" />
+              </div>
+            ))}
+          </motion.div>
+        </div>
+
         {/* Hero */}
         <div className="mb-14 grid items-center gap-8 lg:grid-cols-2">
           <div className="space-y-4">

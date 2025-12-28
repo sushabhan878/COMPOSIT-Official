@@ -87,7 +87,7 @@ const Navbar = () => {
 
                 {/* Activities Dropdown */}
                 {item.hasDropdown && (
-                  <div className="absolute left-0 mt-2 w-48 bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-[0_10px_40px_rgba(92,10,10,0.35)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 py-2 z-10">
+                  <div className="absolute left-0 mt-2 w-48 bg-black/70 backdrop-blur-lg border border-white/20 rounded-2xl shadow-[0_10px_40px_rgba(92,10,10,0.35)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 py-2 z-10">
                     {activitiesDropdown.map((subItem) => (
                       <Link
                         key={subItem.path}
@@ -144,7 +144,7 @@ const Navbar = () => {
 
               {isAuthenticated && isProfileDropdownOpen && (
                 <div
-                  className="absolute right-0 mt-2 w-44 bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-[0_10px_40px_rgba(92,10,10,0.35)] py-2 z-10"
+                  className="absolute right-0 mt-2 w-44 bg-black/50 backdrop-blur-lg border border-white/20 rounded-2xl shadow-[0_10px_40px_rgba(92,10,10,0.35)] py-2 z-10"
                   onMouseEnter={openProfileMenu}
                   onMouseLeave={scheduleCloseProfileMenu}
                 >

@@ -17,7 +17,7 @@ async function page() {
       <div className='md:absolute md:bottom-5 md:right-5 fixed inset-0 flex items-center justify-center md:inset-auto z-10 pointer-events-none md:pointer-events-auto'>
         <CountDown />
       </div>
-
+      
       <Link href="/home" className='absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-2 text-white/80 font-light pointer-events-auto hover:text-white transition-colors cursor-pointer'
       >
         Go to Home 

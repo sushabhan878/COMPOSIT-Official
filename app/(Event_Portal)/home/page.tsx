@@ -28,7 +28,7 @@ const HomePage = () => {
           transition={{ duration: 0.4, ease: 'easeOut' }}
           className="text-xs uppercase tracking-[0.35em] text-gray-300"
         >
-          IIT Kharagpur • March 2026
+          IIT Kharagpur • COMPOSIT 2026
         </motion.p>
 
         <motion.h1
@@ -60,7 +60,7 @@ const HomePage = () => {
           className="flex flex-wrap items-center gap-3 text-sm md:text-base"
         >
           <span className="rounded-full bg-white/10 px-4 py-2 backdrop-blur mr-4 transition duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-amber-400/20">Location: IIT Kharagpur</span>
-          <span className="rounded-full bg-white/10 px-4 py-2 backdrop-blur transition duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-amber-400/20">Dates: 14-16 March 2026</span>
+          <span className="rounded-full bg-white/10 px-4 py-2 backdrop-blur transition duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-amber-400/20">Dates: 27-29 March 2026</span>
         </motion.div>
 
         <motion.div
@@ -87,7 +87,7 @@ const HomePage = () => {
       </div>
     </section>
 
-    {/* Motivation and Vision Section */}
+    {/* Motto and Vision Section */}
     <section className="relative w-full overflow-hidden py-20 lg:py-18">
       <div className="mx-auto max-w-10xl px-[5vw]">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
@@ -95,7 +95,7 @@ const HomePage = () => {
           <div className="flex flex-col justify-center space-y-8">
             <div className="space-y-4">
               <h2 className="text-3xl font-bold leading-tight text-white md:text-4xl lg:text-5xl">
-                Our Motivation & Vision
+                Our Motto & Vision
               </h2>
               <div className="h-1 w-24 rounded-full bg-gradient-to-r from-amber-400 to-orange-500"></div>
             </div>
@@ -118,7 +118,7 @@ const HomePage = () => {
             {/* Image 1 - Large Feature Top */}
             <div className="relative col-span-5 row-span-4 overflow-hidden rounded-3xl shadow-2xl transition-all duration-300 hover:scale-[1.02] hover:shadow-amber-500/30 hover:z-10">
               <Image
-                src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&q=80"
+                src="https://res.cloudinary.com/dohx1bvom/image/upload/v1766911450/R_vmassg.jpg"
                 alt="Materials Science Research"
                 fill
                 className="object-cover"
@@ -129,7 +129,7 @@ const HomePage = () => {
             {/* Image 2 - Tall Right */}
             <div className="relative col-span-3 col-start-6 row-span-5 overflow-hidden rounded-3xl shadow-2xl transition-all duration-300 hover:scale-[1.02] hover:shadow-amber-500/30 hover:z-10">
               <Image
-                src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=500&q=80"
+                src="https://res.cloudinary.com/dohx1bvom/image/upload/v1766911451/1FOJA0O7PHUO32foz1gr.width-1280_oat07f.jpg"
                 alt="Aerospace Materials"
                 fill
                 className="object-cover"
@@ -151,7 +151,7 @@ const HomePage = () => {
             {/* Image 4 - Wide Bottom */}
             <div className="relative col-span-5 col-start-4 row-span-3 row-start-6 overflow-hidden rounded-3xl shadow-2xl transition-all duration-300 hover:scale-[1.02] hover:shadow-amber-500/30 hover:z-10">
               <Image
-                src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=500&q=80"
+                src="https://res.cloudinary.com/dohx1bvom/image/upload/v1766911449/OIP_farr3j.webp"
                 alt="Space Technology"
                 fill
                 className="object-cover"

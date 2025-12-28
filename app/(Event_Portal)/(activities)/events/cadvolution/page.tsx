@@ -1,13 +1,12 @@
 import ComingSoon from '@/components/ComingSoon'
-import Navbar from '@/components/Navbar'
 import React from 'react'
 
-const Schedule = () => {
+const page = () => {
   return (
-    <main>
+    <div>
       <ComingSoon/>
-    </main>
+    </div>
   )
 }
 
-export default Schedule
+export default page

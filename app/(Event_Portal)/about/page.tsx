@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 const AboutComposit = () => {
   return (
-    <main className="relative w-full overflow-hidden py-20 lg:py-28">
+    <main className="relative w-full overflow-hidden py-20 mt-16 lg:py-28">
       <div className="mx-auto max-w-10xl px-[5vw]">
         {/* Header */}
         <div className="mb-12 space-y-3 text-center">
@@ -27,13 +27,13 @@ const AboutComposit = () => {
 
           {/* Image */}
           <div className="lg:col-span-5">
-            <div className="relative overflow-hidden rounded-3xl shadow-2xl">
+            <div className="relative overflow-hidden rounded-3xl shadow-2xl transition duration-300 hover:-translate-y-2 hover:shadow-amber-500/30">
               <Image
-                src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=1200&q=80&auto=format&fit=crop"
+                src="https://res.cloudinary.com/dohx1bvom/image/upload/v1766904306/COMPOSIT_Brochure_2026_tivg2u.png"
                 alt="Materials science at IIT Kharagpur — COMPOSIT"
                 width={1200}
                 height={800}
-                className="h-full w-full object-cover"
+                className="h-full w-full scale-110 object-cover transition duration-300 hover:scale-125"
                 priority
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
@@ -55,19 +55,19 @@ const AboutComposit = () => {
           </p>
 
           <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-            <div className="rounded-2xl bg-white/5 p-6 backdrop-blur-sm">
+            <div className="rounded-2xl bg-white/5 p-6 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:bg-white/10 hover:shadow-lg hover:shadow-amber-400/20">
               <h3 className="text-lg font-semibold text-white">Critical Materials</h3>
               <p className="mt-2 text-sm text-gray-300">Nd, Dy, Tb, and more—rare earths enabling high-performance magnets, sensors, and advanced devices.</p>
             </div>
-            <div className="rounded-2xl bg-white/5 p-6 backdrop-blur-sm">
+            <div className="rounded-2xl bg-white/5 p-6 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:bg-white/10 hover:shadow-lg hover:shadow-amber-400/20">
               <h3 className="text-lg font-semibold text-white">Clean Energy</h3>
               <p className="mt-2 text-sm text-gray-300">Powering EV motors, wind turbines, and efficient lighting for a low-carbon future.</p>
             </div>
-            <div className="rounded-2xl bg-white/5 p-6 backdrop-blur-sm">
+            <div className="rounded-2xl bg-white/5 p-6 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:bg-white/10 hover:shadow-lg hover:shadow-amber-400/20">
               <h3 className="text-lg font-semibold text-white">Sustainable Extraction</h3>
               <p className="mt-2 text-sm text-gray-300">Exploring responsible mining, recycling, and circular supply chains for critical minerals.</p>
             </div>
-            <div className="rounded-2xl bg-white/5 p-6 backdrop-blur-sm">
+            <div className="rounded-2xl bg-white/5 p-6 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:bg-white/10 hover:shadow-lg hover:shadow-amber-400/20">
               <h3 className="text-lg font-semibold text-white">Future Applications</h3>
               <p className="mt-2 text-sm text-gray-300">Next-gen communications, aerospace, and quantum technologies driven by rare earth innovation.</p>
             </div>

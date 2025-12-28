@@ -45,7 +45,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
         </div>
 
         {/* Back */}
-        <div className="absolute inset-0 flex flex-col justify-between rounded-3xl bg-gradient-to-br from-white/10 via-white/5 to-white/0 p-6 shadow-2xl backdrop-blur-md [backface-visibility:hidden] [transform:rotateY(180deg)]">
+        <div className="absolute inset-0 flex flex-col justify-between rounded-3xl bg-gradient-to-br from-white/10 via-white/5 to-white/0 p-6 shadow-2xl backdrop-blur-md [backface-visibility:hidden] [transform:rotateY(180deg)] transition-all duration-300 group-hover:ring-2 group-hover:ring-amber-400 group-hover:shadow-lg group-hover:shadow-amber-400/40">
           <div className="space-y-3">
             <h3 className="text-xl font-bold text-white">{name}</h3>
             <p className="text-sm font-semibold text-amber-400">{position}</p>
@@ -75,13 +75,14 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
           </div>
 
           <div className="flex gap-3 pt-2">
+
             {linkedin && (
               <Link
                 href={linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-all duration-300 hover:bg-amber-400 hover:text-black"
-                title="LinkedIn"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-all duration-300 hover:bg-amber-400 hover:text-black hover:shadow-lg hover:shadow-amber-400/50 pointer-events-auto"
+                title="Instagram"
               >
                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.475-2.236-1.986-2.236-1.081 0-1.722.732-2.004 1.438-.103.249-.129.597-.129.946v5.421h-3.554s.049-8.789 0-9.692h3.554v1.371c.429-.661 1.196-1.602 2.905-1.602 2.121 0 3.71 1.328 3.71 4.187v5.736zM5.337 9.433c-1.144 0-1.915-.762-1.915-1.715 0-.953.77-1.715 1.958-1.715 1.188 0 1.915.762 1.915 1.715 0 .953-.727 1.715-1.958 1.715zm1.946 11.019H3.391V9.761h3.892v10.691zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z" />
@@ -94,7 +95,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
                 href={instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-all duration-300 hover:bg-amber-400 hover:text-black"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-all duration-300 hover:bg-amber-400 hover:text-black hover:shadow-lg hover:shadow-amber-400/50 pointer-events-auto"
                 title="Instagram"
               >
                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
@@ -106,7 +107,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
             {email && (
               <Link
                 href={`mailto:${email}`}
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-all duration-300 hover:bg-amber-400 hover:text-black"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-all duration-300 hover:bg-amber-400 hover:text-black hover:shadow-lg hover:shadow-amber-400/50 pointer-events-auto"
                 title="Email"
               >
                 <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -118,7 +119,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
             {contactNo && (
               <Link
                 href={`tel:${contactNo}`}
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-all duration-300 hover:bg-amber-400 hover:text-black"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-all duration-300 hover:bg-amber-400 hover:text-black hover:shadow-lg hover:shadow-amber-400/50 pointer-events-auto"
                 title="Call"
               >
                 <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -128,7 +129,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
             )}
           </div>
 
-          <div className="absolute -left-8 -bottom-8 h-32 w-32 rounded-full bg-amber-500/10 blur-3xl" />
+          <div className="absolute -left-8 -bottom-8 h-32 w-32 rounded-full bg-amber-500/10 blur-3xl pointer-events-none" />
         </div>
       </div>
     </div>
