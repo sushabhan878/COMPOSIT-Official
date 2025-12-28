@@ -42,7 +42,9 @@ const AboutComposit = () => {
         </div>
 
         {/* Theme Description */}
-        <section className="mt-16 lg:mt-24">
+
+        
+        {/* <section className="mt-16 lg:mt-24">
           <div className="mb-8 space-y-2">
             <h2 className="text-2xl font-bold text-white md:text-3xl">Mischmetal Mystique — Unveiling the Mysteries of Rare Earth Materials</h2>
             <div className="h-1 w-20 rounded-full bg-gradient-to-r from-amber-400 to-orange-500" />
@@ -72,7 +74,7 @@ const AboutComposit = () => {
               <p className="mt-2 text-sm text-gray-300">Next-gen communications, aerospace, and quantum technologies driven by rare earth innovation.</p>
             </div>
           </div>
-        </section>
+        </section> */}
       </div>
     </main>
   )

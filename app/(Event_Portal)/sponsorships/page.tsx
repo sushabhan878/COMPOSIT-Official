@@ -89,12 +89,32 @@ const benefits = [
 ]
 
 const sponsorLogos = [
-  'https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=400&q=80',
-  'https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=400&q=80',
-  'https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=400&q=80',
-  'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=400&q=80',
-  'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=400&q=80',
-  'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=400&q=80',
+  'https://res.cloudinary.com/dohx1bvom/image/upload/v1766922628/COMPOSIT_Brochure_2026_1_ykwugg.png',
+  'https://res.cloudinary.com/dohx1bvom/image/upload/v1766922624/Screenshot_2025-12-28_171853_zmxqf1.png',
+  'https://res.cloudinary.com/dohx1bvom/image/upload/v1766922624/Screenshot_2025-12-28_171832_uj4lor.png',
+  'https://res.cloudinary.com/dohx1bvom/image/upload/v1766922622/Screenshot_2025-12-28_171804_sao3be.png',
+  'https://res.cloudinary.com/dohx1bvom/image/upload/v1766922621/Screenshot_2025-12-28_171736_fl9in4.png',
+  'https://res.cloudinary.com/dohx1bvom/image/upload/v1766922620/Screenshot_2025-12-28_171707_mb0lxf.png',
+  'https://res.cloudinary.com/dohx1bvom/image/upload/v1766922617/Screenshot_2025-12-28_171620_y2pwjc.png',
+  'https://res.cloudinary.com/dohx1bvom/image/upload/v1766922616/Screenshot_2025-12-28_171417_kkut58.png',
+  'https://res.cloudinary.com/dohx1bvom/image/upload/v1766922616/Screenshot_2025-12-28_171442_uklamn.png',
+  'https://res.cloudinary.com/dohx1bvom/image/upload/v1766922616/Screenshot_2025-12-28_171402_ot1kyv.png',
+  'https://res.cloudinary.com/dohx1bvom/image/upload/v1766922615/Screenshot_2025-12-28_171345_tudbrq.png',
+  'https://res.cloudinary.com/dohx1bvom/image/upload/v1766922610/Screenshot_2025-12-28_171311_k2dwyp.png',
+  'https://res.cloudinary.com/dohx1bvom/image/upload/v1766922610/Screenshot_2025-12-28_171327_c73biw.png',
+  'https://res.cloudinary.com/dohx1bvom/image/upload/v1766922610/Screenshot_2025-12-28_171252_rax8mm.png',
+  'https://res.cloudinary.com/dohx1bvom/image/upload/v1766922609/Screenshot_2025-12-28_171236_jwbvir.png',
+  'https://res.cloudinary.com/dohx1bvom/image/upload/v1766922609/Screenshot_2025-12-28_171223_vwpdy6.png',
+  'https://res.cloudinary.com/dohx1bvom/image/upload/v1766922590/Screenshot_2025-12-28_171211_aargqb.png',
+  'https://res.cloudinary.com/dohx1bvom/image/upload/v1766922590/Screenshot_2025-12-28_171142_clti9a.png',
+  'https://res.cloudinary.com/dohx1bvom/image/upload/v1766922590/Screenshot_2025-12-28_171154_pnyxfe.png',
+  'https://res.cloudinary.com/dohx1bvom/image/upload/v1766922589/Screenshot_2025-12-28_171050_xhiqsh.png',
+  'https://res.cloudinary.com/dohx1bvom/image/upload/v1766922589/Screenshot_2025-12-28_171126_sz98fj.png',
+  'https://res.cloudinary.com/dohx1bvom/image/upload/v1766922589/Screenshot_2025-12-28_171037_bysvdg.png',
+  'https://res.cloudinary.com/dohx1bvom/image/upload/v1766922589/Screenshot_2025-12-28_171023_jlcdsr.png',
+  'https://res.cloudinary.com/dohx1bvom/image/upload/v1766922589/Screenshot_2025-12-28_171008_fv2dat.png',
+  'https://res.cloudinary.com/dohx1bvom/image/upload/v1766922589/Screenshot_2025-12-28_171112_atixby.png',
+  'https://res.cloudinary.com/dohx1bvom/image/upload/v1766922588/Screenshot_2025-12-28_170957_h2nwna.png',
 ]
 
 const Check = () => (
@@ -122,9 +142,9 @@ const Sponsorships = () => {
             {loopedLogos.map((logo, idx) => (
               <div
                 key={logo + idx}
-                className="flex h-36 w-56 flex-shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-white/5 ring-1 ring-white/10 transition duration-200 hover:-translate-y-1 hover:ring-amber-400/60 hover:shadow-amber-400/30 hover:shadow-lg"
+                className="flex h-36 w-auto flex-shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-white/5 ring-1 ring-white/10 transition duration-200 hover:-translate-y-1 hover:ring-amber-400/60 hover:shadow-amber-400/30 hover:shadow-lg"
               >
-                <img src={logo} alt={`Sponsor logo ${idx + 1}`} className="h-full w-full object-cover opacity-90" />
+                <img src={logo} alt={`Sponsor logo ${idx + 1}`} className="h-full w-auto object-contain opacity-90" />
               </div>
             ))}
           </motion.div>

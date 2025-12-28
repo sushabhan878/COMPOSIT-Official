@@ -115,17 +115,15 @@ const Team = () => {
               imageUrl: "https://res.cloudinary.com/dohx1bvom/image/upload/v1766858327/AmlanDutta.cebd0cf0bae6d57b1429_xpifq3.jpg",
               name: "Prof. Amlan Datta",
               position: "Faculty Advisor",
-              linkedin: "https://linkedin.com",
-              email: "amlan@gmail.com",
-              contactNo: "+91-9000000001",
+              linkedin: "https://www.linkedin.com/in/amlan-dutta-a108a8148/",
+              email: "amlan.dutta@metal.iitkgp.ac.in",
               description: "Guiding COMPOSIT's strategic vision and academic excellence. Instrumental in shaping the festival's core values and ensuring world-class standards.",
             }, {
               imageUrl: "https://res.cloudinary.com/dohx1bvom/image/upload/v1766858328/Sankha_profile.688a415f27fd5df569fb_zpcx3m.jpg",
               name: "Prof. Sankha Mukherjee",
               position: "Faculty Advisor",
-              linkedin: "https://linkedin.com",
-              email: "sankha@composit.in",
-              contactNo: "+91-9000000002",
+              linkedin: "https://www.linkedin.com/in/sankha-m-913867161/",
+              email: "sankha@metal.iitkgp.ac.in",
               description: "Mentoring the entire team and fostering innovation at every level. Committed to building a sustainable legacy through COMPOSIT.",
             }].map((advisor) => (
               <motion.div key={advisor.name} variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } }}>
@@ -145,22 +143,22 @@ const Team = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 items-center justify-items-center lg:mr-60 lg:ml-60 gap-8">
             <ProfileCard
               imageUrl="https://res.cloudinary.com/dohx1bvom/image/upload/v1766858576/1759917747528_saeklg.jpg"
-              name="Krishna Chaudhary"
+              name="Krishna Chaudhari"
               position="Governor"
-              linkedin="https://linkedin.com/in/example"
-              instagram="https://instagram.com/example"
-              email="krishna@composit.in"
-              contactNo="+91-9876543210"
+              linkedin="https://www.linkedin.com/in/krishachaudhari/"
+              instagram="https://www.instagram.com/krish.g_d/"
+              email="krishnachaudhari2309@gmail.com"
+              contactNo="+91-8767650199"
               description="Leading with strategic expertise and proven management acumen. Bringing years of industry experience to guide COMPOSIT's success."
             />
             <ProfileCard
               imageUrl="https://res.cloudinary.com/dohx1bvom/image/upload/v1766858576/1732958709166_kiyl4k.jpg"
               name="Deven Shinde"
               position="Governor"
-              linkedin="https://linkedin.com"
-              instagram="https://instagram.com"
-              email="deven@composit.in"
-              contactNo="+91-9000000003"
+              linkedin="https://www.linkedin.com/in/deven-shinde-6b3687259/"
+              instagram="https://www.instagram.com/deven_shinde_29/"
+              email="devenshinde346@gmail.com"
+              contactNo="+91-7057101469"
               description="Steering the team with visionary leadership and exceptional organizational skills. Driving excellence through decisive management."
             />
           </div>
