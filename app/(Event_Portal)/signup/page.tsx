@@ -22,7 +22,7 @@ const Signup: React.FC = () => {
   const [referral, setReferral] = useState<string | null>(null)
 
 
-    useEffect(() => {
+  useEffect(() => {
     const ref = searchParams.get("ref")
     if (ref) {
       setReferral(ref)
@@ -51,7 +51,7 @@ const Signup: React.FC = () => {
     try {
       setLoading(true)
 
-      const referralCode = referral || localStorage.getItem("referralCode")
+      const referralCode = referral ?? null
       
       const res = await axios.post("/api/auth/signup", {
         name,
@@ -66,6 +66,8 @@ const Signup: React.FC = () => {
       }
 
       setSuccess("Account created! Redirecting to sign in…")
+      localStorage.removeItem("referralCode")
+
       await signIn("credentials", {
         email,
         password,

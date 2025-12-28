@@ -9,6 +9,7 @@ export interface IUser {
 
   mobile?: string;
   image?: string;
+  compositId?: string;
 
   gender?: "male" | "female" | "other";
   role?: "user" | "admin" | "sa";
@@ -63,6 +64,12 @@ const userSchema = new Schema<IUser>(
       unique: true,
       sparse: true, // ✅ optional + unique
       trim: true,
+    },
+
+    compositId: {
+      type: String,
+      trim: true,
+      sparse: true, // ✅ optional + unique
     },
 
     image: {
