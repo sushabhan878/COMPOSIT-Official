@@ -4,6 +4,8 @@ import connectDb from "./lib/db"
 import User from "./models/user.model"
 import bcrypt from "bcryptjs"
 import Google from "next-auth/providers/google"
+import { cookies } from "next/headers"
+import { join } from "path"
  
 export const { handlers, signIn, signOut, auth } = NextAuth({
     providers: [
@@ -132,14 +134,23 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         async signIn({ user, account }) {
             if (account?.provider === "google") {
                 await connectDb()
+                const cookiesStore = await cookies()
+                const referralCode = cookiesStore.get("referralCode")?.value
                 let dbUser = await User.findOne({email: user.email})
                 if (!dbUser) {
                     dbUser = await User.create({
                         name: user.name,
                         email: user.email,
                         image: user.image,
-
+                        saId: referralCode || null,
+                        joinDate: new Date(),
                     })
+                }
+                if (referralCode) {
+                      await User.updateOne(
+                        { saId: referralCode, role: "sa" },
+                        { $inc: { numberOfReferrals: 1 } }
+                      )
                 }
                 user.id = dbUser._id.toString()
                 user.role = dbUser.role
@@ -160,6 +171,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 user.team = dbUser.team
                 user.registeredEvents = dbUser.registeredEvents
                 user.cirtificates = dbUser.cirtificates
+                // clear cookie
+                cookiesStore.delete("referralCode")
             }
             return true
         }

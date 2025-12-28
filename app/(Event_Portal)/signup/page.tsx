@@ -8,6 +8,7 @@ import { signIn } from "next-auth/react"
 import { Eye, EyeOff } from "lucide-react"
 import axios from "axios"
 
+
 const Signup: React.FC = () => {
   const router = useRouter()
   const [name, setName] = useState("")
@@ -18,9 +19,9 @@ const Signup: React.FC = () => {
   const [success, setSuccess] = useState<string | null>(null)
   const [showPassword, setShowPassword] = useState(false)
   const searchParams = useSearchParams()
-
-  
   const [referral, setReferral] = useState<string | null>(null)
+
+
     useEffect(() => {
     const ref = searchParams.get("ref")
     if (ref) {
@@ -81,6 +82,15 @@ const Signup: React.FC = () => {
 
   const onGoogleSignup = async () => {
     try {
+
+      const referralCode =
+      referral || localStorage.getItem("referralCode")
+
+    if (referralCode) {
+      await axios.post("/api/referral", {
+        referralCode,
+      })
+      }
       // If Google provider isn't configured, NextAuth will route to error page.
       await signIn("google", { callbackUrl: "/home" })
     } catch (err) {

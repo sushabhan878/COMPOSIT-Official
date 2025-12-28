@@ -131,11 +131,6 @@ const userSchema = new Schema<IUser>(
       sparse: true,
     },
 
-    referredBy: {
-      type: String,
-      trim: true,
-    },
-
     numberOfReferrals: {
       type: Number,
     },
