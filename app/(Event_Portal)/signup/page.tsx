@@ -51,7 +51,7 @@ const Signup: React.FC = () => {
     try {
       setLoading(true)
 
-      const referralCode = referral ?? null
+      const referralCode = referral || localStorage.getItem("referralCode");
       
       const res = await axios.post("/api/auth/signup", {
         name,
@@ -88,13 +88,17 @@ const Signup: React.FC = () => {
       const referralCode =
       referral || localStorage.getItem("referralCode")
 
-    if (referralCode) {
-      await axios.post("/api/referral", {
-        referralCode,
-      })
+      if (referralCode) {
+        await axios.post("/api/referral", {
+          referralCode,
+        })
       }
+
+      localStorage.getItem("referralCode");  
+      document.cookie = "referralCode=; Max-Age=0; path=/"; // clear cookie too
       // If Google provider isn't configured, NextAuth will route to error page.
       await signIn("google", { callbackUrl: "/home" })
+
     } catch (err) {
       setError("Google signup is currently unavailable.")
     }

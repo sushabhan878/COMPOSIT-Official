@@ -6,6 +6,7 @@ import bcrypt from "bcryptjs"
 import Google from "next-auth/providers/google"
 import { cookies } from "next/headers"
 import { join } from "path"
+import { generateUniqueCompositID } from "./lib/generateCompositId"
  
 export const { handlers, signIn, signOut, auth } = NextAuth({
     providers: [
@@ -138,10 +139,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 const referralCode = cookiesStore.get("referralCode")?.value
                 let dbUser = await User.findOne({email: user.email})
                 if (!dbUser) {
+                    const compositId = await generateUniqueCompositID()
                     dbUser = await User.create({
                         name: user.name,
                         email: user.email,
                         image: user.image,
+                        compositId,
                         saId: referralCode || null,
                         joinDate: new Date(),
                     })
