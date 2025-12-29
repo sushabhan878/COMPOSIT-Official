@@ -57,7 +57,6 @@ const Signup: React.FC = () => {
         name,
         email,
         password,
-        role: "user",
         referralCode
       })
 

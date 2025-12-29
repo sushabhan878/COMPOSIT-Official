@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
+import { signOut } from 'next-auth/react'
 
 const AdminPortalNavbar = () => {
   const pathname = usePathname()
@@ -14,8 +15,7 @@ const AdminPortalNavbar = () => {
     { name: 'Manage Accommodations', path: '/admin/manage-accommodations' },
     { name: 'Manage SA', path: '/admin/manage-sa' },
     { name: 'Manage Events', path: '/admin/manage-events' },
-    { name: 'Issue Cirtificates', path: '/admin/issue-cirtificates' },
-    { name: 'logout', path: '/home'}
+    { name: 'Notifications', path: '/admin/notification' },
   ]
 
   return (
@@ -49,6 +49,12 @@ const AdminPortalNavbar = () => {
                 {item.name}
               </Link>
             ))}
+            <div 
+              onClick={() => signOut({ callbackUrl: '/home' })} 
+              className="px-6 py-2 rounded-4xl text-lg font-light transition-all duration-300 border border-transparent cursor-pointer text-white/90 hover:border-[#5c0a0a] hover:-translate-y-0.5 hover:shadow-[0_12px_30px_rgba(92,10,10,0.35)]"
+            >
+              Logout
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
@@ -93,6 +99,15 @@ const AdminPortalNavbar = () => {
                   {item.name}
                 </Link>
               ))}
+              <div
+                onClick={() => {
+                  setIsMenuOpen(false)
+                  signOut({ callbackUrl: '/home' })
+                }}
+                className="px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 border border-transparent cursor-pointer text-white/90 hover:text-[#5c0a0a] hover:border-[#5c0a0a] hover:-translate-y-0.5 hover:shadow-[0_10px_26px_rgba(92,10,10,0.3)]"
+              >
+                Logout
+              </div>
             </div>
           </div>
         )}

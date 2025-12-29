@@ -1,7 +1,7 @@
 import ComingSoon from '@/components/ComingSoon'
 import React from 'react'
 
-const ManageSA = () => {
+const Notification = () => {
   return (
     <div>
       <ComingSoon/>
@@ -9,4 +9,4 @@ const ManageSA = () => {
   )
 }
 
-export default ManageSA
+export default Notification

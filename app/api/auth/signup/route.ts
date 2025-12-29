@@ -64,7 +64,7 @@ export async function POST(req: NextRequest) {
       joinDate: new Date(),
       compositId: await generateUniqueCompositID(),
     })
-    
+
     // Increment SA referral count
     if (referredBySA) {
       await User.updateOne(
