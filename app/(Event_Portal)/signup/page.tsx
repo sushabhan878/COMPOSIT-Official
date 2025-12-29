@@ -598,67 +598,91 @@ const Signup: React.FC = () => {
                   exit={{ opacity: 0, height: 0 }}
                   className="space-y-4 overflow-hidden"
                 >
-                  {/* OTP INPUT */}
-                  <div>
-                    <label className="block text-sm text-white/70 mb-1">
-                      Verification Code
-                    </label>
-                    <input
-                      type="text"
-                      inputMode="numeric"
-                      value={otp}
-                      onChange={(e) =>
-                        setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))
-                      }
-                      placeholder="Enter 6-digit OTP"
-                      maxLength={6}
-                      className="w-full rounded-lg border border-white/10 bg-black/60 px-4 py-2 text-center text-lg tracking-widest text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-red-700/60"
-                      aria-label="One-time password"
-                    />
-                  </div>
-                  <div className="flex items-center justify-between text-xs text-white/60">
-                    <span className="inline-flex items-center gap-1">
-                      <TimerIcon className="h-3.5 w-3.5" />
-                      {resendTimer > 0 ? (
-                        <>You can resend in {resendTimer}s</>
-                      ) : (
-                        <>You can resend now.</>
-                      )}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={handleResendOtp}
-                      disabled={resendTimer > 0 || loading}
-                      className="inline-flex items-center gap-1 rounded-md border border-white/10 px-2 py-1 text-white/80 hover:text-white/100 hover:border-white/30 disabled:opacity-60"
-                    >
-                      <RefreshCw className="h-3.5 w-3.5" /> Resend
-                    </button>
-                  </div>
-
-                  {/* PASSWORD INPUT */}
-                  <div>
-                    <label className="block text-sm text-white/70 mb-1">
-                      Set Password
-                    </label>
-                    <div className="relative">
+                  <div className="space-y-4 pt-2 border-t border-white/10">
+                    {/* OTP INPUT */}
+                    <div>
+                      <label className="block text-sm font-medium text-white/80 mb-2">
+                        Verification Code
+                      </label>
                       <input
-                        type={showPassword ? "text" : "password"}
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder="At least 6 characters"
-                        className="w-full rounded-lg border border-white/10 bg-black/60 px-4 py-2 pr-11 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-red-700/60"
+                        type="text"
+                        inputMode="numeric"
+                        value={otp}
+                        onChange={(e) =>
+                          setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))
+                        }
+                        placeholder="000000"
+                        maxLength={6}
+                        className="w-full rounded-lg border border-white/20 bg-black/40 px-4 py-3 text-center text-2xl tracking-widest font-semibold text-white placeholder-white/20 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500/50 transition-all"
+                        aria-label="One-time password"
                       />
+                      <p className="text-xs text-white/50 mt-1">
+                        Check your email for the code
+                      </p>
+                    </div>
+
+                    {/* RESEND SECTION */}
+                    <div className="rounded-lg border border-white/10 bg-black/30 px-3 py-3 flex items-center justify-between">
+                      <span className="inline-flex items-center gap-2 text-xs text-white/70">
+                        <TimerIcon className="h-4 w-4" />
+                        <span>
+                          {resendTimer > 0 ? (
+                            <>
+                              Resend in{" "}
+                              <span className="font-semibold text-white">
+                                {resendTimer}s
+                              </span>
+                            </>
+                          ) : (
+                            <>
+                              Didn't receive?{" "}
+                              <span className="text-white/90">Resend OTP</span>
+                            </>
+                          )}
+                        </span>
+                      </span>
                       <button
                         type="button"
-                        onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-white/20 hover:text-white/50"
+                        onClick={handleResendOtp}
+                        disabled={resendTimer > 0 || loading}
+                        className="inline-flex items-center gap-1.5 rounded-md bg-red-900/30 border border-red-700/40 px-3 py-1.5 text-xs text-red-300 hover:bg-red-900/50 hover:border-red-700/60 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
                       >
-                        {showPassword ? (
-                          <EyeOff className="h-5 w-5" />
-                        ) : (
-                          <Eye className="h-5 w-5" />
-                        )}
+                        <RefreshCw className="h-3.5 w-3.5" /> Resend
                       </button>
+                    </div>
+
+                    {/* PASSWORD INPUT */}
+                    <div>
+                      <label className="block text-sm font-medium text-white/80 mb-2">
+                        Set Password
+                      </label>
+                      <div className="relative">
+                        <input
+                          type={showPassword ? "text" : "password"}
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                          placeholder="••••••••"
+                          className="w-full rounded-lg border border-white/20 bg-black/40 px-4 py-3 pr-11 text-white placeholder-white/20 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500/50 transition-all"
+                          aria-label="Password"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowPassword(!showPassword)}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-white/40 hover:text-white/70 transition-colors"
+                          aria-label={
+                            showPassword ? "Hide password" : "Show password"
+                          }
+                        >
+                          {showPassword ? (
+                            <EyeOff className="h-5 w-5" />
+                          ) : (
+                            <Eye className="h-5 w-5" />
+                          )}
+                        </button>
+                      </div>
+                      <p className="text-xs text-white/50 mt-1">
+                        At least 6 characters
+                      </p>
                     </div>
                   </div>
                 </motion.div>
@@ -687,13 +711,17 @@ const Signup: React.FC = () => {
                 boxShadow: "0 0 24px rgba(139,0,0,0.45)",
               }}
               whileTap={{ scale: 0.98 }}
-              className="relative w-full overflow-hidden rounded-lg bg-linear-to-r from-[#5c0a0a] via-[#8b0000] to-[#5c0a0a] px-5 py-3 text-center font-medium text-white shadow-lg disabled:opacity-70"
+              className={`relative w-full overflow-hidden rounded-lg px-5 py-3 text-center font-medium text-white shadow-lg transition-all ${
+                isOtpSent
+                  ? "bg-linear-to-r from-emerald-900 via-emerald-700 to-emerald-900 hover:shadow-emerald-900/50"
+                  : "bg-linear-to-r from-[#5c0a0a] via-[#8b0000] to-[#5c0a0a]"
+              } disabled:opacity-70`}
             >
               <span className="relative z-10 flex items-center justify-center gap-2">
                 {loading ? (
                   <>
                     <Loader2 className="h-5 w-5 animate-spin" />
-                    Processing...
+                    {isOtpSent ? "Creating..." : "Sending..."}
                   </>
                 ) : isOtpSent ? (
                   "Create Account"
