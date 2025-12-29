@@ -1,4 +1,5 @@
 import connectDb from "@/lib/db";
+import { sendWelcomeSAEmail } from "@/lib/welcomeSa";
 import User from "@/models/user.model";
 import bcrypt from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
@@ -83,6 +84,8 @@ export async function POST(req: NextRequest) {
       SARank: null,
       joinDate: new Date(),
     });
+
+    await sendWelcomeSAEmail(email, referralLink, name, saId);
 
     return NextResponse.json({ message: "SA registered", sa }, { status: 200 });
   } catch (error) {

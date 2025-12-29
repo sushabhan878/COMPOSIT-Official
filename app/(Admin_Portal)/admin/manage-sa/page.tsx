@@ -67,13 +67,15 @@ const ManageSAs = () => {
         "bg-amber-800/30 text-amber-200 border border-amber-500/40 shadow-[0_0_0_1px_rgba(217,119,6,0.2)]",
       silver:
         "bg-slate-500/25 text-slate-100 border border-slate-200/40 shadow-[0_0_0_1px_rgba(226,232,240,0.2)]",
-      gold:
-        "bg-yellow-500/25 text-yellow-100 border border-yellow-400/50 shadow-[0_0_0_1px_rgba(250,204,21,0.25)]",
+      gold: "bg-yellow-500/25 text-yellow-100 border border-yellow-400/50 shadow-[0_0_0_1px_rgba(250,204,21,0.25)]",
       platinum:
         "bg-sky-200/25 text-sky-50 border border-sky-100/60 shadow-[0_0_0_1px_rgba(186,230,253,0.35)]",
     };
 
-    return styles[normalized] || "bg-blue-500/20 text-blue-200 border border-blue-500/30";
+    return (
+      styles[normalized] ||
+      "bg-blue-500/20 text-blue-200 border border-blue-500/30"
+    );
   };
 
   const formatDate = (date: string) => {
@@ -119,6 +121,9 @@ const ManageSAs = () => {
                       Email
                     </th>
                     <th className="px-4 py-4 text-left text-sm font-semibold text-white/90">
+                      Contact
+                    </th>
+                    <th className="px-4 py-4 text-left text-sm font-semibold text-white/90">
                       SA ID
                     </th>
                     <th className="px-4 py-4 text-left text-sm font-semibold text-white/90">
@@ -143,7 +148,7 @@ const ManageSAs = () => {
                   {sas.length === 0 ? (
                     <tr>
                       <td
-                        colSpan={8}
+                        colSpan={9}
                         className="px-4 py-8 text-center text-white/70"
                       >
                         No SAs found
@@ -160,6 +165,9 @@ const ManageSAs = () => {
                         </td>
                         <td className="px-4 py-4 text-sm text-white/80">
                           {sa.email}
+                        </td>
+                        <td className="px-4 py-4 text-sm text-white/80 font-mono">
+                          {sa.mobile || "N/A"}
                         </td>
                         <td className="px-4 py-4 text-sm text-white/90 font-mono">
                           {sa.saId}
