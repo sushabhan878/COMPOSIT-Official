@@ -36,6 +36,11 @@ export interface IUser {
   cirtificates?: {
     cirtificateLink: string;
   }[];
+
+  // Email verification via OTP
+  isVerified?: boolean;
+  otp?: string;
+  otpExpires?: Date;
 }
 
 const userSchema = new Schema<IUser>(
@@ -120,7 +125,7 @@ const userSchema = new Schema<IUser>(
     },
 
     saId: {
-      type: String, 
+      type: String,
       trim: true,
     },
 
@@ -177,6 +182,20 @@ const userSchema = new Schema<IUser>(
         },
       },
     ],
+
+    // Email verification fields
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    otp: {
+      type: String,
+      select: false,
+    },
+    otpExpires: {
+      type: Date,
+      select: false,
+    },
   },
   { timestamps: true }
 );
