@@ -6,6 +6,7 @@ const ManageParticipants = () => {
   const [users, setUsers] = useState<any[]>([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [totalUsers, setTotalUsers] = useState(0);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -27,6 +28,7 @@ const ManageParticipants = () => {
 
     setUsers(data.users);
     setTotalPages(data.pagination.totalPages);
+    setTotalUsers(data.pagination.totalUsers ?? 0);
     setLoading(false);
   };
 
@@ -77,7 +79,7 @@ const ManageParticipants = () => {
           Manage Participants
         </h1>
 
-        <div className="mb-4 flex items-center gap-3">
+        <div className="mb-4 flex flex-wrap items-center gap-3">
           <input
             ref={inputRef}
             value={searchTerm}
@@ -85,6 +87,11 @@ const ManageParticipants = () => {
             placeholder="Search by name, COMPOSIT ID, or email"
             className="w-full md:w-96 px-4 py-2 rounded-xl bg-white/10 border border-white/15 text-white placeholder-white/50 focus:outline-none focus:border-[#5c0a0a] focus:ring-2 focus:ring-[#5c0a0a]/40 transition-all"
           />
+
+          <div className="px-4 py-2 rounded-xl bg-white/5 border border-white/15 text-white/80 text-sm">
+            Total users:{" "}
+            <span className="text-white font-semibold">{totalUsers}</span>
+          </div>
         </div>
 
         {loading ? (

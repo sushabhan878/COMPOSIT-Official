@@ -6,6 +6,7 @@ const ManageSAs = () => {
   const [sas, setSAs] = useState<any[]>([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [totalSAs, setTotalSAs] = useState(0);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -27,6 +28,7 @@ const ManageSAs = () => {
 
     setSAs(data.sas || []);
     setTotalPages(data.pagination.totalPages);
+    setTotalSAs(data.pagination.totalSAs ?? 0);
     setLoading(false);
   };
 
@@ -94,7 +96,7 @@ const ManageSAs = () => {
           Manage Student Ambassadors
         </h1>
 
-        <div className="mb-4 flex items-center gap-3">
+        <div className="mb-4 flex flex-wrap items-center gap-3">
           <input
             ref={inputRef}
             value={searchTerm}
@@ -102,6 +104,11 @@ const ManageSAs = () => {
             placeholder="Search by name, SA ID, or email"
             className="w-full md:w-96 px-4 py-2 rounded-xl bg-white/10 border border-white/15 text-white placeholder-white/50 focus:outline-none focus:border-[#5c0a0a] focus:ring-2 focus:ring-[#5c0a0a]/40 transition-all"
           />
+
+          <div className="px-4 py-2 rounded-xl bg-white/5 border border-white/15 text-white/80 text-sm">
+            Total SAs:{" "}
+            <span className="text-white font-semibold">{totalSAs}</span>
+          </div>
         </div>
 
         {loading ? (

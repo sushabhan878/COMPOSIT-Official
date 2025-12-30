@@ -1,18 +1,44 @@
 import mongoose from "mongoose";
 
 interface IEvent {
-    _id?: mongoose.Types.ObjectId;
-    eventName: "Technova" | "Enigma" | "Excavate" | "Metaclix" | "Case Study" | "Ideathon" | "Meta Code" | "Cadvolution";
+  _id?: mongoose.Types.ObjectId;
+  eventName:
+    | "Technova"
+    | "Enigma"
+    | "Excavate"
+    | "Metaclix"
+    | "Case Study"
+    | "Ideathon"
+    | "Meta Code"
+    | "Cadvolution";
+  registrations: { userId: mongoose.Types.ObjectId }[];
 }
 
-const eventSchema = new mongoose.Schema<IEvent>({
+const eventSchema = new mongoose.Schema<IEvent>(
+  {
     eventName: {
-        type: String,
-        enum: ["Technova", "Enigma", "Excavate", "Metaclix", "Case Study", "Ideathon", "Meta Code", "Cadvolution"],
-        required: true,
-    }
-}, { timestamps: true });
+      type: String,
+      enum: [
+        "Technova",
+        "Enigma",
+        "Excavate",
+        "Metaclix",
+        "Case Study",
+        "Ideathon",
+        "Meta Code",
+        "Cadvolution",
+      ],
+    },
+    registrations: [
+      {
+        userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+      },
+    ],
+  },
+  { timestamps: true }
+);
 
-const Event = mongoose.models.Event || mongoose.model<IEvent>("Event", eventSchema);
+const Event =
+  mongoose.models.Event || mongoose.model<IEvent>("Event", eventSchema);
 
 export default Event;
