@@ -1,34 +1,49 @@
-"use client"
+"use client";
 
-import React, { useState } from 'react'
-import { motion } from 'framer-motion'
-import GridBackground from '@/components/GridBackground'
-import { Mail, LogOut, Users, Trophy, ChevronDown } from 'lucide-react'
-import Image from 'next/image'
-import { signOut } from 'next-auth/react'
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import GridBackground from "@/components/GridBackground";
+import { Mail, LogOut, Users, Trophy, ChevronDown } from "lucide-react";
+import Image from "next/image";
+import { signOut } from "next-auth/react";
 
-type EventItem = { id: string; name: string }
-type TeamInfo = { teamName: string | null; teamMembers: string[] }
-type UserInfo = { name?: string; email?: string; image?: string }
+type EventItem = { id: string; name: string };
+type TeamInfo = { teamName: string | null; teamMembers: string[] };
+type UserInfo = {
+  name?: string;
+  email?: string;
+  image?: string;
+  compositId?: string;
+};
 
 const riseProps = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
   transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const },
-}
+};
 
-export default function ProfileClient({ user, events, team }: { user: UserInfo; events: EventItem[]; team: TeamInfo }) {
-  const [selectedEvent, setSelectedEvent] = useState<string | null>(null)
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  const [copied, setCopied] = useState(false)
+export default function ProfileClient({
+  user,
+  events,
+  team,
+}: {
+  user: UserInfo;
+  events: EventItem[];
+  team: TeamInfo;
+}) {
+  const [selectedEvent, setSelectedEvent] = useState<string | null>(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
 
-  const selectedEventData = selectedEvent ? events.find(e => e.id === selectedEvent) : null
+  const selectedEventData = selectedEvent
+    ? events.find((e) => e.id === selectedEvent)
+    : null;
 
   const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
-  }
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
     <div className="relative min-h-dvh py-20 px-6 mt-20">
@@ -38,13 +53,19 @@ export default function ProfileClient({ user, events, team }: { user: UserInfo; 
         {/* Header */}
         <motion.div {...riseProps} className="text-center mb-12">
           <h1 className="text-4xl font-bold text-white mb-2">My Profile</h1>
-          <p className="text-white/60">View and manage your event participation information</p>
+          <p className="text-white/60">
+            View and manage your event participation information
+          </p>
         </motion.div>
 
         {/* Main Profile Card */}
         <motion.div
           {...riseProps}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as const, delay: 0.1 }}
+          transition={{
+            duration: 0.6,
+            ease: [0.16, 1, 0.3, 1] as const,
+            delay: 0.1,
+          }}
           className="rounded-3xl border border-white/10 bg-black/40 backdrop-blur-md p-8 shadow-2xl mb-8"
         >
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -62,7 +83,7 @@ export default function ProfileClient({ user, events, team }: { user: UserInfo; 
                 {user?.image ? (
                   <Image
                     src={user.image}
-                    alt={user?.name || 'Profile Image'}
+                    alt={user?.name || "Profile Image"}
                     width={200}
                     height={200}
                     className="relative w-48 h-48 rounded-full object-cover border-2 border-white/20 shadow-2xl"
@@ -76,13 +97,17 @@ export default function ProfileClient({ user, events, team }: { user: UserInfo; 
                 )}
               </div>
 
-              <h2 className="text-2xl font-bold text-white text-center mb-2">{user?.name || "User"}</h2>
+              <h2 className="text-2xl font-bold text-white text-center mb-2">
+                {user?.name || "User"}
+              </h2>
               <p className="text-white/60 text-center mb-6">
-                {events.length > 0 ? "Event Participant" : "Not registered for any events yet"}
+                {events.length > 0
+                  ? "Event Participant"
+                  : "Not registered for any events yet"}
               </p>
 
               <motion.button
-                onClick={() => signOut({ callbackUrl: '/signin' })}
+                onClick={() => signOut({ callbackUrl: "/signin" })}
                 whileHover={{ scale: 1.08 }}
                 whileTap={{ scale: 0.92 }}
                 className="relative overflow-hidden px-6 py-3 rounded-lg font-semibold text-white transition-all duration-300 group"
@@ -103,7 +128,11 @@ export default function ProfileClient({ user, events, team }: { user: UserInfo; 
 
                 {/* Button content */}
                 <div className="relative flex items-center justify-center gap-2">
-                  <motion.div initial={{ rotate: 0 }} whileHover={{ rotate: 20 }} transition={{ duration: 0.3 }}>
+                  <motion.div
+                    initial={{ rotate: 0 }}
+                    whileHover={{ rotate: 20 }}
+                    transition={{ duration: 0.3 }}
+                  >
                     <LogOut className="w-5 h-5" />
                   </motion.div>
                   <span>Logout</span>
@@ -119,14 +148,19 @@ export default function ProfileClient({ user, events, team }: { user: UserInfo; 
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.15 }}
-                  whileHover={{ y: -4, backgroundColor: "rgba(255, 255, 255, 0.05)" }}
+                  whileHover={{
+                    y: -4,
+                    backgroundColor: "rgba(255, 255, 255, 0.05)",
+                  }}
                   className="rounded-lg border border-white/10 bg-white/5 p-4 transition-all duration-300"
                 >
                   <div className="flex items-start gap-3">
                     <Users className="w-5 h-5 mt-1 shrink-0 text-purple-400" />
                     <div>
                       <p className="text-white/50 text-sm mb-1">Name</p>
-                      <p className="text-white font-medium">{user?.name || "N/A"}</p>
+                      <p className="text-white font-medium">
+                        {user?.name || "N/A"}
+                      </p>
                     </div>
                   </div>
                 </motion.div>
@@ -135,15 +169,20 @@ export default function ProfileClient({ user, events, team }: { user: UserInfo; 
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.20 }}
-                  whileHover={{ y: -4, backgroundColor: "rgba(255, 255, 255, 0.05)" }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  whileHover={{
+                    y: -4,
+                    backgroundColor: "rgba(255, 255, 255, 0.05)",
+                  }}
                   className="rounded-lg border border-white/10 bg-white/5 p-4 transition-all duration-300"
                 >
                   <div className="flex items-start gap-3">
                     <Mail className="w-5 h-5 mt-1 shrink-0 text-blue-400" />
                     <div className="min-w-0 flex-1">
                       <p className="text-white/50 text-sm mb-1">Email</p>
-                      <p className="text-white font-medium truncate">{user?.email || "N/A"}</p>
+                      <p className="text-white font-medium truncate">
+                        {user?.email || "N/A"}
+                      </p>
                     </div>
                   </div>
                 </motion.div>
@@ -153,14 +192,21 @@ export default function ProfileClient({ user, events, team }: { user: UserInfo; 
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.25 }}
-                  whileHover={{ y: -4, backgroundColor: "rgba(255, 255, 255, 0.05)" }}
+                  whileHover={{
+                    y: -4,
+                    backgroundColor: "rgba(255, 255, 255, 0.05)",
+                  }}
                   className="rounded-lg border border-white/10 bg-white/5 p-4 transition-all duration-300 sm:col-span-2"
                 >
                   <div className="flex items-start gap-3">
                     <Trophy className="w-5 h-5 mt-1 shrink-0 text-yellow-400" />
                     <div className="w-full">
-                      <p className="text-white/50 text-sm mb-2">Events Registered</p>
-                      <p className="text-white font-medium mb-3">{events.length} events</p>
+                      <p className="text-white/50 text-sm mb-2">
+                        Events Registered
+                      </p>
+                      <p className="text-white font-medium mb-3">
+                        {events.length} events
+                      </p>
 
                       {/* Event Dropdown */}
                       <div className="relative">
@@ -168,8 +214,14 @@ export default function ProfileClient({ user, events, team }: { user: UserInfo; 
                           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                           className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white text-sm flex items-center justify-between hover:bg-black/70 transition-colors"
                         >
-                          <span className="truncate">{selectedEventData?.name || "Select an event"}</span>
-                          <ChevronDown className={`w-4 h-4 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                          <span className="truncate">
+                            {selectedEventData?.name || "Select an event"}
+                          </span>
+                          <ChevronDown
+                            className={`w-4 h-4 transition-transform ${
+                              isDropdownOpen ? "rotate-180" : ""
+                            }`}
+                          />
                         </button>
 
                         {/* Dropdown Menu */}
@@ -184,8 +236,8 @@ export default function ProfileClient({ user, events, team }: { user: UserInfo; 
                               <button
                                 key={event.id}
                                 onClick={() => {
-                                  setSelectedEvent(event.id)
-                                  setIsDropdownOpen(false)
+                                  setSelectedEvent(event.id);
+                                  setIsDropdownOpen(false);
                                 }}
                                 className="w-full px-3 py-2 text-left text-white text-sm hover:bg-white/10 transition-colors"
                               >
@@ -208,7 +260,11 @@ export default function ProfileClient({ user, events, team }: { user: UserInfo; 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as const, delay: 0.15 }}
+            transition={{
+              duration: 0.6,
+              ease: [0.16, 1, 0.3, 1] as const,
+              delay: 0.15,
+            }}
             className="rounded-2xl border border-white/10 bg-black/40 backdrop-blur-md p-8 shadow-2xl mb-8"
           >
             <h3 className="text-xl font-semibold text-white mb-6 flex items-center gap-2">
@@ -224,9 +280,15 @@ export default function ProfileClient({ user, events, team }: { user: UserInfo; 
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="rounded-lg border border-white/10 bg-white/5 p-6"
               >
-                <p className="text-white/60 text-sm mb-3 font-semibold">Team Name</p>
-                <p className="text-white font-medium text-lg">{team.teamName || 'N/A'}</p>
-                <p className="text-white/50 text-xs mt-2">You are part of this team for the event</p>
+                <p className="text-white/60 text-sm mb-3 font-semibold">
+                  Team Name
+                </p>
+                <p className="text-white font-medium text-lg">
+                  {team.teamName || "N/A"}
+                </p>
+                <p className="text-white/50 text-xs mt-2">
+                  You are part of this team for the event
+                </p>
               </motion.div>
 
               {/* Team Members Count */}
@@ -236,8 +298,12 @@ export default function ProfileClient({ user, events, team }: { user: UserInfo; 
                 transition={{ duration: 0.6, delay: 0.25 }}
                 className="rounded-lg border border-white/10 bg-white/5 p-6"
               >
-                <p className="text-white/60 text-sm mb-3 font-semibold">Team Size</p>
-                <p className="text-white font-medium text-lg">{(team.teamMembers?.length || 0) + 1} members</p>
+                <p className="text-white/60 text-sm mb-3 font-semibold">
+                  Team Size
+                </p>
+                <p className="text-white font-medium text-lg">
+                  {(team.teamMembers?.length || 0) + 1} members
+                </p>
                 <p className="text-white/50 text-xs mt-2">Including you</p>
               </motion.div>
 
@@ -262,9 +328,13 @@ export default function ProfileClient({ user, events, team }: { user: UserInfo; 
                       className="flex items-center gap-3 p-3 rounded-lg bg-black/40 border border-white/10"
                     >
                       <div className="w-10 h-10 rounded-full bg-linear-to-br from-[#7a1f2a] to-[#2d4f9e] flex items-center justify-center flex-shrink-0">
-                        <span className="text-white font-bold text-sm">{member.charAt(0).toUpperCase()}</span>
+                        <span className="text-white font-bold text-sm">
+                          {member.charAt(0).toUpperCase()}
+                        </span>
                       </div>
-                      <span className="text-white text-sm font-medium truncate">{member}</span>
+                      <span className="text-white text-sm font-medium truncate">
+                        {member}
+                      </span>
                     </motion.div>
                   ))}
                 </div>
@@ -276,7 +346,11 @@ export default function ProfileClient({ user, events, team }: { user: UserInfo; 
         {/* Quick Stats Section */}
         <motion.div
           {...riseProps}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as const, delay: 0.3 }}
+          transition={{
+            duration: 0.6,
+            ease: [0.16, 1, 0.3, 1] as const,
+            delay: 0.3,
+          }}
           className="grid grid-cols-1 md:grid-cols-2 gap-6"
         >
           <motion.div
@@ -286,22 +360,26 @@ export default function ProfileClient({ user, events, team }: { user: UserInfo; 
             whileHover={{ y: -4 }}
             className="rounded-xl border border-white/10 bg-linear-to-br from-[#7a1f2a] to-black/20 p-6 text-center shadow-lg"
           >
-            <p className="text-white/60 text-sm mb-2">Total Events You Registered</p>
+            <p className="text-white/60 text-sm mb-2">
+              Total Events You Registered
+            </p>
             <p className="text-3xl font-bold text-white">{events.length}</p>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.40 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
             whileHover={{ y: -4 }}
             className="rounded-xl border border-white/10 bg-linear-to-br from-[#2d4f9e] to-black/20 p-6 text-center shadow-lg"
           >
-            <p className="text-white/60 text-sm mb-2">Current Team Members</p>
-            <p className="text-3xl font-bold text-white">{(team.teamMembers?.length || 0) + 1}</p>
+            <p className="text-white/60 text-sm mb-2">Composit ID </p>
+            <p className="text-3xl font-bold text-white">
+              {user.compositId || "N/A"}
+            </p>
           </motion.div>
         </motion.div>
       </div>
     </div>
-  )
+  );
 }

@@ -98,6 +98,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.team = user.team;
         token.registeredEvents = user.registeredEvents?.map(String);
         token.cirtificates = user.cirtificates?.map(String);
+        token.compositId = user.compositId;
       }
 
       // When session.update() is called
@@ -134,6 +135,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.user.team = token.team as string;
         session.user.registeredEvents = token.registeredEvents as string[];
         session.user.cirtificates = token.cirtificates as string[];
+        session.user.compositId = token.compositId as string;
       }
       return session;
     },
@@ -199,6 +201,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         user.team = dbUser.team;
         user.registeredEvents = dbUser.registeredEvents;
         user.cirtificates = dbUser.cirtificates;
+        user.compositId = dbUser.compositId;
         // clear cookie
         cookiesStore.delete("referralCode");
       }
