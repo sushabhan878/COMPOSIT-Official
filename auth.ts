@@ -61,6 +61,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             team: user.team,
             registeredEvents: user.registeredEvents,
             cirtificates: user.cirtificates,
+            compositId: user.compositId,
           };
         } catch (error) {
           throw new Error(`Authentication failed: ${error}`);
