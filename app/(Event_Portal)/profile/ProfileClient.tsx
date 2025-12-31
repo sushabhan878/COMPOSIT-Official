@@ -97,7 +97,7 @@ export default function ProfileClient({
                 )}
               </div>
 
-              <h2 className="text-2xl font-bold text-white text-center mb-2">
+              <h2 className="text-2xl font-bold text-white text-center mb-2 break-words px-4">
                 {user?.name || "User"}
               </h2>
               <p className="text-white/60 text-center mb-6">
@@ -156,9 +156,9 @@ export default function ProfileClient({
                 >
                   <div className="flex items-start gap-3">
                     <Users className="w-5 h-5 mt-1 shrink-0 text-purple-400" />
-                    <div>
+                    <div className="min-w-0 flex-1">
                       <p className="text-white/50 text-sm mb-1">Name</p>
-                      <p className="text-white font-medium">
+                      <p className="text-white font-medium break-words">
                         {user?.name || "N/A"}
                       </p>
                     </div>
@@ -180,7 +180,7 @@ export default function ProfileClient({
                     <Mail className="w-5 h-5 mt-1 shrink-0 text-blue-400" />
                     <div className="min-w-0 flex-1">
                       <p className="text-white/50 text-sm mb-1">Email</p>
-                      <p className="text-white font-medium truncate">
+                      <p className="text-white font-medium break-words leading-relaxed">
                         {user?.email || "N/A"}
                       </p>
                     </div>
@@ -283,7 +283,7 @@ export default function ProfileClient({
                 <p className="text-white/60 text-sm mb-3 font-semibold">
                   Team Name
                 </p>
-                <p className="text-white font-medium text-lg">
+                <p className="text-white font-medium text-lg break-words">
                   {team.teamName || "N/A"}
                 </p>
                 <p className="text-white/50 text-xs mt-2">
@@ -332,7 +332,7 @@ export default function ProfileClient({
                           {member.charAt(0).toUpperCase()}
                         </span>
                       </div>
-                      <span className="text-white text-sm font-medium truncate">
+                      <span className="text-white text-sm font-medium break-words leading-snug">
                         {member}
                       </span>
                     </motion.div>
@@ -374,7 +374,7 @@ export default function ProfileClient({
             className="rounded-xl border border-white/10 bg-linear-to-br from-[#2d4f9e] to-black/20 p-6 text-center shadow-lg"
           >
             <p className="text-white/60 text-sm mb-2">Composit ID </p>
-            <p className="text-3xl font-bold text-white">
+            <p className="text-3xl font-bold text-white break-words">
               {user.compositId || "N/A"}
             </p>
           </motion.div>

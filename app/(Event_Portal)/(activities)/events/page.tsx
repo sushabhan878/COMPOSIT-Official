@@ -21,7 +21,7 @@ const events = [
   },
   {
     imageUrl:
-      "https://res.cloudinary.com/dohx1bvom/image/upload/v1766912188/istockphoto-1408304009-1024x1024_aeybis.jpg",
+      "https://res.cloudinary.com/dohx1bvom/image/upload/v1767204568/Screenshot_2025-12-31_233803_aav5el.png",
     title: "Enigma",
     description:
       "Test your knowledge in an exciting online quiz featuring diverse questions from engineering to general awareness.",

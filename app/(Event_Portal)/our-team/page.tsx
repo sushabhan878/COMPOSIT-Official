@@ -20,7 +20,7 @@ const headsData = [
     name: "Omkar Prajapati",
     position: "General Secretary",
     imageUrl:
-      "https://res.cloudinary.com/dohx1bvom/image/upload/v1766670891/1741552440328_jdmiv4.jpg",
+      "https://res.cloudinary.com/dohx1bvom/image/upload/v1767207594/Gemini_Generated_Image_4hdf6p4hdf6p4hdf_gfcv3u.png",
     linkedin: "https://www.linkedin.com/in/omkar-prajapati-05810a297/",
     instagram: "https://www.instagram.com/omkar_prajapati_24/",
     email: "omkar@composit.in",
@@ -68,7 +68,7 @@ const headsData = [
     name: "Debarshini Mondal",
     position: "Head - Events",
     imageUrl:
-      "https://res.cloudinary.com/dohx1bvom/image/upload/v1766857852/1722867973882_fdemjf.jpg",
+      "https://res.cloudinary.com/dohx1bvom/image/upload/v1767204597/WhatsApp_Image_2025-12-31_at_23.39.25_w0eos4.jpg",
     linkedin: "https://www.linkedin.com/in/debarshini-mondal-0758a0231/",
     instagram: "https://www.instagram.com/_debarshini_/",
     email: "debarshini@composit.in",
@@ -187,7 +187,7 @@ const Team = () => {
               description="Leading with strategic expertise and proven management acumen. Bringing years of industry experience to guide COMPOSIT's success."
             />
             <ProfileCard
-              imageUrl="https://res.cloudinary.com/dohx1bvom/image/upload/v1766858576/1732958709166_kiyl4k.jpg"
+              imageUrl="https://res.cloudinary.com/dohx1bvom/image/upload/v1767207592/WhatsApp_Image_2025-12-29_at_18.20.12_rnq6tq.jpg"
               name="Deven Shinde"
               position="Governor"
               linkedin="https://www.linkedin.com/in/deven-shinde-6b3687259/"
@@ -206,7 +206,7 @@ const Team = () => {
             <div className="mx-auto h-1 w-16 rounded-full bg-gradient-to-r from-amber-400 to-orange-500" />
           </div>
 
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-4 space-y-20 items-center justify-items-center lg:mr-60 lg:ml-60">
+          <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 xl:grid-cols-4 items-start justify-items-center">
             {headsData.map((head) => (
               <ProfileCard
                 key={head.name}

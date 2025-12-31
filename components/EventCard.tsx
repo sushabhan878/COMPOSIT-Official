@@ -24,7 +24,7 @@ const EventCard: React.FC<EventCardProps> = ({
       viewport={{ once: true }}
       whileHover={{ y: -6 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
-      className="group relative w-[380px] md:w-[410px] h-[400px] overflow-hidden rounded-3xl bg-white/5 shadow-2xl backdrop-blur ring-1 ring-white/10"
+      className="group relative flex w-full min-w-[260px] max-w-[480px] flex-col overflow-hidden rounded-3xl bg-white/5 shadow-2xl backdrop-blur ring-1 ring-white/10 sm:max-w-[360px] md:max-w-[420px] lg:max-w-[460px]"
     >
       {/* Hover background glow overlay */}
       <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
@@ -33,12 +33,12 @@ const EventCard: React.FC<EventCardProps> = ({
         <div className="absolute -left-16 -bottom-16 h-56 w-56 rounded-full bg-orange-500/15 blur-3xl" />
       </div>
       {/* Image */}
-      <div className="relative h-[58%] w-full overflow-hidden">
+      <div className="relative w-full overflow-hidden aspect-[16/9] sm:aspect-[16/9]">
         <Image
           src={imageUrl}
           alt={title}
           fill
-          sizes="(max-width: 768px) 100vw, 300px"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 480px"
           className="object-cover transition-transform duration-300 group-hover:scale-105"
           priority={false}
         />
@@ -53,9 +53,9 @@ const EventCard: React.FC<EventCardProps> = ({
       </div>
 
       {/* Body */}
-      <div className="flex h-[42%] w-full flex-col justify-between p-4">
-        <p className="text-sm text-gray-300">{description}</p>
-        <div className="mt-3">
+      <div className="flex w-full flex-1 flex-col justify-between gap-3 p-4">
+        <p className="text-sm text-gray-300 leading-relaxed">{description}</p>
+        <div className="mt-auto pt-1">
           <Link
             href={href}
             className="inline-flex items-center gap-2 rounded-full bg-amber-400 px-4 py-2 text-sm font-semibold text-black shadow-lg shadow-amber-500/30 transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-amber-500/40"
