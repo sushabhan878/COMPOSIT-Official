@@ -296,9 +296,10 @@ const TechnovaPage = () => {
   const handleJoinTeam = async () => {
     try {
       // Logic to handle joining a team
-      const res = await axios.post("/api/envnt/join-team", {
+      const res = await axios.post("/api/event/join-team", {
         teamId,
       });
+      console.log(res.data);
       setShowJoinPopup(false);
     } catch (error) {
       console.error("Error joining team:", error);
