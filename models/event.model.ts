@@ -11,6 +11,7 @@ interface IEvent {
     | "Ideathon"
     | "Meta Code"
     | "Cadvolution";
+  eventId: string;
   registrations: { userId: mongoose.Types.ObjectId }[];
 }
 
@@ -28,6 +29,10 @@ const eventSchema = new mongoose.Schema<IEvent>(
         "Meta Code",
         "Cadvolution",
       ],
+    },
+    eventId: {
+      type: String,
+      unique: true,
     },
     registrations: [
       {

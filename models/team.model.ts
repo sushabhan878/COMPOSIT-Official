@@ -1,68 +1,51 @@
 import mongoose from "mongoose";
 
 interface ITeam {
-    _id?: mongoose.Types.ObjectId;
-    teamName: string;
-    leader: mongoose.Types.ObjectId; // Reference to User model
-    isLeader: boolean;
-    members: {
-        name: string;
-        email: string;
-        comirmTeam: boolean;
-        status: "pending" | "accepted" | "rejected";
-    }  // Array of references to User model
-    events: mongoose.Types.ObjectId[]; // Array of references to Event model
-    
+  _id?: mongoose.Types.ObjectId;
+  teamName: string;
+  teamId: string;
+  event: string;
+  leaderId: string; // Reference to User model
+  members: {
+    name: string;
+    compositId: string;
+  }[]; // Array of references to User model
 }
 
-const teamSchema = new mongoose.Schema<ITeam>({
+const teamSchema = new mongoose.Schema<ITeam>(
+  {
     teamName: {
-        type: String,
-        required: true,
-        unique: true,
+      type: String,
+      required: true,
     },
-    leader: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
+    event: {
+      type: String,
+      required: true,
     },
-    isLeader: {
-        type: Boolean,
-        required: true,
-        default: false,
+    teamId: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    leaderId: {
+      type: String,
+      required: true,
     },
     members: [
-        {
-            name: {
-                type: String,
-                requiered: true,
-            },
-            email: {
-                type: String,
-                required: true,
-                unique: true,
-            },
-            comirmTeam: {
-                type: Boolean,
-                required: true,
-                default: false,
-            },
-            status: {
-                type: String,
-                enum: ["pending", "accepted", "rejected"],
-                required: true,
-                default: "pending",
-            }
-        }
+      {
+        name: {
+          type: String,
+          required: true,
+        },
+        compositId: {
+          type: String,
+          required: true,
+        },
+      },
     ],
-    events: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Event",
-            required: true,
-        }
-    ],
-}, { timestamps: true });
+  },
+  { timestamps: true }
+);
 
 const Team = mongoose.models.Team || mongoose.model<ITeam>("Team", teamSchema);
 
