@@ -65,21 +65,34 @@ export async function POST(req: NextRequest) {
 
     const teamId = await generateUniqueTeamId(event);
 
-    const team = await Team.create({
-      teamName,
-      teamId,
-      leaderId,
-      event,
-      members: members.map((m: any) => ({
-        name: m.name,
-        compositId: m.compositId,
-      })),
-    });
+    const teamDetails = await Team.findOne({ leaderId, event });
 
-    return NextResponse.json(
-      { message: "Team created successfully", team },
-      { status: 201 }
-    );
+    if (teamDetails) {
+      return NextResponse.json(
+        {
+          error: {
+            message: "Leader has already created a team for this event",
+          },
+        },
+        { status: 400 }
+      );
+    } else {
+      const team = await Team.create({
+        teamName,
+        teamId,
+        leaderId,
+        event,
+        members: members.map((m: any) => ({
+          name: m.name,
+          compositId: m.compositId,
+        })),
+      });
+
+      return NextResponse.json(
+        { message: "Team created successfully", team },
+        { status: 201 }
+      );
+    }
   } catch (error: any) {
     console.error(error);
     return NextResponse.json(

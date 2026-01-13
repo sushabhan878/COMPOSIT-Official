@@ -23,6 +23,10 @@ const TechnovaPage = () => {
   ]);
   const [teamId, setTeamId] = useState("");
   const [registerLoading, setRegisterLoading] = useState(false);
+  const [registerMessage, setRegisterMessage] = useState<{
+    type: "success" | "error" | "info";
+    text: string;
+  } | null>(null);
 
   const renderContent = () => {
     switch (activeTab) {
@@ -175,9 +179,27 @@ const TechnovaPage = () => {
   };
 
   const handleRegisterTeam = async () => {
-    try {
-      // Add logic to register the team
+    setRegisterMessage(null);
 
+    // Validation
+    if (!teamName.trim()) {
+      setRegisterMessage({
+        type: "error",
+        text: "Team name is required.",
+      });
+      return;
+    }
+
+    if (teamMembers.some((m) => !m.name.trim() || !m.compositId.trim())) {
+      setRegisterMessage({
+        type: "error",
+        text: "Please fill in all member names and COMPOSIT IDs.",
+      });
+      return;
+    }
+
+    try {
+      setRegisterLoading(true);
       const res = await axios.post("/api/event/create-team", {
         teamName,
         event: "Technova",
@@ -187,10 +209,87 @@ const TechnovaPage = () => {
           compositId: member.compositId,
         })),
       });
+
       console.log("Team Registered:", res.data);
-      setShowPopup(false);
-    } catch (error) {
+      setRegisterMessage({
+        type: "success",
+        text: "✅ Team created successfully!",
+      });
+
+      // Reset form after 2 seconds
+      setTimeout(() => {
+        setTeamName("");
+        setTeamMembers([{ name: "", compositId: "" }]);
+        setShowPopup(false);
+        setRegisterMessage(null);
+      }, 2000);
+    } catch (error: any) {
+      let errorMessage = "An error occurred while registering the team.";
+
+      if (error.response?.status === 400) {
+        const errorData = error.response.data;
+        // Handle both error formats: { error: "message" } and { error: { message: "..." } }
+        const errorText =
+          typeof errorData.error === "string"
+            ? errorData.error
+            : errorData.error?.message || "";
+
+        if (errorText.includes("Invalid") || errorText.includes("invalid")) {
+          if (
+            errorText.includes("compositId") ||
+            errorText.includes("Composit ID")
+          ) {
+            errorMessage =
+              "❌ Invalid COMPOSIT ID provided. Please check and try again.";
+          } else if (errorText.includes("team data")) {
+            errorMessage =
+              "❌ Invalid team data. Please fill in all fields correctly.";
+          } else {
+            errorMessage = `❌ ${errorText}`;
+          }
+        } else if (
+          errorText.includes("not found") ||
+          errorText.includes("does not exist")
+        ) {
+          errorMessage =
+            "❌ One or more members do not exist. Please verify all COMPOSIT IDs are correct.";
+        } else if (errorText.includes("already")) {
+          if (errorText.includes("registered")) {
+            errorMessage =
+              "❌ Team already registered for this event. One team per member is allowed.";
+          } else if (errorText.includes("created")) {
+            errorMessage =
+              "❌ Leader has already created a team for this event. One team per leader is allowed.";
+          } else {
+            errorMessage = `❌ ${errorText}`;
+          }
+        } else if (errorText.includes("exists")) {
+          errorMessage =
+            "❌ User already exists in another team. Please check member details.";
+        } else if (errorText) {
+          errorMessage = `❌ ${errorText}`;
+        }
+      } else if (error.response?.status === 404) {
+        errorMessage =
+          "❌ One or more members do not exist. Please verify all COMPOSIT IDs are correct.";
+      } else if (error.response?.status === 409) {
+        errorMessage =
+          "❌ Team name already exists. Please choose a different name.";
+      } else if (error.response?.status === 401) {
+        errorMessage = "❌ Unauthorized. Please sign in again.";
+      } else if (error.response?.status === 500) {
+        errorMessage = "❌ Internal server error. Please try again later.";
+      } else if (error.message === "Network Error") {
+        errorMessage = "❌ Network error. Please check your connection.";
+      }
+
+      setRegisterMessage({
+        type: "error",
+        text: errorMessage,
+      });
       console.error("Error registering team:", error);
+    } finally {
+      setRegisterLoading(false);
     }
   };
 
@@ -200,7 +299,6 @@ const TechnovaPage = () => {
       const res = await axios.post("/api/envnt/join-team", {
         teamId,
       });
-      console.log("Join Team ID:", res.data);
       setShowJoinPopup(false);
     } catch (error) {
       console.error("Error joining team:", error);
@@ -375,13 +473,72 @@ const TechnovaPage = () => {
                   Add Member
                 </button>
               </div>
-              <button
+              {registerMessage && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4 }}
+                  className={`rounded-md border px-3 py-2 text-sm ${
+                    registerMessage.type === "success"
+                      ? "border-emerald-800/40 bg-emerald-950/40 text-emerald-200"
+                      : "border-red-800/40 bg-red-950/40 text-red-200"
+                  }`}
+                >
+                  {registerMessage.text}
+                </motion.div>
+              )}
+              <motion.button
                 type="button"
                 onClick={handleRegisterTeam}
-                className="w-full rounded-lg bg-gradient-to-r from-[#5c0a0a] via-[#8b0000] to-[#5c0a0a] px-5 py-3 text-center font-medium text-white shadow-lg focus:outline-none hover:scale-105"
+                disabled={registerLoading}
+                whileHover={{
+                  scale: registerLoading ? 1 : 1.02,
+                  boxShadow: "0 0 24px rgba(139,0,0,0.45)",
+                }}
+                whileTap={{ scale: registerLoading ? 1 : 0.98 }}
+                className="relative w-full overflow-hidden rounded-lg bg-gradient-to-r from-[#5c0a0a] via-[#8b0000] to-[#5c0a0a] px-5 py-3 text-center font-medium text-white shadow-lg focus:outline-none disabled:cursor-not-allowed disabled:opacity-70"
               >
-                Register Team
-              </button>
+                <span className="relative z-10 inline-flex items-center justify-center gap-2">
+                  {registerLoading ? (
+                    <>
+                      <svg
+                        className="h-5 w-5 animate-spin"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        />
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                        />
+                      </svg>
+                      Registering…
+                    </>
+                  ) : (
+                    <>Register Team</>
+                  )}
+                </span>
+                <motion.span
+                  aria-hidden
+                  initial={{ x: "-100%" }}
+                  animate={{ x: registerLoading ? "100%" : "-100%" }}
+                  transition={{
+                    repeat: Infinity,
+                    duration: 1.8,
+                    ease: "linear",
+                  }}
+                  className="absolute inset-0 -skew-x-12 bg-gradient-to-r from-transparent via-white/15 to-transparent"
+                />
+              </motion.button>
             </form>
           </div>
         </div>
