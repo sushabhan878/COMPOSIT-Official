@@ -8,7 +8,12 @@ import Image from "next/image";
 import { signOut } from "next-auth/react";
 
 type EventItem = { id: string; name: string };
-type TeamInfo = { teamName: string | null; teamMembers: string[] };
+type TeamData = {
+  teamName: string;
+  teamId: string;
+  event: string;
+  members: { name: string; compositId: string }[];
+};
 type UserInfo = {
   name?: string;
   email?: string;
@@ -25,11 +30,11 @@ const riseProps = {
 export default function ProfileClient({
   user,
   events,
-  team,
+  teams,
 }: {
   user: UserInfo;
   events: EventItem[];
-  team: TeamInfo;
+  teams: TeamData[];
 }) {
   const [selectedEvent, setSelectedEvent] = useState<string | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -37,6 +42,11 @@ export default function ProfileClient({
 
   const selectedEventData = selectedEvent
     ? events.find((e) => e.id === selectedEvent)
+    : null;
+
+  // Find the team for the selected event
+  const selectedTeam = selectedEvent
+    ? teams.find((t) => t.event === selectedEvent)
     : null;
 
   const copyToClipboard = (text: string) => {
@@ -272,7 +282,7 @@ export default function ProfileClient({
               Team Information for {selectedEventData.name}
             </h3>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Team Name */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -284,10 +294,28 @@ export default function ProfileClient({
                   Team Name
                 </p>
                 <p className="text-white font-medium text-lg break-words">
-                  {team.teamName || "N/A"}
+                  {selectedTeam?.teamName || "N/A"}
                 </p>
                 <p className="text-white/50 text-xs mt-2">
                   You are part of this team for the event
+                </p>
+              </motion.div>
+
+              {/* Team ID */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.23 }}
+                className="rounded-lg border border-white/10 bg-white/5 p-6"
+              >
+                <p className="text-white/60 text-sm mb-3 font-semibold">
+                  Team ID
+                </p>
+                <p className="text-white font-medium text-lg break-words">
+                  {selectedTeam?.teamId || "N/A"}
+                </p>
+                <p className="text-white/50 text-xs mt-2">
+                  Use this ID to invite members
                 </p>
               </motion.div>
 
@@ -302,9 +330,9 @@ export default function ProfileClient({
                   Team Size
                 </p>
                 <p className="text-white font-medium text-lg">
-                  {(team.teamMembers?.length || 0) + 1} members
+                  {selectedTeam?.members?.length || 0} members
                 </p>
-                <p className="text-white/50 text-xs mt-2">Including you</p>
+                <p className="text-white/50 text-xs mt-2">Total team members</p>
               </motion.div>
 
               {/* Team Members */}
@@ -312,14 +340,14 @@ export default function ProfileClient({
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="rounded-lg border border-white/10 bg-white/5 p-6 md:col-span-2"
+                className="rounded-lg border border-white/10 bg-white/5 p-6 md:col-span-3"
               >
                 <p className="text-white/60 text-sm mb-4 font-semibold flex items-center gap-2">
                   <Users className="w-4 h-4" />
                   Team Members
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {(team.teamMembers || []).map((member, idx) => (
+                  {(selectedTeam?.members || []).map((member, idx) => (
                     <motion.div
                       key={idx}
                       initial={{ opacity: 0, x: -10 }}
@@ -329,11 +357,11 @@ export default function ProfileClient({
                     >
                       <div className="w-10 h-10 rounded-full bg-linear-to-br from-[#7a1f2a] to-[#2d4f9e] flex items-center justify-center flex-shrink-0">
                         <span className="text-white font-bold text-sm">
-                          {member.charAt(0).toUpperCase()}
+                          {member.name.charAt(0).toUpperCase()}
                         </span>
                       </div>
                       <span className="text-white text-sm font-medium break-words leading-snug">
-                        {member}
+                        {member.name}
                       </span>
                     </motion.div>
                   ))}

@@ -1,63 +1,90 @@
-import connectDb from "@/lib/db";
-import { auth } from "@/auth";
-import Event from "@/models/event.model";
-import Team from "@/models/team.model";
+"use client";
+
+import { useEffect, useState } from "react";
+import axios from "axios";
 import ProfileClient from "./ProfileClient";
 
-const Page = async () => {
-  await connectDb();
-  const session = await auth();
+type UserType = {
+  name: string;
+  email: string;
+  image?: string;
+  compositId?: string;
+};
 
-  if (!session?.user) {
+type EventItem = {
+  id: string;
+  name: string;
+};
+
+type TeamData = {
+  teamName: string;
+  teamId: string;
+  event: string;
+  members: { name: string; compositId: string }[];
+};
+
+const ProfileClientWrapper = () => {
+  const [user, setUser] = useState<UserType | null>(null);
+  const [teams, setTeams] = useState<TeamData[]>([]);
+  const [events, setEvents] = useState<EventItem[]>([]);
+
+  const [loading, setLoading] = useState(true);
+
+  const fetchProfile = async () => {
+    try {
+      setLoading(true);
+
+      const { data } = await axios.get("/api/profile");
+
+      const { user: dbUser, teams } = data;
+
+      setUser({
+        name: dbUser.name,
+        email: dbUser.email,
+        image: dbUser.image || undefined,
+        compositId: dbUser.compositId || undefined,
+      });
+
+      // Extract unique event names from all teams
+      if (teams?.length) {
+        const uniqueEvents = new Map<string, string>();
+        teams.forEach((t: any) => {
+          if (t.event) {
+            // Use event name as both id and name
+            uniqueEvents.set(t.event, t.event);
+          }
+        });
+
+        const eventList: EventItem[] = Array.from(uniqueEvents.entries()).map(
+          ([eventName]) => ({
+            id: eventName,
+            name: eventName,
+          })
+        );
+
+        setEvents(eventList);
+        setTeams(teams);
+      }
+    } catch (err) {
+      console.error("Profile fetch failed", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchProfile();
+  }, []);
+
+  if (loading || !user) {
     return (
       <div className="min-h-dvh flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-semibold text-white mb-2">
-            Please sign in
-          </h1>
-          <p className="text-white/60">
-            Sign in to view your profile and registrations.
-          </p>
-        </div>
+        <div className="text-white text-xl">Loading profile...</div>
       </div>
     );
   }
 
-  const registeredEventIds = (session.user.registeredEvents || []) as string[];
-  const eventsDocs = registeredEventIds.length
-    ? await Event.find({ _id: { $in: registeredEventIds } }).lean()
-    : [];
-  const events = eventsDocs.map((e: any) => ({
-    id: e._id.toString(),
-    name: e.eventName as string,
-  }));
-
-  let teamName: string | null = null;
-  let teamMembers: string[] = [];
-  if (session.user.team) {
-    const teamDoc: any = await Team.findById(session.user.team).lean();
-    if (teamDoc) {
-      teamName = teamDoc.teamName || null;
-      teamMembers = (teamDoc.members || [])
-        .map((m: any) => m?.name)
-        .filter(Boolean);
-    }
-  }
-
-  const user = {
-    name: session.user.name,
-    email: session.user.email,
-    image: session.user.image || undefined,
-    compositId: session.user.compositId || undefined,
-  };
-
-  return (
-    <ProfileClient
-      user={user}
-      events={events}
-      team={{ teamName, teamMembers }}
-    />
-  );
+  return <ProfileClient user={user} events={events} teams={teams} />;
 };
 
-export default Page;
+export default ProfileClientWrapper;
