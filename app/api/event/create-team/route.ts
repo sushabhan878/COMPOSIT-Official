@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import connectDb from "@/lib/db";
 import Team from "@/models/team.model";
 import User from "@/models/user.model";
@@ -44,8 +45,8 @@ async function generateUniqueTeamId(event: string) {
 export async function POST(req: NextRequest) {
   try {
     await connectDb();
-    const { teamName, event, members, leaderId } = await req.json();
 
+    const { teamName, event, members, leaderId } = await req.json();
     if (!teamName || !event || !members || members.length === 0 || !leaderId) {
       return NextResponse.json(
         { message: "Invalid team data" },

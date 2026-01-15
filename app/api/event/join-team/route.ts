@@ -9,25 +9,39 @@ export async function POST(req: NextRequest) {
 
     const { teamId, compositId } = await req.json();
 
-    // 1️⃣ Validate input
     if (!teamId || !compositId) {
       return NextResponse.json({ message: "Invalid data" }, { status: 400 });
     }
 
-    // 2️⃣ Fetch user (single source of truth)
+    // Fetch user
     const user = await User.findOne({ compositId }).lean();
     if (!user) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
 
-    // 3️⃣ Atomic update (NO race condition)
+    // Ensure team exists
+    const team = await Team.findOne({ teamId });
+    if (!team) {
+      return NextResponse.json({ message: "Team not found" }, { status: 404 });
+    }
+
+    // Check if already in team
+    const alreadyInTeam = team.members.some(
+      (m: any) => m.compositId === compositId
+    );
+
+    if (alreadyInTeam) {
+      return NextResponse.json(
+        { message: "User already in the team" },
+        { status: 409 }
+      );
+    }
+
+    // Atomic update
     const updatedTeam = await Team.findOneAndUpdate(
+      { teamId },
       {
-        teamId,
-        "members.compositId": { $ne: compositId },
-      },
-      {
-        $push: {
+        $addToSet: {
           members: {
             name: user.name,
             compositId,
@@ -36,15 +50,6 @@ export async function POST(req: NextRequest) {
       },
       { new: true }
     );
-
-    if (!updatedTeam) {
-      return NextResponse.json(
-        {
-          message: "Team not found or user already in the team",
-        },
-        { status: 409 }
-      );
-    }
 
     return NextResponse.json(
       {

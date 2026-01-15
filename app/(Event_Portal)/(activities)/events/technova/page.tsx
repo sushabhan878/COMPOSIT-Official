@@ -1,5 +1,6 @@
 "use client";
 
+import Team from "@/models/team.model";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { useSession, signIn } from "next-auth/react";
@@ -24,6 +25,10 @@ const TechnovaPage = () => {
   const [teamId, setTeamId] = useState("");
   const [registerLoading, setRegisterLoading] = useState(false);
   const [registerMessage, setRegisterMessage] = useState<{
+    type: "success" | "error" | "info";
+    text: string;
+  } | null>(null);
+  const [joinMessage, setJoinMessage] = useState<{
     type: "success" | "error" | "info";
     text: string;
   } | null>(null);
@@ -182,6 +187,7 @@ const TechnovaPage = () => {
     setRegisterMessage(null);
 
     // Validation
+
     if (!teamName.trim()) {
       setRegisterMessage({
         type: "error",
@@ -298,11 +304,30 @@ const TechnovaPage = () => {
       // Logic to handle joining a team
       const res = await axios.post("/api/event/join-team", {
         teamId,
+        compositId: session?.data?.user?.compositId,
       });
-      console.log(res.data);
-      setShowJoinPopup(false);
+      setJoinMessage({
+        type: "success",
+        text: "✅ You joined the team successfully!",
+      });
+      // Clear the team ID input
+      setTeamId("");
+      // Close popup after 2 seconds
+      setTimeout(() => {
+        setShowJoinPopup(false);
+        setJoinMessage(null);
+      }, 2000);
     } catch (error) {
       console.error("Error joining team:", error);
+      let errorMessage = "An error occurred while joining the team.";
+      if (axios.isAxiosError(error) && error.response?.data) {
+        const errorData = error.response.data;
+        errorMessage = errorData.message || errorMessage;
+      }
+      setJoinMessage({
+        type: "error",
+        text: `❌ ${errorMessage}`,
+      });
     }
   };
 
@@ -569,6 +594,20 @@ const TechnovaPage = () => {
                   className="w-full rounded-lg border border-white/10 bg-black/60 px-4 py-2 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-red-700/60"
                 />
               </div>
+              {joinMessage && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4 }}
+                  className={`rounded-md border px-3 py-2 text-sm ${
+                    joinMessage.type === "success"
+                      ? "border-emerald-800/40 bg-emerald-950/40 text-emerald-200"
+                      : "border-red-800/40 bg-red-950/40 text-red-200"
+                  }`}
+                >
+                  {joinMessage.text}
+                </motion.div>
+              )}
               <button
                 type="button"
                 onClick={handleJoinTeam}
