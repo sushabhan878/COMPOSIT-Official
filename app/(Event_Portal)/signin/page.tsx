@@ -1,61 +1,72 @@
-"use client"
+"use client";
 
-import React, { useState } from "react"
-import { motion } from "framer-motion"
-import GridBackground from "@/components/GridBackground"
-import { signIn, useSession } from "next-auth/react"
-import { useRouter } from "next/navigation"
-import { Eye, EyeOff } from "lucide-react"
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import GridBackground from "@/components/GridBackground";
+import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { Eye, EyeOff } from "lucide-react";
 
 const Signin: React.FC = () => {
-  const router = useRouter()
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [showPassword, setShowPassword] = useState(false)
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setError(null)
+    e.preventDefault();
+    setError(null);
 
     if (!email.trim() || !password.trim()) {
-      setError("Please enter your email and password.")
-      return
+      setError("Please enter your email and password.");
+      return;
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError("Please enter a valid email address.")
-      return
+      setError("Please enter a valid email address.");
+      return;
     }
 
     try {
-      setLoading(true)
+      setLoading(true);
       const res = await signIn("credentials", {
         email,
         password,
         redirect: false,
-      })
+      });
 
       if (res?.error) {
-        throw new Error(res.error)
+        // Handle specific error codes
+        if (res.error.includes("SIGNUP_REQUIRED")) {
+          setError("❌ Don't have an account? Sign up now!");
+        } else {
+          setError(res.error);
+        }
+        return;
       }
+
+      if (!res?.ok) {
+        setError("Sign in failed. Please try again.");
+        return;
+      }
+
       // Successful sign in
-      router.push("/home")
+      router.push("/home");
     } catch (err: any) {
-      setError(err?.message || "Invalid email or password.")
+      setError(err?.message || "Invalid email or password.");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const onGoogleSignin = async () => {
     try {
-      await signIn("google", { callbackUrl: "/home" })
-
+      await signIn("google", { callbackUrl: "/home" });
     } catch (err) {
-      setError("Google sign-in is currently unavailable.")
+      setError("Google sign-in is currently unavailable.");
     }
-  }
+  };
 
   return (
     <div className="relative min-h-[100dvh] flex items-center justify-center px-6 py-10">
@@ -63,8 +74,12 @@ const Signin: React.FC = () => {
 
       <div className="w-full max-w-md">
         <div className="mb-8 text-center">
-          <h1 className="text-3xl font-semibold tracking-wide text-white/90">Welcome back</h1>
-          <p className="mt-2 text-sm text-white/60">Sign in to continue to COMPOSIT.</p>
+          <h1 className="text-3xl font-semibold tracking-wide text-white/90">
+            Welcome back
+          </h1>
+          <p className="mt-2 text-sm text-white/60">
+            Sign in to continue to COMPOSIT.
+          </p>
         </div>
 
         <div className="rounded-2xl border border-white/10 bg-black/40 backdrop-blur-md p-6 shadow-2xl">
@@ -81,7 +96,9 @@ const Signin: React.FC = () => {
             </div>
 
             <div>
-              <label className="block text-sm text-white/70 mb-1">Password</label>
+              <label className="block text-sm text-white/70 mb-1">
+                Password
+              </label>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
@@ -96,30 +113,65 @@ const Signin: React.FC = () => {
                   onClick={() => setShowPassword((v) => !v)}
                   className="absolute right-2 top-1/2 -translate-y-1/2 inline-flex items-center justify-center rounded-md p-1 text-white/60 hover:text-white/90 focus:outline-none"
                 >
-                  {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                  {showPassword ? (
+                    <EyeOff className="h-5 w-5" />
+                  ) : (
+                    <Eye className="h-5 w-5" />
+                  )}
                 </button>
               </div>
             </div>
 
             {error && (
               <div className="rounded-md border border-red-800/40 bg-red-950/40 px-3 py-2 text-sm text-red-200">
-                {error}
+                {error.includes("Don't have an account") ? (
+                  <span>
+                    {error}{" "}
+                    <a
+                      href="/signup"
+                      className="underline font-semibold hover:text-red-100"
+                    >
+                      Sign up here
+                    </a>
+                  </span>
+                ) : (
+                  error
+                )}
               </div>
             )}
 
             <motion.button
               type="submit"
               disabled={loading}
-              whileHover={{ scale: 1.02, boxShadow: "0 0 24px rgba(139,0,0,0.45)" }}
+              whileHover={{
+                scale: 1.02,
+                boxShadow: "0 0 24px rgba(139,0,0,0.45)",
+              }}
               whileTap={{ scale: 0.98 }}
               className="relative w-full overflow-hidden rounded-lg bg-gradient-to-r from-[#5c0a0a] via-[#8b0000] to-[#5c0a0a] px-5 py-3 text-center font-medium text-white shadow-lg focus:outline-none disabled:opacity-70"
             >
               <span className="relative z-10 inline-flex items-center justify-center gap-2">
                 {loading ? (
                   <>
-                    <svg className="h-5 w-5 animate-spin" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+                    <svg
+                      className="h-5 w-5 animate-spin"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      />
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                      />
                     </svg>
                     Signing in…
                   </>
@@ -149,11 +201,27 @@ const Signin: React.FC = () => {
             className="mt-4 w-full rounded-lg border border-white/15 bg-black/50 px-5 py-3 text-white hover:border-white/30 hover:bg-black/60 transition-colors"
           >
             <span className="inline-flex items-center justify-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" className="h-5 w-5">
-                <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303C33.44 31.91 29.043 35 24 35 16.268 35 10 28.732 10 21s6.268-14 14-14c3.59 0 6.845 1.351 9.348 3.552l5.657-5.657C35.743 1.676 30.128 0 24 0 10.745 0 0 10.745 0 24s10.745 24 24 24c12.132 0 22.236-8.86 23.743-20.327.171-1.192.257-2.415.257-3.673 0-1.245-.086-2.466-.259-3.644z"/>
-                <path fill="#FF3D00" d="M6.306 14.691l6.586 4.823C14.094 16.257 18.68 13 24 13c3.59 0 6.845 1.351 9.348 3.552l5.657-5.657C35.743 1.676 30.128 0 24 0 15.315 0 7.762 4.512 3.294 11.29l3.012 3.401z"/>
-                <path fill="#4CAF50" d="M24 48c5.996 0 11.464-2.293 15.616-6.024l-7.211-5.994C30.611 37.668 27.427 39 24 39c-5.018 0-9.397-3.053-11.307-7.438l-6.52 5.02C10.588 43.424 16.82 48 24 48z"/>
-                <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303c-1.673 3.827-5.92 6.917-11.303 6.917-5.018 0-9.397-3.053-11.307-7.438l-6.52 5.02C10.588 43.424 16.82 48 24 48c12.132 0 22.236-8.86 23.743-20.327.171-1.192.257-2.415.257-3.673 0-1.245-.086-2.466-.259-3.644z"/>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 48 48"
+                className="h-5 w-5"
+              >
+                <path
+                  fill="#FFC107"
+                  d="M43.611 20.083H42V20H24v8h11.303C33.44 31.91 29.043 35 24 35 16.268 35 10 28.732 10 21s6.268-14 14-14c3.59 0 6.845 1.351 9.348 3.552l5.657-5.657C35.743 1.676 30.128 0 24 0 10.745 0 0 10.745 0 24s10.745 24 24 24c12.132 0 22.236-8.86 23.743-20.327.171-1.192.257-2.415.257-3.673 0-1.245-.086-2.466-.259-3.644z"
+                />
+                <path
+                  fill="#FF3D00"
+                  d="M6.306 14.691l6.586 4.823C14.094 16.257 18.68 13 24 13c3.59 0 6.845 1.351 9.348 3.552l5.657-5.657C35.743 1.676 30.128 0 24 0 15.315 0 7.762 4.512 3.294 11.29l3.012 3.401z"
+                />
+                <path
+                  fill="#4CAF50"
+                  d="M24 48c5.996 0 11.464-2.293 15.616-6.024l-7.211-5.994C30.611 37.668 27.427 39 24 39c-5.018 0-9.397-3.053-11.307-7.438l-6.52 5.02C10.588 43.424 16.82 48 24 48z"
+                />
+                <path
+                  fill="#1976D2"
+                  d="M43.611 20.083H42V20H24v8h11.303c-1.673 3.827-5.92 6.917-11.303 6.917-5.018 0-9.397-3.053-11.307-7.438l-6.52 5.02C10.588 43.424 16.82 48 24 48c12.132 0 22.236-8.86 23.743-20.327.171-1.192.257-2.415.257-3.673 0-1.245-.086-2.466-.259-3.644z"
+                />
               </svg>
               Sign in with Google
             </span>
@@ -161,11 +229,14 @@ const Signin: React.FC = () => {
         </div>
 
         <p className="mt-6 text-center text-sm text-white/50">
-          New here? <a href="/signup" className="text-red-400 hover:text-red-300">Create an account</a>
+          New here?{" "}
+          <a href="/signup" className="text-red-400 hover:text-red-300">
+            Create an account
+          </a>
         </p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Signin
+export default Signin;

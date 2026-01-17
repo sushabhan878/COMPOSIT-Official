@@ -32,7 +32,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
           const user = await User.findOne({ email });
           if (!user) {
-            throw new Error("User does not exist");
+            throw new Error("SIGNUP_REQUIRED");
           }
           const isPasswordValid = await bcrypt.compare(password, user.password);
           if (!isPasswordValid) {
@@ -63,8 +63,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             cirtificates: user.cirtificates,
             compositId: user.compositId,
           };
-        } catch (error) {
-          throw new Error(`Authentication failed: ${error}`);
+        } catch (error: any) {
+          if (error.message === "SIGNUP_REQUIRED") {
+            throw new Error("SIGNUP_REQUIRED");
+          }
+          throw new Error(error.message || "Authentication failed");
         }
       },
     }),
@@ -178,7 +181,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                   numberOfReferrals: newReferralCount,
                   SARank: newRank, // ✅ ALWAYS SET
                 },
-              }
+              },
             );
           }
         }
