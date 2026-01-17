@@ -6,12 +6,12 @@ import { NextRequest, NextResponse } from "next/server";
 
 const EVENT_PREFIX_MAP: Record<string, string> = {
   Technova: "TNV",
-  Casestudy: "GCS",
+  CaseStudy: "GCS",
   Enigma: "ENG",
   Excavate: "EXC",
   Ideathon: "IDT",
   Metacli: "MTX",
-  Metacode: "MTC",
+  MetaCode: "MTC",
 };
 
 export function generateTeamId(event: string): string {
@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
     if (!teamName || !event || !members || members.length === 0 || !leaderId) {
       return NextResponse.json(
         { message: "Invalid team data" },
-        { status: 400 }
+        { status: 400 },
       );
     }
     for (const member of members) {
@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
       if (!user) {
         return NextResponse.json(
           { message: `User with id ${member.compositId} not found` },
-          { status: 404 }
+          { status: 404 },
         );
       }
     }
@@ -75,7 +75,7 @@ export async function POST(req: NextRequest) {
             message: "Leader has already created a team for this event",
           },
         },
-        { status: 400 }
+        { status: 400 },
       );
     } else {
       const team = await Team.create({
@@ -91,14 +91,14 @@ export async function POST(req: NextRequest) {
 
       return NextResponse.json(
         { message: "Team created successfully", team },
-        { status: 201 }
+        { status: 201 },
       );
     }
   } catch (error: any) {
     console.error(error);
     return NextResponse.json(
       { message: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

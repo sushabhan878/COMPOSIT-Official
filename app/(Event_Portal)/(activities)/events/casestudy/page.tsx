@@ -487,7 +487,7 @@ const CaseStudyPage = () => {
       setRegisterLoading(true);
       const res = await axios.post("/api/event/create-team", {
         teamName,
-        event: "Case Study",
+        event: "CaseStudy",
         leaderId: session?.data?.user?.compositId,
         members: teamMembers.map((member) => ({
           name: member.name,

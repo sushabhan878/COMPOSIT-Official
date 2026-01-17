@@ -336,10 +336,17 @@ const EnigmaPage = () => {
     try {
       setRegisterLoading(true);
 
-      // For individual participation, we just need to register the participant
-      const res = await axios.post("/api/event/register-participant", {
-        event: "ENIGMA",
-        compositId: session?.data?.user?.compositId,
+      // For individual participation, register the participant as a team of one
+      const res = await axios.post("/api/event/create-team", {
+        teamName: "Enigma_Individual",
+        event: "Enigma",
+        leaderId: session?.data?.user?.compositId,
+        members: [
+          {
+            name: session?.data?.user?.name,
+            compositId: session?.data?.user?.compositId,
+          },
+        ],
       });
 
       console.log("Registered for ENIGMA:", res.data);
