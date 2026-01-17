@@ -37,19 +37,65 @@ const TechnovaPage = () => {
     switch (activeTab) {
       case "structure":
         return (
-          <section className="space-y-4">
+          <section className="space-y-6">
             <h2 className="text-3xl font-extrabold text-white">Structure</h2>
-            <p className="text-lg leading-relaxed text-white/90">
-              Teams present a technical paper based on one of the suggested
-              energy themes. The session includes a brief presentation followed
-              by a Q&amp;A round with the judging panel.
-            </p>
-            <ul className="list-disc space-y-2 pl-5 text-white/90">
-              <li>Presentation window: 7–8 minutes per team.</li>
-              <li>Q&amp;A: 2–3 minutes focused on clarity and originality.</li>
-              <li>Evaluation: innovation, feasibility, and communication.</li>
-              <li>Team size: up to 3 members.</li>
-            </ul>
+
+            <div>
+              <h3 className="text-xl font-bold text-white mb-3">
+                Number of Rounds
+              </h3>
+              <div className="space-y-4">
+                <div>
+                  <h4 className="text-lg font-semibold text-[#f4b000] mb-2">
+                    Round 1: Abstract Submission at Unstop
+                  </h4>
+                  <p className="text-white/90">
+                    Participants must submit an abstract (maximum 1000 words) of
+                    their paper, highlighting the objective, methodology, and
+                    key findings or insights. Shortlisted teams will be notified
+                    of the final presentation.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="text-lg font-semibold text-[#f4b000] mb-2">
+                    Round 2: Classical Technical Conference at IIT Kharagpur
+                    Campus
+                  </h4>
+                  <p className="text-white/90 mb-2">
+                    Each team will present their paper in front of a panel of
+                    judges. Presentations must be 10 minutes long, followed by a
+                    5-minute Q&A session with the judges.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-xl font-bold text-white mb-3">
+                Eligibility Criteria
+              </h3>
+              <ul className="list-disc space-y-2 pl-5 text-white/90">
+                <li>
+                  Open to all UG, PG and PhD students in the science and
+                  engineering domains.
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-xl font-bold text-white mb-3">
+                Participation Type
+              </h3>
+              <ul className="list-disc space-y-2 pl-5 text-white/90">
+                <li>
+                  Maximum 3 members per team (individual participation is
+                  allowed).
+                </li>
+                <li>
+                  Each team can submit their presentation under one theme only.
+                </li>
+              </ul>
+            </div>
           </section>
         );
 
@@ -57,25 +103,41 @@ const TechnovaPage = () => {
         return (
           <section className="space-y-6">
             <h2 className="text-3xl font-extrabold text-white">
-              Frequently Asked Questions
+              Rules & Guidelines
             </h2>
             <div className="space-y-4">
               {[
                 {
-                  q: "What is the registration process?",
-                  a: "All members register on the COMPOSIT website. The leader creates a team and shares the team code; others join with that code.",
+                  q: "Can teams span different departments?",
+                  a: "Yes. Cross-department and cross-institute teams are welcome.",
                 },
                 {
                   q: "Is there a registration fee?",
                   a: "No. Registration is free for all participants.",
                 },
                 {
-                  q: "Can teams span different departments or institutes?",
-                  a: "Yes. Cross-department and cross-institute teams are welcome.",
+                  q: "Can I participate individually?",
+                  a: "Yes. Individual participation is allowed. You can submit as a team of one.",
                 },
                 {
-                  q: "Do I need to bring a laptop?",
-                  a: "Yes. Bring your laptop and make sure you have a working HDMI port or connector for projection.",
+                  q: "What happens if we exceed the presentation time limit?",
+                  a: "Time limit penalties are as follows: 0-1 min: 10% of presentation marks, 1-2 mins: 20% of presentation marks, Greater than 2 mins: 50% of presentation marks.",
+                },
+                {
+                  q: "Do I need to have a published paper?",
+                  a: "No. Having a publication currently is not required, but it must be a proper draft.",
+                },
+                {
+                  q: "What if plagiarism is detected?",
+                  a: "Participants will be disqualified immediately if any type of plagiarism is detected.",
+                },
+                {
+                  q: "Can a team submit papers in multiple themes?",
+                  a: "No. Each team can submit their presentation under one theme only.",
+                },
+                {
+                  q: "How will evaluation be done?",
+                  a: "Evaluation will be done based on both round performances by the team. Factors include relevance of the topic, technical depth, presentation quality, and Q&A responses.",
                 },
               ].map((item, index) => (
                 <details
@@ -122,41 +184,144 @@ const TechnovaPage = () => {
       case "about":
       default:
         return (
-          <section className="space-y-4">
-            <h2 className="text-3xl font-extrabold text-white">Technova</h2>
-            <p className="text-lg leading-relaxed text-white/90">
-              Present a technical paper rooted in existing literature or
-              original scientific work. Choose one of the themes below and bring
-              practical, initiative ideas to the jury.
-            </p>
-            <div className="space-y-3">
-              <h3 className="text-xl font-bold text-white">
-                Theme 1: Renewable Energy Materials
-              </h3>
-              <ul className="list-disc space-y-1 pl-5 text-white/90">
-                <li>Solar energy materials (photovoltaics and coatings).</li>
-                <li>Advanced wind turbine materials.</li>
-                <li>Hydrogen production and storage materials.</li>
-              </ul>
+          <section className="space-y-6">
+            <div>
+              <h2 className="text-3xl font-extrabold text-white mb-4">
+                Technova
+              </h2>
+              <p className="text-lg leading-relaxed text-white/90">
+                Showcase your scientific brilliance and innovative ideas at
+                Technova! This event provides a platform for students to present
+                technical papers or original research work in the fields of
+                materials science and engineering. Participants can choose from
+                one of the following themes:
+              </p>
             </div>
-            <div className="space-y-3">
-              <h3 className="text-xl font-bold text-white">
-                Theme 2: Energy Storage Technologies
-              </h3>
-              <ul className="list-disc space-y-1 pl-5 text-white/90">
-                <li>Lithium-ion and sodium-ion batteries.</li>
-                <li>Supercapacitors and ultracapacitors.</li>
-                <li>Solid-state batteries.</li>
-              </ul>
+
+            <div className="space-y-4">
+              <div>
+                <h3 className="text-xl font-bold text-white mb-2">
+                  Theme 1: Fundamentals & Extraction of Rare Earth Materials
+                </h3>
+                <ul className="list-disc space-y-1 pl-5 text-white/90">
+                  <li>
+                    Rare Earth Element (REE) classification and electronic
+                    structure
+                  </li>
+                  <li>Mining, beneficiation, and separation techniques</li>
+                  <li>
+                    Hydrometallurgical and pyrometallurgical processing of REEs
+                  </li>
+                  <li>Sustainable and green extraction methods</li>
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-bold text-white mb-2">
+                  Theme 2: Rare Earths in Energy Technologies
+                </h3>
+                <ul className="list-disc space-y-1 pl-5 text-white/90">
+                  <li>
+                    Rare earth permanent magnets for wind turbines and EV motors
+                  </li>
+                  <li>
+                    REE-based materials in hydrogen production and storage
+                  </li>
+                  <li>Role of lanthanides in batteries and supercapacitors</li>
+                  <li>Rare earth oxides in solid oxide fuel cells (SOFCs)</li>
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-bold text-white mb-2">
+                  Theme 3: Rare Earth Functional Materials
+                </h3>
+                <ul className="list-disc space-y-1 pl-5 text-white/90">
+                  <li>
+                    Luminescent and phosphor materials for LEDs and displays
+                  </li>
+                  <li>Magnetic materials and spintronic applications</li>
+                  <li>Optical, laser, and photonic materials based on REEs</li>
+                  <li>
+                    Dielectric, ferroelectric, and multiferroic rare earth
+                    compounds
+                  </li>
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-bold text-white mb-2">
+                  Theme 4: Advanced & Emerging Applications of Rare Earths
+                </h3>
+                <ul className="list-disc space-y-1 pl-5 text-white/90">
+                  <li>
+                    Rare earths in quantum materials and advanced electronics
+                  </li>
+                  <li>
+                    REEs in thermoelectric and energy-harvesting materials
+                  </li>
+                  <li>Rare earth nanomaterials and nanocomposites</li>
+                  <li>
+                    Additive manufacturing and advanced processing of REE-based
+                    materials
+                  </li>
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-bold text-white mb-2">
+                  Theme 5: Rare Earths for Sustainability & Circular Economy
+                </h3>
+                <ul className="list-disc space-y-1 pl-5 text-white/90">
+                  <li>
+                    Recycling and recovery of rare earth elements from e-waste
+                  </li>
+                  <li>
+                    Substitution and reduction strategies for critical REEs
+                  </li>
+                  <li>Life-cycle assessment of rare earth materials</li>
+                  <li>
+                    Environmental and geopolitical challenges of rare earth
+                    supply chains
+                  </li>
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-bold text-white mb-2">
+                  Theme 6: Rare Earths in Defense, Space & Nuclear Applications
+                </h3>
+                <ul className="list-disc space-y-1 pl-5 text-white/90">
+                  <li>Radiation-resistant rare earth ceramics</li>
+                  <li>REEs in nuclear fuel and reactor materials</li>
+                  <li>Aerospace and space-grade rare earth alloys</li>
+                  <li>High-temperature and extreme-environment applications</li>
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-bold text-white mb-2">
+                  Theme 7: Computational & Data-Driven Approaches
+                </h3>
+                <ul className="list-disc space-y-1 pl-5 text-white/90">
+                  <li>
+                    First-principles and DFT studies on rare earth materials
+                  </li>
+                  <li>Machine learning for discovery of REE-based compounds</li>
+                  <li>
+                    Modeling of magnetic, optical, and electronic properties
+                  </li>
+                  <li>Multiscale simulations for rare earth material design</li>
+                </ul>
+              </div>
             </div>
-            <div className="space-y-3">
-              <h3 className="text-xl font-bold text-white">
-                Theme 3: Emerging Energy Materials
-              </h3>
-              <ul className="list-disc space-y-1 pl-5 text-white/90">
-                <li>Perovskite materials for energy applications.</li>
-                <li>Thermoelectric materials for waste-heat recovery.</li>
-              </ul>
+
+            <div className="rounded-2xl border border-white/25 bg-white/10 p-4 text-sm text-white/90">
+              <p className="font-semibold text-white mb-2">📝 Note:</p>
+              <p>
+                Having a publication currently is not required, but it must be a
+                proper draft.
+              </p>
             </div>
           </section>
         );
@@ -495,9 +660,13 @@ const TechnovaPage = () => {
                 <button
                   type="button"
                   onClick={addTeamMember}
-                  className="rounded-lg bg-gradient-to-r from-[#5c0a0a] via-[#8b0000] to-[#5c0a0a] px-4 py-2 text-sm font-medium text-white shadow-lg focus:outline-none hover:scale-105"
+                  disabled={teamMembers.length >= 3}
+                  className="rounded-lg bg-gradient-to-r from-[#5c0a0a] via-[#8b0000] to-[#5c0a0a] px-4 py-2 text-sm font-medium text-white shadow-lg focus:outline-none hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Add Member
+                  Add Member{" "}
+                  {teamMembers.length < 3
+                    ? `(${teamMembers.length}/3)`
+                    : "(Max)"}
                 </button>
               </div>
               {registerMessage && (
