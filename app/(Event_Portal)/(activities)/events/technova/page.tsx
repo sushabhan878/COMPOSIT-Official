@@ -102,8 +102,9 @@ const TechnovaPage = () => {
             <h2 className="text-3xl font-extrabold text-white">Contacts</h2>
             <div className="grid gap-4 md:grid-cols-2">
               {[
-                { name: "Suryansh Singh", phone: "9670006875" },
-                { name: "Aarya Joshi", phone: "7045020804" },
+                { name: "Debarshini Mondal", phone: "9933163116" },
+                { name: "Jayesh Andhale", phone: "9767922637" },
+                { name: "Ayush Ogle", phone: "8167069056" },
               ].map((contact) => (
                 <article
                   key={contact.name}
@@ -165,7 +166,7 @@ const TechnovaPage = () => {
   const handleMemberChange = (
     index: number,
     field: "name" | "compositId",
-    value: string
+    value: string,
   ) => {
     const updatedMembers = [...teamMembers];
     updatedMembers[index][field] = value;
