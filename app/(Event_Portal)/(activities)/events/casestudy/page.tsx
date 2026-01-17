@@ -648,7 +648,7 @@ const CaseStudyPage = () => {
                 type="button"
                 onClick={() => {
                   const link = document.createElement("a");
-                  link.href = "/CaseStudy_2025.pdf"; // Update with the actual path to the PDF
+                  link.href = "/CaseStudy_2026.pdf"; // Update with the actual path to the PDF
                   link.download = "Rules_and_Regulations.pdf";
                   link.click();
                 }}

@@ -535,7 +535,7 @@ const TechnovaPage = () => {
                 type="button"
                 onClick={() => {
                   const link = document.createElement("a");
-                  link.href = "/Technova_2025.pdf"; // Update with the actual path to the PDF
+                  link.href = "/Technova_2026.pdf"; // Update with the actual path to the PDF
                   link.download = "Rules_and_Regulations.pdf";
                   link.click();
                 }}

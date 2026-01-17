@@ -37,14 +37,6 @@ const events = [
   },
   {
     imageUrl:
-      "https://res.cloudinary.com/dohx1bvom/image/upload/v1766912210/bailey-mahon-2b6K4uy0Hbc-unsplash_bh9sny.jpg",
-    title: "Metaclix",
-    description:
-      "Capture the beauty of science and technology through photography and compete in a dynamic contest.",
-    href: "events/metaclix",
-  },
-  {
-    imageUrl:
       "https://res.cloudinary.com/dohx1bvom/image/upload/v1766912214/marvin-meyer-SYTO3xs06fU-unsplash_ehgamu.jpg",
     title: "Case Study",
     description:
@@ -58,6 +50,14 @@ const events = [
     description:
       "An event for aspiring entrepreneurs to pitch innovative ideas, receive expert feedback, and propel their vision into reality.",
     href: "events/ideathon",
+  },
+  {
+    imageUrl:
+      "https://res.cloudinary.com/dohx1bvom/image/upload/v1766912210/bailey-mahon-2b6K4uy0Hbc-unsplash_bh9sny.jpg",
+    title: "Metaclix",
+    description:
+      "Capture the beauty of science and technology through photography and compete in a dynamic contest.",
+    href: "events/metaclix",
   },
   {
     imageUrl:

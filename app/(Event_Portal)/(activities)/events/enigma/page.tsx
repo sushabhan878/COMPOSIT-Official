@@ -418,7 +418,7 @@ const EnigmaPage = () => {
                 type="button"
                 onClick={() => {
                   const link = document.createElement("a");
-                  link.href = "/ENIGMA_2025.pdf";
+                  link.href = "/ENIGMA_2026.pdf";
                   link.download = "Rules_and_Regulations.pdf";
                   link.click();
                 }}

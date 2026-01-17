@@ -593,7 +593,7 @@ const IdeathonPage = () => {
                 type="button"
                 onClick={() => {
                   const link = document.createElement("a");
-                  link.href = "/Ideathon_2025.pdf"; // Update with the actual path to the PDF
+                  link.href = "/Ideathon_2026.pdf"; // Update with the actual path to the PDF
                   link.download = "Rules_and_Regulations.pdf";
                   link.click();
                 }}

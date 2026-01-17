@@ -1,6 +1,5 @@
 "use client";
 
-import Team from "@/models/team.model";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { useSession, signIn } from "next-auth/react";
@@ -16,19 +15,9 @@ const tabs = [
 const MetacadePage = () => {
   const session = useSession();
   const [activeTab, setActiveTab] = useState<string>("about");
-  const [showPopup, setShowPopup] = useState(false);
-  const [showJoinPopup, setShowJoinPopup] = useState(false);
-  const [teamName, setTeamName] = useState("");
-  const [teamMembers, setTeamMembers] = useState([
-    { name: "", compositId: "" },
-  ]);
-  const [teamId, setTeamId] = useState("");
+  const [showRegisterPopup, setShowRegisterPopup] = useState(false);
   const [registerLoading, setRegisterLoading] = useState(false);
   const [registerMessage, setRegisterMessage] = useState<{
-    type: "success" | "error" | "info";
-    text: string;
-  } | null>(null);
-  const [joinMessage, setJoinMessage] = useState<{
     type: "success" | "error" | "info";
     text: string;
   } | null>(null);
@@ -45,16 +34,21 @@ const MetacadePage = () => {
                   Round 1: Online Quiz
                 </h3>
                 <ul className="list-disc space-y-2 pl-5 text-white/90">
-                  <li>Conducted on the Unstop platform</li>
+                  <li>Conducted online on the Unstop platform</li>
                   <li>Time limit: 20 minutes to attempt the quiz</li>
                   <li>Quiz window: Open for 4 hours</li>
                   <li>
-                    Topics: Computer Science, DSA, Materials in Computer
-                    Architecture, Aptitude, Puzzles, etc.
+                    Topics: Computer Science and DSA, Application of Materials
+                    in Computer Architecture and Tools, Aptitude, Puzzles, etc.
                   </li>
                   <li>
-                    This is an elimination round - top scorers qualify for Round
-                    2
+                    This is an elimination round - top scorers will qualify for
+                    the final coding round
+                  </li>
+                  <li>
+                    The shortlisted candidates from the first round will be
+                    invited to come offline for the final round at the IIT
+                    Kharagpur campus
                   </li>
                 </ul>
               </div>
@@ -63,16 +57,30 @@ const MetacadePage = () => {
                   Round 2: Offline Coding Round
                 </h3>
                 <ul className="list-disc space-y-2 pl-5 text-white/90">
-                  <li>Location: CIC lab at IIT Kharagpur</li>
-                  <li>Format: Competitive programming contest</li>
-                  <li>Number of questions: 3-5 coding problems</li>
-                  <li>Time limit: 90 minutes</li>
-                  <li>Allowed Languages: C++, C, Java, Python</li>
                   <li>
-                    Evaluation: Based on number of test cases passed; timing
-                    used for tie-breaking
+                    The top participants from the first round will be invited
+                    for the final coding round
                   </li>
-                  <li>Winners: Top three based on final score</li>
+                  <li>The selected participants will be notified via email</li>
+                  <li>Location: CIC lab at IIT Kharagpur</li>
+                  <li>
+                    This would be a competitive programming contest that will
+                    consist of 3-5 coding questions
+                  </li>
+                  <li>Time limit: 90 minutes</li>
+                  <li>Allowed Languages: C++/C/Java/Python</li>
+                  <li>
+                    The number of test cases passed will determine the final
+                    marks
+                  </li>
+                  <li>
+                    In case of a tie between two or more participant marks,
+                    their timing will be taken into consideration
+                  </li>
+                  <li>
+                    Top three winners will be selected based on their final
+                    score
+                  </li>
                 </ul>
               </div>
             </div>
@@ -97,15 +105,15 @@ const MetacadePage = () => {
                 },
                 {
                   q: "Is there a registration fee?",
-                  a: "No, registration is completely free on Unstop and the official website for everyone.",
+                  a: "No, registration is completely free on Unstop and Website for everyone.",
                 },
                 {
                   q: "Do I need any special software or tools to participate?",
-                  a: "No, you only need a stable internet connection and a device (laptop, PC) to access the Unstop platform.",
+                  a: "No, you only need a stable internet connection and a device (laptop, pc) to access the Unstop platform.",
                 },
                 {
                   q: "Is prior knowledge in a specific subject required?",
-                  a: "The quiz covers domains including General Trivia, Computer Science, Data Structures and Algorithms, Puzzles, and Aptitudes. Having basic knowledge in these areas may provide an advantage, but the questions are designed to be accessible to participants from all backgrounds.",
+                  a: "The quiz covers a few domains including General Trivia, Computer Science, Data Structures and Algorithms, Puzzles, Aptitudes and Application of Materials. Having basic knowledge in these areas of Metallurgy and Materials Engineering may provide an advantage, but the questions are designed to be accessible to participants from all backgrounds.",
                 },
                 {
                   q: "Will all participants receive a certificate?",
@@ -113,7 +121,7 @@ const MetacadePage = () => {
                 },
                 {
                   q: "When will the results be announced?",
-                  a: "The results will be announced shortly after the quiz is completed. Participants will be informed via email through COMPOSIT'25 and Unstop.",
+                  a: "The results will be announced shortly after the quiz is completed. Participants will be informed via email through COMPOSIT'25 and unstop.",
                 },
               ].map((item, index) => (
                 <details
@@ -172,19 +180,23 @@ const MetacadePage = () => {
                 materials science and engineering. The event emphasizes critical
                 thinking, technical proficiency, and problem-solving skills
                 through rounds that test aptitude, coding expertise, and
-                innovative solutions.
+                innovative solutions. In the final round, participants will use
+                programming languages like C++, C, or Java to tackle
+                domain-specific problems, which will feature long competitive
+                programming at IIT Kharagpur.
               </p>
             </div>
 
             <div className="space-y-3">
-              <h3 className="text-xl font-bold text-white">Overview</h3>
-              <p className="text-white/90">
-                In the final round, participants will use programming languages
-                like C++, C, or Java to tackle domain-specific problems in a
-                long competitive programming event at IIT Kharagpur. This is a
-                unique opportunity to demonstrate your skills in solving complex
-                computational problems related to metallurgical innovation.
-              </p>
+              <h3 className="text-xl font-bold text-white">Number of Rounds</h3>
+              <ul className="list-disc space-y-2 pl-5 text-white/90">
+                <li>
+                  <strong>Round 1:</strong> An online quiz on Unstop
+                </li>
+                <li>
+                  <strong>Round 2:</strong> Offline Coding Round
+                </li>
+              </ul>
             </div>
 
             <div className="space-y-3">
@@ -199,11 +211,12 @@ const MetacadePage = () => {
                   Kharagpur (3-5 problems, 90 minutes)
                 </li>
                 <li>
-                  <strong>Multiple Topics:</strong> CS, DSA, Materials in
-                  Computer Architecture, Aptitude, Puzzles
+                  <strong>Multiple Topics:</strong> CS, DSA, Application of
+                  Materials in Computer Architecture and Tools, Aptitude,
+                  Puzzles
                 </li>
                 <li>
-                  <strong>Multiple Languages:</strong> C++, C, Java, Python
+                  <strong>Multiple Languages:</strong> C++/C/Java/Python
                   supported
                 </li>
                 <li>
@@ -219,24 +232,40 @@ const MetacadePage = () => {
 
             <div className="space-y-3">
               <h3 className="text-xl font-bold text-white">
+                Participation Details
+              </h3>
+              <ul className="list-disc space-y-2 pl-5 text-white/90">
+                <li>
+                  <strong>Type:</strong> Individual Participation
+                </li>
+                <li>
+                  <strong>Eligibility:</strong> Open to All
+                </li>
+                <li>
+                  <strong>Registration:</strong> Completely Free
+                </li>
+                <li>
+                  <strong>Platform:</strong> Unstop
+                </li>
+              </ul>
+            </div>
+
+            <div className="space-y-3">
+              <h3 className="text-xl font-bold text-white">
                 General Instructions
               </h3>
               <ul className="list-disc space-y-2 pl-5 text-white/90">
                 <li>
                   Every participant must register online on Unstop as well as on
-                  the official website of COMPOSIT'25
-                </li>
-                <li>
-                  A Team ID will be allocated after registration, which must be
-                  used for all future references
+                  the official website of COMPOSIT
                 </li>
                 <li>
                   The decision of the organizers and judges will be final and
                   binding
                 </li>
                 <li>
-                  COMPOSIT'25, IIT Kharagpur is not responsible for any late,
-                  lost, or misdirected entries
+                  COMPOSIT, IIT Kharagpur is not responsible for any late, lost,
+                  or misdirected entries
                 </li>
               </ul>
             </div>
@@ -245,125 +274,51 @@ const MetacadePage = () => {
     }
   };
 
-  const handleMemberChange = (
-    index: number,
-    field: "name" | "compositId",
-    value: string,
-  ) => {
-    const updatedMembers = [...teamMembers];
-    updatedMembers[index][field] = value;
-    setTeamMembers(updatedMembers);
-  };
-
-  const addTeamMember = () => {
-    setTeamMembers([...teamMembers, { name: "", compositId: "" }]);
-  };
-
-  const removeTeamMember = (index: number) => {
-    if (teamMembers.length > 1) {
-      const updatedMembers = teamMembers.filter((_, i) => i !== index);
-      setTeamMembers(updatedMembers);
-    }
-  };
-
-  const handleRegisterTeam = async () => {
+  const handleRegister = async () => {
     setRegisterMessage(null);
-
-    // Validation
-
-    if (!teamName.trim()) {
-      setRegisterMessage({
-        type: "error",
-        text: "Team name is required.",
-      });
-      return;
-    }
-
-    if (teamMembers.some((m) => !m.name.trim() || !m.compositId.trim())) {
-      setRegisterMessage({
-        type: "error",
-        text: "Please fill in all member names and COMPOSIT IDs.",
-      });
-      return;
-    }
 
     try {
       setRegisterLoading(true);
+
+      // For individual participation, register the participant as a team of one
       const res = await axios.post("/api/event/create-team", {
-        teamName,
+        teamName: "MetaCode_Individual",
         event: "MetaCode",
         leaderId: session?.data?.user?.compositId,
-        members: teamMembers.map((member) => ({
-          name: member.name,
-          compositId: member.compositId,
-        })),
+        members: [
+          {
+            name: session?.data?.user?.name,
+            compositId: session?.data?.user?.compositId,
+          },
+        ],
       });
 
-      console.log("Team Registered:", res.data);
+      console.log("Registered for MetaCode:", res.data);
       setRegisterMessage({
         type: "success",
-        text: "✅ Team created successfully!",
+        text: "✅ Successfully registered for MetaCode! Check your email for further instructions.",
       });
 
-      // Reset form after 2 seconds
+      // Reset after 2 seconds
       setTimeout(() => {
-        setTeamName("");
-        setTeamMembers([{ name: "", compositId: "" }]);
-        setShowPopup(false);
+        setShowRegisterPopup(false);
         setRegisterMessage(null);
       }, 2000);
     } catch (error: any) {
-      let errorMessage = "An error occurred while registering the team.";
+      let errorMessage = "An error occurred while registering for the event.";
 
       if (error.response?.status === 400) {
         const errorData = error.response.data;
-        // Handle both error formats: { error: "message" } and { error: { message: "..." } }
         const errorText =
           typeof errorData.error === "string"
             ? errorData.error
             : errorData.error?.message || "";
 
-        if (errorText.includes("Invalid") || errorText.includes("invalid")) {
-          if (
-            errorText.includes("compositId") ||
-            errorText.includes("Composit ID")
-          ) {
-            errorMessage =
-              "❌ Invalid COMPOSIT ID provided. Please check and try again.";
-          } else if (errorText.includes("team data")) {
-            errorMessage =
-              "❌ Invalid team data. Please fill in all fields correctly.";
-          } else {
-            errorMessage = `❌ ${errorText}`;
-          }
-        } else if (
-          errorText.includes("not found") ||
-          errorText.includes("does not exist")
-        ) {
-          errorMessage =
-            "❌ One or more members do not exist. Please verify all COMPOSIT IDs are correct.";
-        } else if (errorText.includes("already")) {
-          if (errorText.includes("registered")) {
-            errorMessage =
-              "❌ Team already registered for this event. One team per member is allowed.";
-          } else if (errorText.includes("created")) {
-            errorMessage =
-              "❌ Leader has already created a team for this event. One team per leader is allowed.";
-          } else {
-            errorMessage = `❌ ${errorText}`;
-          }
-        } else if (errorText.includes("exists")) {
-          errorMessage =
-            "❌ User already exists in another team. Please check member details.";
+        if (errorText.includes("already")) {
+          errorMessage = "❌ You are already registered for this event.";
         } else if (errorText) {
           errorMessage = `❌ ${errorText}`;
         }
-      } else if (error.response?.status === 404) {
-        errorMessage =
-          "❌ One or more members do not exist. Please verify all COMPOSIT IDs are correct.";
-      } else if (error.response?.status === 409) {
-        errorMessage =
-          "❌ Team name already exists. Please choose a different name.";
       } else if (error.response?.status === 401) {
         errorMessage = "❌ Unauthorized. Please sign in again.";
       } else if (error.response?.status === 500) {
@@ -376,41 +331,9 @@ const MetacadePage = () => {
         type: "error",
         text: errorMessage,
       });
-      console.error("Error registering team:", error);
+      console.error("Error registering for MetaCode:", error);
     } finally {
       setRegisterLoading(false);
-    }
-  };
-
-  const handleJoinTeam = async () => {
-    try {
-      // Logic to handle joining a team
-      const res = await axios.post("/api/event/join-team", {
-        teamId,
-        compositId: session?.data?.user?.compositId,
-      });
-      setJoinMessage({
-        type: "success",
-        text: "✅ You joined the team successfully!",
-      });
-      // Clear the team ID input
-      setTeamId("");
-      // Close popup after 2 seconds
-      setTimeout(() => {
-        setShowJoinPopup(false);
-        setJoinMessage(null);
-      }, 2000);
-    } catch (error) {
-      console.error("Error joining team:", error);
-      let errorMessage = "An error occurred while joining the team.";
-      if (axios.isAxiosError(error) && error.response?.data) {
-        const errorData = error.response.data;
-        errorMessage = errorData.message || errorMessage;
-      }
-      setJoinMessage({
-        type: "error",
-        text: `❌ ${errorMessage}`,
-      });
     }
   };
 
@@ -423,41 +346,27 @@ const MetacadePage = () => {
               <h1 className="text-4xl font-extrabold text-white">MetaCode</h1>
               <p className="text-base leading-relaxed text-white/85">
                 Fuse computational power with metallurgical innovation. Register
-                your team and explore event details using the quick actions
-                below.
+                as an individual and showcase your coding skills.
               </p>
             </div>
 
             <div className="flex w-full flex-col gap-3 md:flex-row">
-              {/**
-               * Modified button group to include onClick handlers
-               */}
               <button
-                key="Create Team"
                 type="button"
-                className="flex-1 rounded-xl border border-white/30 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg bg-[#800000] hover:bg-[#a01111]"
-                onClick={() => setShowPopup(true)}
+                className="w-full rounded-xl border border-white/30 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg bg-[#800000] hover:bg-[#a01111]"
+                onClick={() => setShowRegisterPopup(true)}
               >
-                Create Team
+                Register Now
               </button>
               <button
-                key="Join Team"
-                type="button"
-                className="flex-1 rounded-xl border border-white/30 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg bg-[#0b4f8c] hover:bg-[#0d5fa8]"
-                onClick={() => setShowJoinPopup(true)}
-              >
-                Join Team
-              </button>
-              <button
-                key="Rules & Regulations"
                 type="button"
                 onClick={() => {
                   const link = document.createElement("a");
-                  link.href = "/MetaCode_2025.pdf"; // Update with the actual path to the PDF
+                  link.href = "/MetaCode_2026.pdf";
                   link.download = "Rules_and_Regulations.pdf";
                   link.click();
                 }}
-                className="flex-1 rounded-xl border border-white/30 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg bg-[#f4b000] hover:bg-[#ffbf1f]"
+                className="w-full rounded-xl border border-white/30 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg bg-[#f4b000] hover:bg-[#ffbf1f]"
               >
                 Rules & Regulations
               </button>
@@ -510,242 +419,116 @@ const MetacadePage = () => {
         </div>
       </div>
 
-      {/* Popup for team registration */}
-      {showPopup && session?.data?.user && (
+      {/* Registration Popup */}
+      {showRegisterPopup && session?.data?.user && (
         <div
           className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-md"
-          onClick={() => setShowPopup(false)}
-        >
-          <div
-            className="w-full max-w-xl rounded-lg bg-black/40 p-6 shadow-2xl"
-            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the form
-          >
-            <h2 className="text-xl font-bold text-white/90 mb-4">
-              Register Team
-            </h2>
-            <form className="space-y-4">
-              <div>
-                <label className="block text-sm text-white/70 mb-1">
-                  Team Name
-                </label>
-                <input
-                  aria-label="Team Name"
-                  type="text"
-                  value={teamName}
-                  onChange={(e) => setTeamName(e.target.value)}
-                  className="w-full rounded-lg border border-white/10 bg-black/60 px-4 py-2 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-red-700/60"
-                />
-              </div>
-              {teamMembers.map((member, index) => (
-                <div key={index} className="flex space-x-4 items-center">
-                  <div className="flex-[2]">
-                    <input
-                      aria-label={`Member ${index + 1} Name`}
-                      type="text"
-                      placeholder="Member Name"
-                      value={member.name}
-                      onChange={(e) =>
-                        handleMemberChange(index, "name", e.target.value)
-                      }
-                      className="w-full rounded-lg border border-white/10 bg-black/60 px-4 py-2 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-red-700/60"
-                    />
-                  </div>
-                  <div className="flex-1">
-                    <input
-                      aria-label={`Member ${index + 1} Composit ID`}
-                      type="text"
-                      placeholder="Composit ID"
-                      value={member.compositId}
-                      onChange={(e) =>
-                        handleMemberChange(index, "compositId", e.target.value)
-                      }
-                      className="w-full rounded-lg border border-white/10 bg-black/60 px-4 py-2 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-red-700/60"
-                    />
-                  </div>
-                  {teamMembers.length > 1 && (
-                    <button
-                      type="button"
-                      onClick={() => removeTeamMember(index)}
-                      className="text-white/60 hover:text-red-500 text-2xl font-bold transition focus:outline-none"
-                      aria-label={`Remove member ${index + 1}`}
-                    >
-                      ×
-                    </button>
-                  )}
-                </div>
-              ))}
-              <div className="flex justify-end">
-                <button
-                  type="button"
-                  onClick={addTeamMember}
-                  className="rounded-lg bg-gradient-to-r from-[#5c0a0a] via-[#8b0000] to-[#5c0a0a] px-4 py-2 text-sm font-medium text-white shadow-lg focus:outline-none hover:scale-105"
-                >
-                  Add Member
-                </button>
-              </div>
-              {registerMessage && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4 }}
-                  className={`rounded-md border px-3 py-2 text-sm ${
-                    registerMessage.type === "success"
-                      ? "border-emerald-800/40 bg-emerald-950/40 text-emerald-200"
-                      : "border-red-800/40 bg-red-950/40 text-red-200"
-                  }`}
-                >
-                  {registerMessage.text}
-                </motion.div>
-              )}
-              <motion.button
-                type="button"
-                onClick={handleRegisterTeam}
-                disabled={registerLoading}
-                whileHover={{
-                  scale: registerLoading ? 1 : 1.02,
-                  boxShadow: "0 0 24px rgba(139,0,0,0.45)",
-                }}
-                whileTap={{ scale: registerLoading ? 1 : 0.98 }}
-                className="relative w-full overflow-hidden rounded-lg bg-gradient-to-r from-[#5c0a0a] via-[#8b0000] to-[#5c0a0a] px-5 py-3 text-center font-medium text-white shadow-lg focus:outline-none disabled:cursor-not-allowed disabled:opacity-70"
-              >
-                <span className="relative z-10 inline-flex items-center justify-center gap-2">
-                  {registerLoading ? (
-                    <>
-                      <svg
-                        className="h-5 w-5 animate-spin"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                        />
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-                        />
-                      </svg>
-                      Registering…
-                    </>
-                  ) : (
-                    <>Register Team</>
-                  )}
-                </span>
-                <motion.span
-                  aria-hidden
-                  initial={{ x: "-100%" }}
-                  animate={{ x: registerLoading ? "100%" : "-100%" }}
-                  transition={{
-                    repeat: Infinity,
-                    duration: 1.8,
-                    ease: "linear",
-                  }}
-                  className="absolute inset-0 -skew-x-12 bg-gradient-to-r from-transparent via-white/15 to-transparent"
-                />
-              </motion.button>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* Join Team popup */}
-      {showJoinPopup && session?.data?.user && (
-        <div
-          className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-md"
-          onClick={() => setShowJoinPopup(false)}
+          onClick={() => setShowRegisterPopup(false)}
         >
           <div
             className="w-full max-w-md rounded-lg bg-black/40 p-6 shadow-2xl"
-            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the form
-          >
-            <h2 className="text-xl font-bold text-white/90 mb-4">Join Team</h2>
-            <form className="space-y-4">
-              <div>
-                <label className="block text-sm text-white/70 mb-1">
-                  Team ID
-                </label>
-                <input
-                  aria-label="Team ID"
-                  type="text"
-                  value={teamId}
-                  onChange={(e) => setTeamId(e.target.value)}
-                  className="w-full rounded-lg border border-white/10 bg-black/60 px-4 py-2 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-red-700/60"
-                />
-              </div>
-              {joinMessage && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4 }}
-                  className={`rounded-md border px-3 py-2 text-sm ${
-                    joinMessage.type === "success"
-                      ? "border-emerald-800/40 bg-emerald-950/40 text-emerald-200"
-                      : "border-red-800/40 bg-red-950/40 text-red-200"
-                  }`}
-                >
-                  {joinMessage.text}
-                </motion.div>
-              )}
-              <button
-                type="button"
-                onClick={handleJoinTeam}
-                className="w-full rounded-lg bg-gradient-to-r from-[#5c0a0a] via-[#8b0000] to-[#5c0a0a] px-5 py-3 text-center font-medium text-white shadow-lg focus:outline-none hover:scale-105"
-              >
-                Join Team
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* Login required popup for registration */}
-      {showPopup && !session?.data?.user && (
-        <div
-          className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-md"
-          onClick={() => setShowPopup(false)}
-        >
-          <div
-            className="w-full max-w-md rounded-lg bg-black/40 p-6 shadow-2xl"
-            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the form
+            onClick={(e) => e.stopPropagation()}
           >
             <h2 className="text-xl font-bold text-white/90 mb-4">
-              Login Required
+              Register for MetaCode
             </h2>
             <p className="text-sm text-white/70 mb-4">
-              Please sign in to register your team.
+              You're about to register for MetaCode. After registration, you'll
+              receive a confirmation email with your participant ID and
+              instructions for accessing the competition on Unstop.
             </p>
+            {registerMessage && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                className={`rounded-md border px-3 py-2 text-sm mb-4 ${
+                  registerMessage.type === "success"
+                    ? "border-emerald-800/40 bg-emerald-950/40 text-emerald-200"
+                    : "border-red-800/40 bg-red-950/40 text-red-200"
+                }`}
+              >
+                {registerMessage.text}
+              </motion.div>
+            )}
+            <motion.button
+              type="button"
+              onClick={handleRegister}
+              disabled={registerLoading}
+              whileHover={{
+                scale: registerLoading ? 1 : 1.02,
+                boxShadow: "0 0 24px rgba(139,0,0,0.45)",
+              }}
+              whileTap={{ scale: registerLoading ? 1 : 0.98 }}
+              className="relative w-full overflow-hidden rounded-lg bg-gradient-to-r from-[#5c0a0a] via-[#8b0000] to-[#5c0a0a] px-5 py-3 text-center font-medium text-white shadow-lg focus:outline-none disabled:cursor-not-allowed disabled:opacity-70 mb-3"
+            >
+              <span className="relative z-10 inline-flex items-center justify-center gap-2">
+                {registerLoading ? (
+                  <>
+                    <svg
+                      className="h-5 w-5 animate-spin"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      />
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                      />
+                    </svg>
+                    Registering…
+                  </>
+                ) : (
+                  <>Confirm Registration</>
+                )}
+              </span>
+              <motion.span
+                aria-hidden
+                initial={{ x: "-100%" }}
+                animate={{ x: registerLoading ? "100%" : "-100%" }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 1.8,
+                  ease: "linear",
+                }}
+                className="absolute inset-0 -skew-x-12 bg-gradient-to-r from-transparent via-white/15 to-transparent"
+              />
+            </motion.button>
             <button
               type="button"
-              onClick={() => signIn()}
-              className="w-full rounded-lg bg-gradient-to-r from-[#5c0a0a] via-[#8b0000] to-[#5c0a0a] px-5 py-3 text-center font-medium text-white shadow-lg focus:outline-none hover:scale-105"
+              onClick={() => setShowRegisterPopup(false)}
+              className="w-full rounded-lg border border-white/20 px-5 py-3 text-center font-medium text-white shadow-lg focus:outline-none hover:bg-white/10"
             >
-              Sign In
+              Cancel
             </button>
           </div>
         </div>
       )}
 
-      {/* Login required popup for joining */}
-      {showJoinPopup && !session?.data?.user && (
+      {/* Login required popup */}
+      {showRegisterPopup && !session?.data?.user && (
         <div
           className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-md"
-          onClick={() => setShowJoinPopup(false)}
+          onClick={() => setShowRegisterPopup(false)}
         >
           <div
             className="w-full max-w-md rounded-lg bg-black/40 p-6 shadow-2xl"
-            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the form
+            onClick={(e) => e.stopPropagation()}
           >
             <h2 className="text-xl font-bold text-white/90 mb-4">
               Login Required
             </h2>
             <p className="text-sm text-white/70 mb-4">
-              Please sign in to join a team.
+              Please sign in to register for MetaCode.
             </p>
             <button
               type="button"
