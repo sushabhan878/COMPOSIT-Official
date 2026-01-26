@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Josefin_Sans, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Provider from "@/Provider";
+import { Analytics } from "@vercel/analytics/next";
 
 const josefinSans = Josefin_Sans({
   variable: "--font-josefin-sans",
@@ -16,7 +17,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "COMPOSIT | 2026",
-  description: "A festival celebrating the fusion of art, technology, and creativity, in the field of Metallurgy and Materials Science.",
+  description:
+    "A festival celebrating the fusion of art, technology, and creativity, in the field of Metallurgy and Materials Science.",
 };
 
 export default function RootLayout({
@@ -29,9 +31,8 @@ export default function RootLayout({
       <body
         className={`${josefinSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Provider>
-          {children}
-      </Provider>
+        <Provider>{children}</Provider>
+        <Analytics />
       </body>
     </html>
   );
