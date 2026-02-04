@@ -2,17 +2,9 @@ import connectDb from "@/lib/db";
 import Team from "@/models/team.model";
 import User from "@/models/user.model";
 import { NextRequest, NextResponse } from "next/server";
-import { ratelimit } from "@/lib/redis";
 
 export async function POST(req: NextRequest) {
   try {
-    const { success } = await ratelimit.limit("join-team-api");
-    if (!success) {
-      return NextResponse.json(
-        { message: "Rate limit exceeded" },
-        { status: 429 },
-      );
-    }
     await connectDb();
 
     const { teamId, compositId } = await req.json();
