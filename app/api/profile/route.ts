@@ -24,22 +24,30 @@ export async function GET(req: NextRequest) {
     if (!session?.user?.email) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
-    const compositId = session.user.compositId;
 
-    const user = await User.findOne(
-      {
-        compositId,
-      },
-      { password: 0 },
-    ).lean();
+    // Try to find user by compositId first, then fall back to email
+    const compositId = session.user.compositId;
+    const userQuery = compositId
+      ? { compositId }
+      : { email: session.user.email };
+
+    const user = await User.findOne(userQuery, { password: 0 }).lean();
 
     if (!user) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
 
-    const teams = await Team.find({
-      $or: [{ leaderId: compositId }, { "members.compositId": compositId }],
-    }).lean();
+    // Use the actual compositId from the database user object
+    const actualCompositId = user.compositId;
+
+    const teams = actualCompositId
+      ? await Team.find({
+          $or: [
+            { leaderId: actualCompositId },
+            { "members.compositId": actualCompositId },
+          ],
+        }).lean()
+      : [];
 
     return NextResponse.json(
       {
@@ -49,7 +57,11 @@ export async function GET(req: NextRequest) {
       { status: 200 },
     );
   } catch (error) {
-    console.error(error);
+    console.error("Profile API Error:", error);
+    console.error(
+      "Error stack:",
+      error instanceof Error ? error.stack : "No stack trace",
+    );
     return NextResponse.json(
       { message: "Internal server error" },
       { status: 500 },
