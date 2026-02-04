@@ -3,9 +3,17 @@ import connectDb from "@/lib/db";
 import User from "@/models/user.model";
 import { generateOTP, hashOTP } from "@/lib/otp";
 import { sendOTPEmail } from "@/lib/mail";
+import { ratelimit } from "@/lib/redis";
 
 export async function POST(req: Request) {
   try {
+    const { success } = await ratelimit.limit("send-otp-api");
+    if (!success) {
+      return NextResponse.json(
+        { message: "Rate limit exceeded" },
+        { status: 429 },
+      );
+    }
     const { name, email } = await req.json();
     await connectDb();
 
@@ -15,7 +23,7 @@ export async function POST(req: Request) {
     if (user?.isVerified) {
       return NextResponse.json(
         { message: "User already exists. Please login." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 

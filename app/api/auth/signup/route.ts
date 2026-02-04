@@ -3,6 +3,7 @@ import { hashOTP } from "@/lib/otp";
 import User from "@/models/user.model";
 import bcrypt from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
+import { ratelimit } from "@/lib/redis";
 
 function generateCompositID() {
   const prefix = "CMP-26-";
@@ -36,6 +37,13 @@ function getSARankByReferrals(referrals: number) {
 
 export async function POST(req: NextRequest) {
   try {
+    const { success } = await ratelimit.limit("signup-api");
+    if (!success) {
+      return NextResponse.json(
+        { message: "Rate limit exceeded" },
+        { status: 429 },
+      );
+    }
     await connectDb();
 
     // We accept OTP and Password together here
@@ -45,7 +53,7 @@ export async function POST(req: NextRequest) {
     if (!password || password.length < 6) {
       return NextResponse.json(
         { message: "Password too short" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -55,14 +63,14 @@ export async function POST(req: NextRequest) {
     if (!user) {
       return NextResponse.json(
         { message: "Email not found. Restart signup." },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
     if (user.isVerified && user.password) {
       return NextResponse.json(
         { message: "User already registered." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -70,7 +78,7 @@ export async function POST(req: NextRequest) {
     if (!user.otp || !user.otpExpires || user.otpExpires < new Date()) {
       return NextResponse.json(
         { message: "OTP expired. Please request a new one." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -90,14 +98,14 @@ export async function POST(req: NextRequest) {
         const updatedSA = await User.findOneAndUpdate(
           { _id: sa._id },
           { $inc: { numberOfReferrals: 1 } },
-          { new: true }
+          { new: true },
         );
         if (updatedSA) {
           const newRank = getSARankByReferrals(updatedSA.numberOfReferrals);
           if (newRank && newRank !== updatedSA.SARank) {
             await User.updateOne(
               { _id: updatedSA._id },
-              { $set: { SARank: newRank } }
+              { $set: { SARank: newRank } },
             );
           }
         }
@@ -125,7 +133,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(
       { message: "Registration successful", user },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error: any) {
     console.error("Signup Error:", error);

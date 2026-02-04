@@ -3,9 +3,17 @@ import connectDb from "@/lib/db";
 import Team from "@/models/team.model";
 import User from "@/models/user.model";
 import { NextRequest, NextResponse } from "next/server";
+import { ratelimit } from "@/lib/redis";
 
 export async function GET(req: NextRequest) {
   try {
+    const { success } = await ratelimit.limit("profile-api");
+    if (!success) {
+      return NextResponse.json(
+        { message: "Rate limit exceeded" },
+        { status: 429 },
+      );
+    }
     await connectDb();
     const session = await auth();
     if (!session?.user?.email) {
@@ -17,7 +25,7 @@ export async function GET(req: NextRequest) {
       {
         compositId,
       },
-      { password: 0 }
+      { password: 0 },
     ).lean();
 
     if (!user) {
@@ -33,13 +41,13 @@ export async function GET(req: NextRequest) {
         user,
         teams,
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error(error);
     return NextResponse.json(
       { message: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

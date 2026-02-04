@@ -2,9 +2,17 @@ import connectDb from "@/lib/db";
 import Team from "@/models/team.model";
 import User from "@/models/user.model";
 import { NextRequest, NextResponse } from "next/server";
+import { ratelimit } from "@/lib/redis";
 
 export async function POST(req: NextRequest) {
   try {
+    const { success } = await ratelimit.limit("join-team-api");
+    if (!success) {
+      return NextResponse.json(
+        { message: "Rate limit exceeded" },
+        { status: 429 },
+      );
+    }
     await connectDb();
 
     const { teamId, compositId } = await req.json();
@@ -27,13 +35,13 @@ export async function POST(req: NextRequest) {
 
     // Check if already in team
     const alreadyInTeam = team.members.some(
-      (m: any) => m.compositId === compositId
+      (m: any) => m.compositId === compositId,
     );
 
     if (alreadyInTeam) {
       return NextResponse.json(
         { message: "User already in the team" },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
@@ -48,7 +56,7 @@ export async function POST(req: NextRequest) {
           },
         },
       },
-      { new: true }
+      { new: true },
     );
 
     return NextResponse.json(
@@ -56,13 +64,13 @@ export async function POST(req: NextRequest) {
         message: "Member added successfully",
         team: updatedTeam,
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("Add member error:", error);
     return NextResponse.json(
       { message: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

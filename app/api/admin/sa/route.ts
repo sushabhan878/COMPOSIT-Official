@@ -2,9 +2,17 @@ import { auth } from "@/auth";
 import connectDb from "@/lib/db";
 import User from "@/models/user.model";
 import { NextResponse } from "next/server";
+import { ratelimit } from "@/lib/redis";
 
 export async function GET(req: Request) {
   try {
+    const { success } = await ratelimit.limit("admin-sa-api");
+    if (!success) {
+      return NextResponse.json(
+        { error: "Rate limit exceeded" },
+        { status: 429 },
+      );
+    }
     const session = await auth();
 
     if (!session || session.user?.role !== "admin") {
@@ -135,7 +143,7 @@ export async function GET(req: Request) {
     console.error("Admin SA fetch error:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

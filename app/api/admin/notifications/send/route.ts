@@ -6,12 +6,23 @@ import Notification from "@/models/notification.model";
 import { remark } from "remark";
 import html from "remark-html";
 import { sendBulkEmail } from "@/lib/bulkEmail";
+import { ratelimit } from "@/lib/redis";
 
 /* --------------------------------
  * POST: Send Bulk Notification
  * --------------------------------*/
 export async function POST(req: Request) {
   try {
+    /* -----------------------------
+     * Rate Limit
+     ------------------------------*/
+    const { success } = await ratelimit.limit("admin-notifications-api");
+    if (!success) {
+      return NextResponse.json(
+        { error: "Rate limit exceeded" },
+        { status: 429 },
+      );
+    }
     /* -----------------------------
      * Auth (Admin only)
      ------------------------------*/
@@ -36,14 +47,14 @@ export async function POST(req: Request) {
     if (!category || !subject || !bodyMarkdown) {
       return NextResponse.json(
         { error: "Missing required fields" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (category === "event" && !eventId) {
       return NextResponse.json(
         { error: "eventId is required for event notifications" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -61,7 +72,7 @@ export async function POST(req: Request) {
     } else if (category === "event") {
       users = await User.find(
         { registeredEvents: eventId },
-        { email: 1, _id: 0 }
+        { email: 1, _id: 0 },
       );
     }
 
@@ -70,7 +81,7 @@ export async function POST(req: Request) {
     if (recipients.length === 0) {
       return NextResponse.json(
         { error: "No recipients found" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -133,7 +144,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(
       { error: "Internal Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

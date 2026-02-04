@@ -3,6 +3,7 @@ import { sendWelcomeSAEmail } from "@/lib/welcomeSa";
 import User from "@/models/user.model";
 import bcrypt from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
+import { ratelimit } from "@/lib/redis";
 
 function generateSAId() {
   const prefix = "SA-2026-";
@@ -32,6 +33,13 @@ function generateReferralLink(saId: string) {
 
 export async function POST(req: NextRequest) {
   try {
+    const { success } = await ratelimit.limit("signup-sa-api");
+    if (!success) {
+      return NextResponse.json(
+        { message: "Rate limit exceeded" },
+        { status: 429 },
+      );
+    }
     await connectDb();
 
     const {
@@ -50,7 +58,7 @@ export async function POST(req: NextRequest) {
     if (!password || password.length < 6) {
       return NextResponse.json(
         { message: "Password too short" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -58,7 +66,7 @@ export async function POST(req: NextRequest) {
     if (existing) {
       return NextResponse.json(
         { message: "User already exists" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
