@@ -2,17 +2,9 @@ import { auth } from "@/auth";
 import connectDb from "@/lib/db";
 import Team from "@/models/team.model";
 import { NextResponse } from "next/server";
-import { ratelimit } from "@/lib/redis";
 
 export async function GET(req: Request) {
   try {
-    const { success } = await ratelimit.limit("admin-events-api");
-    if (!success) {
-      return NextResponse.json(
-        { error: "Rate limit exceeded" },
-        { status: 429 },
-      );
-    }
     const session = await auth();
 
     if (!session || session.user?.role !== "admin") {

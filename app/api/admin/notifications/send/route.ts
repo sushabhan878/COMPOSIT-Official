@@ -6,23 +6,12 @@ import Notification from "@/models/notification.model";
 import { remark } from "remark";
 import html from "remark-html";
 import { sendBulkEmail } from "@/lib/bulkEmail";
-import { ratelimit } from "@/lib/redis";
 
 /* --------------------------------
  * POST: Send Bulk Notification
  * --------------------------------*/
 export async function POST(req: Request) {
   try {
-    /* -----------------------------
-     * Rate Limit
-     ------------------------------*/
-    const { success } = await ratelimit.limit("admin-notifications-api");
-    if (!success) {
-      return NextResponse.json(
-        { error: "Rate limit exceeded" },
-        { status: 429 },
-      );
-    }
     /* -----------------------------
      * Auth (Admin only)
      ------------------------------*/
