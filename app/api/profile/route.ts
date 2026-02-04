@@ -7,10 +7,15 @@ import { ratelimit } from "@/lib/redis";
 
 export async function GET(req: NextRequest) {
   try {
-    const { success } = await ratelimit.limit("profile-api");
+    // Use IP-based rate limiting instead of global
+    const ip =
+      req.headers.get("x-forwarded-for") ||
+      req.headers.get("x-real-ip") ||
+      "anonymous";
+    const { success } = await ratelimit.limit(ip);
     if (!success) {
       return NextResponse.json(
-        { message: "Rate limit exceeded" },
+        { message: "Rate limit exceeded. Please try again in a minute." },
         { status: 429 },
       );
     }

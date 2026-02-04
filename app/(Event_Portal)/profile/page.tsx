@@ -59,14 +59,22 @@ const ProfileClientWrapper = () => {
           ([eventName]) => ({
             id: eventName,
             name: eventName,
-          })
+          }),
         );
 
         setEvents(eventList);
         setTeams(teams);
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error("Profile fetch failed", err);
+      // Show user-friendly error for rate limiting
+      if (err?.response?.status === 429) {
+        alert("Too many requests. Please wait a minute and try again.");
+      } else if (err?.response?.status === 401) {
+        alert("Please sign in to view your profile.");
+      } else {
+        alert("Failed to load profile. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
