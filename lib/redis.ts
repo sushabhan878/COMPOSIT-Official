@@ -5,9 +5,6 @@ export const redis = new Redis({
   token: process.env.UPSTASH_REDIS_REST_TOKEN,
 });
 
-await redis.set("foo", "bar");
-await redis.get("foo");
-
 export const ratelimit = new Ratelimit({
   redis: redis,
   limiter: Ratelimit.fixedWindow(5, "5 s"),
