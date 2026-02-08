@@ -11,22 +11,23 @@ export async function GET(req: NextRequest) {
     if (!session?.user?.email) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
-    const compositId = session.user.compositId;
+    const email = session.user.email;
 
-    const user = await User.findOne(
-      {
-        compositId,
-      },
-      { password: 0 },
-    ).lean();
+    const user = await User.findOne({ email }, { password: 0 }).lean();
 
     if (!user) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
 
-    const teams = await Team.find({
-      $or: [{ leaderId: compositId }, { "members.compositId": compositId }],
-    }).lean();
+    const userCompositId = user.compositId;
+    const teams = userCompositId
+      ? await Team.find({
+          $or: [
+            { leaderId: userCompositId },
+            { "members.compositId": userCompositId },
+          ],
+        }).lean()
+      : [];
 
     return NextResponse.json(
       {
