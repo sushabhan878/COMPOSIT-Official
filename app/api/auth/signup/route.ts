@@ -3,7 +3,6 @@ import { hashOTP } from "@/lib/otp";
 import User from "@/models/user.model";
 import bcrypt from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
-import { ratelimit } from "@/lib/redis";
 
 function generateCompositID() {
   const prefix = "CMP-26-";
@@ -37,13 +36,6 @@ function getSARankByReferrals(referrals: number) {
 
 export async function POST(req: NextRequest) {
   try {
-    const { success } = await ratelimit.limit("signup-api");
-    if (!success) {
-      return NextResponse.json(
-        { message: "Rate limit exceeded" },
-        { status: 429 },
-      );
-    }
     await connectDb();
 
     // We accept OTP and Password together here
