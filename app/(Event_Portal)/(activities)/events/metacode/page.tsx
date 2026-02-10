@@ -277,6 +277,23 @@ const MetacadePage = () => {
   const handleRegister = async () => {
     setRegisterMessage(null);
 
+    if (session.status !== "authenticated") {
+      setRegisterMessage({
+        type: "info",
+        text: "Please sign in to register for MetaCode.",
+      });
+      signIn();
+      return;
+    }
+
+    if (!session.data?.user?.compositId || !session.data?.user?.name) {
+      setRegisterMessage({
+        type: "error",
+        text: "❌ Your COMPOSIT profile is incomplete. Please update your profile and try again.",
+      });
+      return;
+    }
+
     try {
       setRegisterLoading(true);
 
@@ -312,11 +329,16 @@ const MetacadePage = () => {
         const errorText =
           typeof errorData.error === "string"
             ? errorData.error
-            : errorData.error?.message || "";
+            : errorData.error?.message || errorData.message || "";
 
         if (errorText.includes("already")) {
           errorMessage = "❌ You are already registered for this event.";
         } else if (errorText) {
+          errorMessage = `❌ ${errorText}`;
+        }
+      } else if (error.response?.status === 404) {
+        const errorText = error.response?.data?.message;
+        if (errorText) {
           errorMessage = `❌ ${errorText}`;
         }
       } else if (error.response?.status === 401) {

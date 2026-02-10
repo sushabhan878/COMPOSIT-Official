@@ -79,6 +79,7 @@ export async function POST(req: NextRequest) {
       state,
       password: hashedPassword,
       saId,
+      compositId: saId,
       referralLink,
       numberOfReferrals: 0,
       SARank: null,

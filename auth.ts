@@ -34,6 +34,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           if (!user) {
             throw new Error("SIGNUP_REQUIRED");
           }
+          if (user.role === "sa" && !user.compositId && user.saId) {
+            user.compositId = user.saId;
+            await user.save();
+          }
           const isPasswordValid = await bcrypt.compare(password, user.password);
           if (!isPasswordValid) {
             throw new Error("Invalid password");

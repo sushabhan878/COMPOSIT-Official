@@ -410,9 +410,32 @@ const IdeathonPage = () => {
   const handleRegisterTeam = async () => {
     setRegisterMessage(null);
 
+    const leaderName = session?.data?.user?.name;
+    const leaderId = session?.data?.user?.compositId;
+    const filledMembers = teamMembers.filter(
+      (member) => member.name.trim() || member.compositId.trim(),
+    );
+    let finalTeamName = teamName.trim();
+    let finalMembers = filledMembers;
+
+    if (filledMembers.length === 0) {
+      if (!leaderName || !leaderId) {
+        setRegisterMessage({
+          type: "error",
+          text: "❌ Please sign in to register for this event.",
+        });
+        return;
+      }
+
+      finalMembers = [{ name: leaderName, compositId: leaderId }];
+      if (!finalTeamName) {
+        finalTeamName = `Ideathon_${leaderId}`;
+      }
+    }
+
     // Validation
 
-    if (!teamName.trim()) {
+    if (!finalTeamName) {
       setRegisterMessage({
         type: "error",
         text: "Team name is required.",
@@ -420,7 +443,7 @@ const IdeathonPage = () => {
       return;
     }
 
-    if (teamMembers.some((m) => !m.name.trim() || !m.compositId.trim())) {
+    if (finalMembers.some((m) => !m.name.trim() || !m.compositId.trim())) {
       setRegisterMessage({
         type: "error",
         text: "Please fill in all member names and COMPOSIT IDs.",
@@ -431,10 +454,10 @@ const IdeathonPage = () => {
     try {
       setRegisterLoading(true);
       const res = await axios.post("/api/event/create-team", {
-        teamName,
+        teamName: finalTeamName,
         event: "Ideathon",
-        leaderId: session?.data?.user?.compositId,
-        members: teamMembers.map((member) => ({
+        leaderId,
+        members: finalMembers.map((member) => ({
           name: member.name,
           compositId: member.compositId,
         })),
