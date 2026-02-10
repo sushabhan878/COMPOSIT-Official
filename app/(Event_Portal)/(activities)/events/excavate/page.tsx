@@ -457,18 +457,28 @@ const ExcavatePage = () => {
     let finalTeamName = teamName.trim();
     let finalMembers = filledMembers;
 
-    if (filledMembers.length === 0) {
-      if (!leaderName || !leaderId) {
-        setRegisterMessage({
-          type: "error",
-          text: "❌ Please sign in to register for this event.",
-        });
-        return;
-      }
+    if (!leaderName || !leaderId) {
+      setRegisterMessage({
+        type: "error",
+        text: "❌ Please sign in to register for this event.",
+      });
+      return;
+    }
 
+    if (filledMembers.length === 0) {
       finalMembers = [{ name: leaderName, compositId: leaderId }];
       if (!finalTeamName) {
         finalTeamName = `Excavate_${leaderId}`;
+      }
+    } else {
+      const hasLeader = filledMembers.some(
+        (member) => member.compositId.trim() === leaderId,
+      );
+      if (!hasLeader) {
+        finalMembers = [
+          { name: leaderName, compositId: leaderId },
+          ...filledMembers,
+        ];
       }
     }
 
