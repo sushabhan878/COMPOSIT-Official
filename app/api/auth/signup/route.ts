@@ -28,8 +28,8 @@ async function generateUniqueCompositID() {
 
 function getSARankByReferrals(referrals: number) {
   if (referrals >= 50) return "Platinum";
-  if (referrals >= 35) return "Gold";
-  if (referrals >= 20) return "Silver";
+  if (referrals >= 25) return "Gold";
+  if (referrals >= 15) return "Silver";
   if (referrals >= 1) return "Bronze";
   return null;
 }
