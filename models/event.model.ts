@@ -3,14 +3,15 @@ import mongoose from "mongoose";
 interface IEvent {
   _id?: mongoose.Types.ObjectId;
   eventName:
-    | "Technova"
-    | "Enigma"
-    | "Excavate"
-    | "Metaclix"
-    | "Case Study"
-    | "Ideathon"
-    | "Meta Code"
-    | "Cadvolution";
+  | "Technova"
+  | "Enigma"
+  | "Excavate"
+  | "Metaclix"
+  | "Case Study"
+  | "Ideathon"
+  | "Meta Code"
+  | "Cadvolution"
+  | "Ore2Equity";
   eventId: string;
   registrations: { userId: mongoose.Types.ObjectId }[];
 }
@@ -28,6 +29,7 @@ const eventSchema = new mongoose.Schema<IEvent>(
         "Ideathon",
         "Meta Code",
         "Cadvolution",
+        "Ore2Equity",
       ],
     },
     eventId: {
@@ -40,7 +42,7 @@ const eventSchema = new mongoose.Schema<IEvent>(
       },
     ],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const Event =

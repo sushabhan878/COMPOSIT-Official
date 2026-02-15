@@ -12,6 +12,7 @@ const EVENT_PREFIX_MAP: Record<string, string> = {
   Ideathon: "IDT",
   Metacli: "MTX",
   MetaCode: "MTC",
+  Ore2Equity: "O2E",
 };
 
 export function generateTeamId(event: string): string {

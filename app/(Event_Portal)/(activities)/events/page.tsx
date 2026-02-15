@@ -67,6 +67,14 @@ const events = [
       "Design creative CAD models, justify your choices, and develop solutions for real-world challenges.",
     href: "events/cadvolution",
   },
+  {
+    imageUrl:
+      "https://images.unsplash.com/photo-1559526324-593bc073d938?auto=format&fit=crop&w=1200&q=80",
+    title: "Ore2Equity",
+    description:
+      "A multi-round finance & economics event testing analytical ability, valuation logic and strategic presentation.",
+    href: "events/ore2equity",
+  },
 ];
 
 const Events = () => {
