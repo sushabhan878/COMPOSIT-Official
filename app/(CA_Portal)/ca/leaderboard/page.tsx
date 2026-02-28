@@ -50,7 +50,9 @@ const Leaderboard = () => {
         setTopAmbassadors(data.topAmbassadors || []);
         setYourData(data.currentUser || null);
       } catch (err) {
-        setError("Failed to fetch leaderboard. Please refresh.");
+        setError(
+          "Login first to see leaderboard data. / Failed to fetch leaderboard. Please refresh.",
+        );
       } finally {
         setLoading(false);
       }
