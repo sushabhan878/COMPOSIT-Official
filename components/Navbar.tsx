@@ -102,6 +102,15 @@ const Navbar = () => {
               </div>
             ))}
 
+            {isAuthenticated && user?.role === "sa" && (
+              <Link
+                href="/ca"
+                className="px-5 py-2 rounded-4xl text-base lg:text-lg font-medium border border-amber-300/40 bg-amber-400/20 text-amber-200 shadow-[0_10px_30px_rgba(251,191,36,0.25)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-amber-400/30 hover:text-amber-100"
+              >
+                Switch to SA Portal
+              </Link>
+            )}
+
             {/* Profile / Auth */}
             <div
               className="relative shrink-0"
@@ -110,7 +119,7 @@ const Navbar = () => {
             >
               {isAuthenticated ? (
                 <button
-                  className={`px-4 py-2 rounded-4xl text-lg font-light transition-all duration-300 border block flex items-center gap-2 ${
+                  className={`px-4 py-2 rounded-4xl text-lg font-light transition-all duration-300 border flex items-center gap-2 ${
                     pathname.startsWith("/profile")
                       ? "border-[#5c0a0a] text-white/90 bg-white/10 shadow-[0_10px_30px_rgba(92,10,10,0.35)]"
                       : "border-transparent text-white/90 hover:border-[#5c0a0a] hover:-translate-y-0.5 hover:shadow-[0_12px_30px_rgba(92,10,10,0.35)]"
@@ -229,6 +238,15 @@ const Navbar = () => {
               <div className="bg-white/5 rounded-xl mt-2 py-2 border border-white/10">
                 {isAuthenticated ? (
                   <>
+                    {user?.role === "sa" && (
+                      <Link
+                        href="/ca"
+                        onClick={() => setIsMenuOpen(false)}
+                        className="mx-2 mb-2 rounded-lg border border-amber-300/40 bg-amber-400/20 px-4 py-2 text-sm font-medium text-amber-200 block transition-all duration-200 hover:bg-amber-400/30"
+                      >
+                        Switch to SA Portal
+                      </Link>
+                    )}
                     <Link
                       href="/profile"
                       onClick={() => setIsMenuOpen(false)}
