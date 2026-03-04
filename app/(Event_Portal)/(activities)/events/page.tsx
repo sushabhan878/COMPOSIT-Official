@@ -54,19 +54,19 @@ const events = [
   {
     imageUrl:
       "https://res.cloudinary.com/dohx1bvom/image/upload/v1766912210/bailey-mahon-2b6K4uy0Hbc-unsplash_bh9sny.jpg",
-    title: "Metaclix",
+    title: "Refract",
     description:
       "Capture the beauty of science and technology through photography and compete in a dynamic contest.",
-    href: "events/metaclix",
+    href: "events/refract",
   },
-  {
-    imageUrl:
-      "https://res.cloudinary.com/dohx1bvom/image/upload/v1766912197/tom-claes-DkAEPVsK2_8-unsplash_pji8mu.jpg",
-    title: "Cadvolution",
-    description:
-      "Design creative CAD models, justify your choices, and develop solutions for real-world challenges.",
-    href: "events/cadvolution",
-  },
+  // {
+  //   imageUrl:
+  //     "https://res.cloudinary.com/dohx1bvom/image/upload/v1766912197/tom-claes-DkAEPVsK2_8-unsplash_pji8mu.jpg",
+  //   title: "Cadvolution",
+  //   description:
+  //     "Design creative CAD models, justify your choices, and develop solutions for real-world challenges.",
+  //   href: "events/cadvolution",
+  // },
   {
     imageUrl:
       "https://images.unsplash.com/photo-1559526324-593bc073d938?auto=format&fit=crop&w=1200&q=80",

@@ -10,7 +10,7 @@ const EVENT_PREFIX_MAP: Record<string, string> = {
   Enigma: "ENG",
   Excavate: "EXC",
   Ideathon: "IDT",
-  Metacli: "MTX",
+  Refract: "REF",
   MetaCode: "MTC",
   Ore2Equity: "O2E",
 };
@@ -65,22 +65,25 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    const teamId = await generateUniqueTeamId(event);
-
     const teamDetails = await Team.findOne({ leaderId, event });
 
-    if (teamDetails) {
-      return NextResponse.json(
-        {
-          error: {
-            message: "Leader has already created a team for this event",
+    if (event === "Refract") {
+      if (teamDetails) {
+        return NextResponse.json(
+          {
+            error: {
+              message: "You have already registered for Refract",
+            },
           },
-        },
-        { status: 400 },
-      );
-    } else {
+          { status: 409 },
+        );
+      }
+
+      const normalizedTeamName = "Refract_Individual";
+      const teamId = await generateUniqueTeamId(event);
+
       const team = await Team.create({
-        teamName,
+        teamName: normalizedTeamName,
         teamId,
         leaderId,
         event,
@@ -95,6 +98,35 @@ export async function POST(req: NextRequest) {
         { status: 201 },
       );
     }
+
+    if (teamDetails) {
+      return NextResponse.json(
+        {
+          error: {
+            message: "Leader has already created a team for this event",
+          },
+        },
+        { status: 400 },
+      );
+    }
+
+    const teamId = await generateUniqueTeamId(event);
+
+    const team = await Team.create({
+      teamName,
+      teamId,
+      leaderId,
+      event,
+      members: members.map((m: any) => ({
+        name: m.name,
+        compositId: m.compositId,
+      })),
+    });
+
+    return NextResponse.json(
+      { message: "Team created successfully", team },
+      { status: 201 },
+    );
   } catch (error: any) {
     console.error(error);
     return NextResponse.json(
