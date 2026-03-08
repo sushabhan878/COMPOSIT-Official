@@ -10,6 +10,12 @@ const AccommodationBookingPage = async () => {
     redirect("/signin");
   }
 
+  const { compositId } = session.user;
+
+  if (!compositId) {
+    redirect("/signin");
+  }
+
   return (
     <main className="relative w-full overflow-hidden py-20 mt-16 lg:py-28">
       <div className="mx-auto max-w-7xl px-[5vw]">
@@ -29,7 +35,7 @@ const AccommodationBookingPage = async () => {
               Booking Details
             </h2>
 
-            <AccommodationForm compositId={session.user.id} />
+            <AccommodationForm compositId={compositId} />
           </div>
 
           <aside className="lg:col-span-5 rounded-3xl border border-amber-400/30 bg-white/5 p-7 md:p-9">

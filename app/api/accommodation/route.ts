@@ -1,6 +1,7 @@
 import connectDb from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 import Accommodation from "@/models/accommodation.model";
+import User from "@/models/user.model";
 import cloudinary from "@/lib/cloudinary";
 
 // Upload Screenshot of payment and create accommodation request
@@ -95,5 +96,68 @@ export async function POST(req: NextRequest) {
   return NextResponse.json(
     { message: "Accommodation request created successfully", accommodation },
     { status: 201 },
+  );
+}
+
+export async function GET(req: NextRequest) {
+  await connectDb();
+
+  const accommodations = await Accommodation.find()
+    .sort({ createdAt: -1 })
+    .lean();
+
+  // enrich with user info if available
+  const mapped = await Promise.all(
+    accommodations.map(async (a: any) => {
+      const user = await User.findOne({ compositId: a.compositId })
+        .lean()
+        .catch(() => null);
+
+      return {
+        _id: a._id,
+        compositId: a.compositId,
+        phone: a.phone,
+        date: a.date,
+        transactionId: a.transactionId,
+        screenshot: a.screenshot,
+        createdAt: a.createdAt,
+        name: user?.name || null,
+        hallName: a.hallName || user?.collegeName || null,
+        isApproved: a.isApproved || false,
+      };
+    }),
+  );
+
+  return NextResponse.json({ accommodations: mapped }, { status: 200 });
+}
+
+export async function PATCH(req: NextRequest) {
+  await connectDb();
+
+  const { accommodationId } = await req.json();
+
+  if (!accommodationId) {
+    return NextResponse.json(
+      { message: "Accommodation ID is required" },
+      { status: 400 },
+    );
+  }
+
+  const accommodation = await Accommodation.findByIdAndUpdate(
+    accommodationId,
+    { isApproved: true },
+    { new: true },
+  );
+
+  if (!accommodation) {
+    return NextResponse.json(
+      { message: "Accommodation not found" },
+      { status: 404 },
+    );
+  }
+
+  return NextResponse.json(
+    { message: "Payment approved successfully", accommodation },
+    { status: 200 },
   );
 }

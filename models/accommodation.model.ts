@@ -16,6 +16,10 @@ const accommodationSchema = new mongoose.Schema<IAccommodation>(
       type: String,
       required: true,
     },
+    hallName: {
+      type: String,
+      required: false,
+    },
     transactionId: {
       type: String,
       required: true,
@@ -23,6 +27,10 @@ const accommodationSchema = new mongoose.Schema<IAccommodation>(
     screenshot: {
       type: String,
       required: true,
+    },
+    isApproved: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true },
