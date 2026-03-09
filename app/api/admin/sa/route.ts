@@ -94,6 +94,7 @@ export async function GET(req: Request) {
       {
         $project: {
           name: 1,
+          collegeName: 1,
           email: 1,
           mobile: 1,
           saId: 1,

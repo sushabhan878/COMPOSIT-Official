@@ -124,6 +124,9 @@ const ManageSAs = () => {
                     <th className="px-4 py-4 text-left text-sm font-semibold text-white/90 min-w-[220px]">
                       Name
                     </th>
+                    <th className="px-4 py-4 text-left text-sm font-semibold text-white/90 min-w-[220px]">
+                      College
+                    </th>
                     <th className="px-4 py-4 text-left text-sm font-semibold text-white/90">
                       Email
                     </th>
@@ -155,7 +158,7 @@ const ManageSAs = () => {
                   {sas.length === 0 ? (
                     <tr>
                       <td
-                        colSpan={9}
+                        colSpan={10}
                         className="px-4 py-8 text-center text-white/70"
                       >
                         No SAs found
@@ -169,6 +172,9 @@ const ManageSAs = () => {
                       >
                         <td className="px-4 py-4 text-base text-white font-semibold">
                           {sa.name}
+                        </td>
+                        <td className="px-4 py-4 text-sm text-white/80">
+                          {sa.collegeName || "N/A"}
                         </td>
                         <td className="px-4 py-4 text-sm text-white/80">
                           {sa.email}
@@ -188,7 +194,7 @@ const ManageSAs = () => {
                         <td className="px-4 py-4 text-center">
                           <span
                             className={`inline-flex px-2.5 py-1 text-xs rounded-full font-semibold uppercase tracking-wide ${getRankClasses(
-                              sa.SARank
+                              sa.SARank,
                             )}`}
                           >
                             {sa.SARank || "N/A"}
