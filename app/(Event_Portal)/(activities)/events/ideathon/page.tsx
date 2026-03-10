@@ -626,8 +626,8 @@ const IdeathonPage = () => {
                 type="button"
                 onClick={() => {
                   const link = document.createElement("a");
-                  link.href = "/Ideathon_2026.pdf"; // Update with the actual path to the PDF
-                  link.download = "Rules_and_Regulations.pdf";
+                  link.href = "/Ideathon Event Draft.pdf"; // Update with the actual path to the PDF
+                  link.download = "Ideathon_Rules_and_Regulations.pdf";
                   link.click();
                 }}
                 className="flex-1 rounded-xl border border-white/30 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg bg-[#f4b000] hover:bg-[#ffbf1f]"

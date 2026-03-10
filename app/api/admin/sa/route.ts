@@ -40,40 +40,12 @@ export async function GET(req: Request) {
     const sas = await User.aggregate([
       { $match: matchStage },
 
-      // 🔗 Count users referred by SA
-      {
-        $lookup: {
-          from: "users",
-          let: { saCode: "$saId" },
-          pipeline: [
-            {
-              $match: {
-                $expr: {
-                  $and: [
-                    { $eq: ["$role", "user"] },
-                    { $eq: ["$saId", "$$saCode"] },
-                  ],
-                },
-              },
-            },
-            { $project: { _id: 1 } },
-          ],
-          as: "referredUsers",
-        },
-      },
-
       // 📊 Derived fields
       {
         $addFields: {
-          referralsCount: { $size: "$referredUsers" },
+          // Keep admin dashboard consistent with the persisted referral counter.
+          referralsCount: { $ifNull: ["$numberOfReferrals", 0] },
           notifyCount: { $size: { $ifNull: ["$notifications", []] } },
-        },
-      },
-
-      // 🧹 Cleanup
-      {
-        $project: {
-          referredUsers: 0,
         },
       },
 

@@ -440,8 +440,8 @@ const EnigmaPage = () => {
                 type="button"
                 onClick={() => {
                   const link = document.createElement("a");
-                  link.href = "/ENIGMA_2026.pdf";
-                  link.download = "Rules_and_Regulations.pdf";
+                  link.href = "/Enigma Event Draft.pdf";
+                  link.download = "Enigma_Rules_and_Regulations.pdf";
                   link.click();
                 }}
                 className="w-full rounded-xl border border-white/30 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg bg-[#f4b000] hover:bg-[#ffbf1f]"

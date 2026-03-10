@@ -526,7 +526,7 @@ const RefractPage = () => {
                 type="button"
                 onClick={() => {
                   const link = document.createElement("a");
-                  link.href = "/REFRACT_EventDraft.pdf";
+                  link.href = "/Refract Event Draft.pdf";
                   link.download = "Refract_Rules_and_Guidelines.pdf";
                   link.click();
                 }}

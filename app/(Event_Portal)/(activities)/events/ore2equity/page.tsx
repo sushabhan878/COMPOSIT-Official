@@ -70,9 +70,7 @@ const Ore2EquityPage = () => {
                     Tasks may include economic analysis, valuation logic or
                     market interpretation
                   </li>
-                  <li>
-                    Submission format: PDF / PPT (specified during event)
-                  </li>
+                  <li>Submission format: PDF / PPT (specified during event)</li>
                   <li>
                     Evaluation based on clarity, reasoning and depth of analysis
                   </li>
@@ -87,8 +85,8 @@ const Ore2EquityPage = () => {
                   <li>Top teams present before the judging panel</li>
                   <li>Presentation: 6–8 minutes; Q&amp;A: 3–4 minutes</li>
                   <li>
-                    Focus on strategic thinking, justification of assumptions and
-                    communication
+                    Focus on strategic thinking, justification of assumptions
+                    and communication
                   </li>
                 </ul>
               </div>
@@ -117,8 +115,8 @@ const Ore2EquityPage = () => {
                     Team size: 1–3 members; individual participation allowed
                   </li>
                   <li>
-                    No prior finance background is mandatory, but basic awareness
-                    is recommended
+                    No prior finance background is mandatory, but basic
+                    awareness is recommended
                   </li>
                 </ul>
               </div>
@@ -239,8 +237,8 @@ const Ore2EquityPage = () => {
                 Ore2Equity is a multi-round finance and economics event designed
                 to test participants on their analytical ability, financial
                 intuition, and real-world economic thinking. The event simulates
-                the journey of transforming a raw resource (&quot;Ore&quot;) into
-                a high-value financial outcome (&quot;Equity&quot;).
+                the journey of transforming a raw resource (&quot;Ore&quot;)
+                into a high-value financial outcome (&quot;Equity&quot;).
               </p>
             </div>
 
@@ -488,9 +486,7 @@ const Ore2EquityPage = () => {
         <div className="grid gap-8 lg:grid-cols-[340px,1fr] md:grid-cols-1">
           <aside className="flex flex-col gap-6 border-b border-white/15 p-8 md:border-b-0 md:border-r">
             <div className="space-y-4">
-              <h1 className="text-4xl font-extrabold text-white">
-                Ore2Equity
-              </h1>
+              <h1 className="text-4xl font-extrabold text-white">Ore2Equity</h1>
               <p className="text-base leading-relaxed text-white/85">
                 Test your financial intuition and analytical ability. Transform
                 raw resources into high-value equity through multi-round
@@ -520,8 +516,8 @@ const Ore2EquityPage = () => {
                 type="button"
                 onClick={() => {
                   const link = document.createElement("a");
-                  link.href = "/Ore2Equity_2026.pdf";
-                  link.download = "Rules_and_Regulations.pdf";
+                  link.href = "/Ore2Equity Event Draft.pdf";
+                  link.download = "Ore2Equity_Rules_and_Regulations.pdf";
                   link.click();
                 }}
                 className="flex-1 rounded-xl border border-white/30 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg bg-[#f4b000] hover:bg-[#ffbf1f]"
@@ -548,10 +544,11 @@ const Ore2EquityPage = () => {
                     key={tab.id}
                     type="button"
                     onClick={() => setActiveTab(tab.id)}
-                    className={`relative px-4 py-2 text-center text-sm font-bold uppercase tracking-wide transition ${isActive
+                    className={`relative px-4 py-2 text-center text-sm font-bold uppercase tracking-wide transition ${
+                      isActive
                         ? "text-[#f4b000]"
                         : "text-white hover:bg-white/15"
-                      }`}
+                    }`}
                   >
                     {tab.label}
                   </button>
@@ -560,8 +557,9 @@ const Ore2EquityPage = () => {
               <div
                 className="absolute bottom-0 left-0 h-1 w-1/5 bg-[#f4b000] transition-transform duration-300 hidden md:block"
                 style={{
-                  transform: `translateX(${tabs.findIndex((tab) => tab.id === activeTab) * 100
-                    }%)`,
+                  transform: `translateX(${
+                    tabs.findIndex((tab) => tab.id === activeTab) * 100
+                  }%)`,
                 }}
               />
             </nav>
@@ -655,10 +653,11 @@ const Ore2EquityPage = () => {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4 }}
-                  className={`rounded-md border px-3 py-2 text-sm ${registerMessage.type === "success"
+                  className={`rounded-md border px-3 py-2 text-sm ${
+                    registerMessage.type === "success"
                       ? "border-emerald-800/40 bg-emerald-950/40 text-emerald-200"
                       : "border-red-800/40 bg-red-950/40 text-red-200"
-                    }`}
+                  }`}
                 >
                   {registerMessage.text}
                 </motion.div>
@@ -730,9 +729,7 @@ const Ore2EquityPage = () => {
             className="w-full max-w-md rounded-lg bg-black/40 p-6 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 className="text-xl font-bold text-white/90 mb-4">
-              Join Team
-            </h2>
+            <h2 className="text-xl font-bold text-white/90 mb-4">Join Team</h2>
             <form className="space-y-4">
               <div>
                 <label className="block text-sm text-white/70 mb-1">
@@ -751,10 +748,11 @@ const Ore2EquityPage = () => {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4 }}
-                  className={`rounded-md border px-3 py-2 text-sm ${joinMessage.type === "success"
+                  className={`rounded-md border px-3 py-2 text-sm ${
+                    joinMessage.type === "success"
                       ? "border-emerald-800/40 bg-emerald-950/40 text-emerald-200"
                       : "border-red-800/40 bg-red-950/40 text-red-200"
-                    }`}
+                  }`}
                 >
                   {joinMessage.text}
                 </motion.div>
