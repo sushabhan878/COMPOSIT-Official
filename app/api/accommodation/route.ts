@@ -119,7 +119,7 @@ export async function GET(req: NextRequest) {
         screenshot: a.screenshot,
         createdAt: a.createdAt,
         name: user?.name || null,
-        hallName: a.hallName || user?.collegeName || null,
+        hallName: a.hallName || null,
         isApproved: a.isApproved || false,
       };
     }),
