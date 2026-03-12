@@ -20,10 +20,6 @@ const accommodationSchema = new mongoose.Schema<IAccommodation>(
       type: String,
       required: false,
     },
-    transactionId: {
-      type: String,
-      required: true,
-    },
     screenshot: {
       type: String,
       required: true,

@@ -45,18 +45,14 @@ const AccommodationBookingPage = async () => {
 
             <div className="mt-6 flex justify-center rounded-2xl bg-white p-5">
               <img
-                src="https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=upi%3Acomposit2026%40ybl"
+                src="/qr.jpeg"
                 alt="Accommodation payment QR code"
-                width={260}
-                height={260}
+                width={360}
+                height={360}
               />
             </div>
 
             <div className="mt-6 space-y-2 text-sm text-gray-300">
-              <p>
-                <span className="text-amber-300">UPI ID:</span> composit2026@ybl
-              </p>
-
               <p>
                 <span className="text-amber-300">Amount:</span>
                 ₹300 (1 day pass) / ₹800 (3 day pass)

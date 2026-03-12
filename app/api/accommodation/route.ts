@@ -65,10 +65,9 @@ export async function POST(req: NextRequest) {
   const compositId = formData.get("compositId") as string;
   const phone = formData.get("phone") as string;
   const date = formData.get("date") as string;
-  const transactionId = formData.get("transactionId") as string;
   const file = formData.get("screenshot") as File;
 
-  if (!compositId || !phone || !date || !transactionId || !file) {
+  if (!compositId || !phone || !date || !file) {
     return NextResponse.json(
       { message: "Missing required fields" },
       { status: 400 },
@@ -89,7 +88,6 @@ export async function POST(req: NextRequest) {
     compositId,
     phone,
     date,
-    transactionId,
     screenshot: screenshotUrl,
   });
 
@@ -118,7 +116,6 @@ export async function GET(req: NextRequest) {
         compositId: a.compositId,
         phone: a.phone,
         date: a.date,
-        transactionId: a.transactionId,
         screenshot: a.screenshot,
         createdAt: a.createdAt,
         name: user?.name || null,

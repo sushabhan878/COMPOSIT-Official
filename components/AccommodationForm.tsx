@@ -79,21 +79,6 @@ const AccommodationForm = ({ compositId }: { compositId: string }) => {
           <option value="27-to-29-march">27th to 29th of March</option>
         </select>
       </div>
-
-      <div>
-        <label className="mb-2 block text-sm font-medium text-gray-300">
-          Transaction ID
-        </label>
-
-        <input
-          name="transactionId"
-          type="text"
-          required
-          placeholder="Enter your payment transaction ID"
-          className="w-full rounded-xl border border-white/15 bg-black/30 px-4 py-3 text-white outline-none focus:border-amber-400"
-        />
-      </div>
-
       <div>
         <label
           htmlFor="screenshot"
