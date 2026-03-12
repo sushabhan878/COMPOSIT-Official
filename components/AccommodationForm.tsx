@@ -2,7 +2,15 @@
 
 import React, { useState } from "react";
 
-const AccommodationForm = ({ compositId }: { compositId: string }) => {
+type AccommodationFormProps = {
+  compositId: string;
+  onDateChange?: (selectedDate: string) => void;
+};
+
+const AccommodationForm = ({
+  compositId,
+  onDateChange,
+}: AccommodationFormProps) => {
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -28,6 +36,7 @@ const AccommodationForm = ({ compositId }: { compositId: string }) => {
       } else {
         alert("Accommodation request submitted successfully!");
         form.reset();
+        onDateChange?.("");
       }
     } catch (error) {
       alert("Failed to submit request");
@@ -61,6 +70,7 @@ const AccommodationForm = ({ compositId }: { compositId: string }) => {
           name="date"
           required
           defaultValue=""
+          onChange={(e) => onDateChange?.(e.target.value)}
           title="Select your stay dates"
           className="w-full rounded-xl border border-white/15 bg-black/30 px-4 py-3 text-white outline-none focus:border-amber-400"
         >
