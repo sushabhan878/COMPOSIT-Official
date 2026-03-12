@@ -42,6 +42,7 @@ const Navbar = () => {
     { name: "About", path: "/about" },
     { name: "Events", path: "/events" },
     { name: "Activities", path: "", hasDropdown: true },
+    { name: "Accommodations", path: "/accommodations" },
     { name: "Sponsorships", path: "/sponsorships" },
     { name: "Our Team", path: "/our-team" },
   ];
