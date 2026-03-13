@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import Accommodation from "@/models/accommodation.model";
 import User from "@/models/user.model";
 import cloudinary from "@/lib/cloudinary";
+import { sendAccommodationApprovalEmail } from "@/lib/mail";
 
 // Upload Screenshot of payment and create accommodation request
 const uploadScreenshot = async (file: File) => {
@@ -140,11 +141,7 @@ export async function PATCH(req: NextRequest) {
     );
   }
 
-  const accommodation = await Accommodation.findByIdAndUpdate(
-    accommodationId,
-    { isApproved: true },
-    { new: true },
-  );
+  const accommodation = await Accommodation.findById(accommodationId);
 
   if (!accommodation) {
     return NextResponse.json(
@@ -153,8 +150,56 @@ export async function PATCH(req: NextRequest) {
     );
   }
 
+  const wasAlreadyApproved = Boolean(accommodation.isApproved);
+
+  if (!wasAlreadyApproved) {
+    accommodation.isApproved = true;
+    await accommodation.save();
+  }
+
+  let emailStatus: "sent" | "failed" | "skipped" = "skipped";
+  let emailReason: string | null = null;
+
+  if (!wasAlreadyApproved) {
+    const user = await User.findOne({ compositId: accommodation.compositId })
+      .select("name email compositId")
+      .lean()
+      .catch(() => null);
+
+    if (user?.email) {
+      try {
+        await sendAccommodationApprovalEmail({
+          email: user.email,
+          name: user.name,
+          compositId: accommodation.compositId,
+          date: accommodation.date,
+          hallName: accommodation.hallName,
+        });
+        emailStatus = "sent";
+      } catch (error) {
+        emailStatus = "failed";
+        emailReason =
+          error instanceof Error ? error.message : "Unknown mail error";
+        console.error("Accommodation approval email failed:", error);
+      }
+    } else {
+      emailReason = "User email not found for this compositId";
+    }
+  }
+
+  if (wasAlreadyApproved) {
+    emailReason = "Already approved, mail not re-sent";
+  }
+
   return NextResponse.json(
-    { message: "Payment approved successfully", accommodation },
+    {
+      message: wasAlreadyApproved
+        ? "Payment already approved"
+        : "Payment approved successfully",
+      accommodation,
+      emailStatus,
+      emailReason,
+    },
     { status: 200 },
   );
 }

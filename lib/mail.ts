@@ -1,16 +1,44 @@
 import nodemailer from "nodemailer";
 
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS, // App Password
-  },
-});
+const smtpUser = process.env.SMTP_USER;
+const smtpPass = process.env.SMTP_PASS;
+const smtpHost = process.env.SMTP_HOST;
+const smtpPort = Number(process.env.SMTP_PORT) || 465;
+const smtpFrom = process.env.SMTP_FROM || smtpUser;
+
+const transporter = smtpHost
+  ? nodemailer.createTransport({
+      host: smtpHost,
+      port: smtpPort,
+      secure: smtpPort === 465,
+      auth: {
+        user: smtpUser,
+        pass: smtpPass,
+      },
+    })
+  : nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: smtpUser,
+        pass: smtpPass,
+      },
+    });
+
+function assertMailConfig() {
+  if (!smtpUser || !smtpPass) {
+    throw new Error("Missing SMTP_USER or SMTP_PASS environment variables");
+  }
+
+  if (!smtpFrom) {
+    throw new Error("Missing SMTP_FROM (or SMTP_USER) environment variable");
+  }
+}
 
 export async function sendOTPEmail(email: string, otp: string) {
+  assertMailConfig();
+
   await transporter.sendMail({
-    from: `"Welcome to COMPOSIT 2026" <${process.env.SMTP_USER}>`,
+    from: `"Welcome to COMPOSIT 2026" <${smtpFrom}>`,
     to: email,
     subject: "Your OTP Verification Code for COMPOSIT 2026 ✅",
     html: `
@@ -193,6 +221,56 @@ export async function sendOTPEmail(email: string, otp: string) {
 </body>
 </html>
 
+    `,
+  });
+}
+
+interface AccommodationApprovalEmailParams {
+  email: string;
+  name?: string;
+  compositId?: string;
+  date?: string;
+  hallName?: string;
+}
+
+export async function sendAccommodationApprovalEmail({
+  email,
+  name,
+  compositId,
+  date,
+  hallName,
+}: AccommodationApprovalEmailParams) {
+  assertMailConfig();
+
+  const participantName = name?.trim() || "Participant";
+  const stayDate = date?.trim() || "As provided in your request";
+  const assignedHall =
+    hallName?.trim() || "To be shared by the accommodation desk";
+
+  await transporter.sendMail({
+    from: `"COMPOSIT 2026" <${smtpFrom}>`,
+    to: email,
+    subject: "Accommodation Booking Confirmed - COMPOSIT 2026",
+    html: `
+      <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #111; max-width: 640px; margin: 0 auto; padding: 20px;">
+        <h2 style="margin-bottom: 8px;">Accommodation Booking Confirmed</h2>
+        <p style="margin-top: 0; color: #444;">Hello ${participantName},</p>
+        <p>
+          Congratulations. Your accommodation payment has been approved and your booking is now confirmed for COMPOSIT 2026.
+        </p>
+        <div style="background: #f5f7fa; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px 14px; margin: 16px 0;">
+          <p style="margin: 4px 0;"><strong>Composit ID:</strong> ${compositId || "Not available"}</p>
+          <p style="margin: 4px 0;"><strong>Date:</strong> ${stayDate}</p>
+          <p style="margin: 4px 0;"><strong>Hall:</strong> ${assignedHall}</p>
+        </div>
+        <p>
+          Please carry your ID proof and keep this email for reference during check-in.
+        </p>
+        <p style="margin-top: 22px;">
+          Regards,<br />
+          <strong>Team COMPOSIT</strong>
+        </p>
+      </div>
     `,
   });
 }
