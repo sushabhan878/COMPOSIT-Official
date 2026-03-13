@@ -256,7 +256,7 @@ export async function sendAccommodationApprovalEmail({
         <h2 style="margin-bottom: 8px;">Accommodation Booking Confirmed</h2>
         <p style="margin-top: 0; color: #444;">Hello ${participantName},</p>
         <p>
-          Congratulations. Your accommodation payment has been approved and your booking is now confirmed for COMPOSIT 2026.
+          Congratulations. Your accommodation has been approved and your booking is now confirmed for COMPOSIT 2026.
         </p>
         <div style="background: #f5f7fa; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px 14px; margin: 16px 0;">
           <p style="margin: 4px 0;"><strong>Composit ID:</strong> ${compositId || "Not available"}</p>
