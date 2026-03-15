@@ -1,12 +1,15 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { auth } from "@/auth";
+import AccommodationMerchPopup from "@/components/AccommodationMerchPopup";
 
 const Accommodations = async () => {
   const session = await auth();
 
   return (
     <main className="relative w-full overflow-hidden py-20 mt-16 lg:py-28">
+      <AccommodationMerchPopup />
       <div className="mx-auto max-w-6xl px-[5vw]">
         <div className="mb-12 space-y-3 text-center">
           <h1 className="text-3xl font-bold leading-tight text-white md:text-4xl lg:text-5xl">
@@ -72,6 +75,42 @@ const Accommodations = async () => {
                 ? "Book Accommodation"
                 : "Login to Book Accommodation"}
             </Link>
+          </div>
+        </section>
+
+        <section className="mt-14 rounded-3xl border border-amber-400/25 bg-linear-to-br from-white/5 to-amber-500/5 p-8 backdrop-blur-sm md:p-10">
+          <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2">
+            <div>
+              <h2 className="text-2xl font-semibold text-white md:text-3xl">
+                Also Checkout Our Official Merch
+              </h2>
+              <p className="mt-4 text-gray-300 md:text-lg leading-relaxed">
+                Take a piece of COMPOSIT home with you. Our official merch is
+                designed to keep the fest energy alive long after the events
+                end.
+              </p>
+              <p className="mt-3 text-gray-300 md:text-lg leading-relaxed">
+                Grab your merch now, wear it on campus, and be part of the
+                COMPOSIT vibe from day one.
+              </p>
+
+              <Link
+                href="/participation-merch"
+                className="mt-6 inline-flex items-center justify-center rounded-full border border-amber-300/40 bg-amber-400/15 px-7 py-3 text-base font-semibold text-amber-200 shadow-lg shadow-amber-500/15 transition-transform duration-300 hover:-translate-y-1 hover:bg-amber-400/25"
+              >
+                Explore Official Merch
+              </Link>
+            </div>
+
+            <div className="overflow-hidden rounded-2xl border border-amber-400/25 bg-black/20 p-2">
+              <Image
+                src="/Participant-Merch.png"
+                alt="Official COMPOSIT merch design"
+                width={900}
+                height={900}
+                className="h-full w-full rounded-xl object-cover"
+              />
+            </div>
           </div>
         </section>
       </div>
