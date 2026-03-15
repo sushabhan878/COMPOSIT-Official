@@ -104,7 +104,7 @@ const Accommodations = async () => {
 
             <div className="overflow-hidden rounded-2xl border border-amber-400/25 bg-black/20 p-2">
               <Image
-                src="/Participant-Merch.png"
+                src="/merch 4.png"
                 alt="Official COMPOSIT merch design"
                 width={900}
                 height={900}
