@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import React, { useState } from "react";
 
 type AccommodationFormProps = {
@@ -146,12 +147,20 @@ const AccommodationForm = ({
               will send a confirmation mail once our team verifies the payment
               details.
             </p>
-            <button
-              onClick={() => setShowSuccess(false)}
-              className="mt-6 rounded-full bg-amber-400 px-8 py-2.5 text-sm font-semibold text-slate-900 hover:bg-amber-300 transition"
-            >
-              OK
-            </button>
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
+              <button
+                onClick={() => setShowSuccess(false)}
+                className="rounded-full bg-amber-400 px-8 py-2.5 text-sm font-semibold text-slate-900 transition hover:bg-amber-300"
+              >
+                OK
+              </button>
+              <Link
+                href="/participation-merch"
+                className="rounded-full border border-amber-400/40 px-8 py-2.5 text-sm font-semibold text-amber-300 transition hover:border-amber-300 hover:bg-amber-400/10"
+              >
+                View Merch
+              </Link>
+            </div>
           </div>
         </div>
       )}
