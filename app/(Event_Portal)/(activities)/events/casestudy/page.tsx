@@ -656,7 +656,7 @@ const CaseStudyPage = () => {
               </p>
             </div>
 
-            <div className="flex w-full flex-col gap-3 md:flex-row">
+            <div className="grid w-full grid-cols-1 gap-3 md:grid-cols-3">
               {/**
                * Modified button group to include onClick handlers
                */}
@@ -688,6 +688,33 @@ const CaseStudyPage = () => {
                 className="flex-1 rounded-xl border border-white/30 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg bg-[#f4b000] hover:bg-[#ffbf1f]"
               >
                 Rules & Regulations
+              </button>
+              <button
+                key="Problem Statement"
+                type="button"
+                onClick={() => {
+                  const link = document.createElement("a");
+                  link.href = "/General Case Study Problem Statement.pdf";
+                  link.download = "GCS_Problem_Statement.pdf";
+                  link.click();
+                }}
+                className="flex-1 rounded-xl border border-white/30 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg bg-[#5c0a0a] hover:bg-[#7a0f0f]"
+              >
+                Problem Statement
+              </button>
+              <button
+                key="GCS Submission Form"
+                type="button"
+                onClick={() => {
+                  window.open(
+                    "https://docs.google.com/forms/d/e/1FAIpQLSeLW5ZtXdYra5rtMExsbifAAXAS0Iy7YBkYK-AEHVY24oIykQ/viewform?usp=sharing&ouid=101154452819176600396",
+                    "_blank",
+                    "noopener,noreferrer",
+                  );
+                }}
+                className="flex-1 rounded-xl border border-white/30 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg bg-emerald-700 hover:bg-emerald-600"
+              >
+                GCS Submission Form
               </button>
             </div>
 

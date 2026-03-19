@@ -634,6 +634,20 @@ const IdeathonPage = () => {
               >
                 Rules & Regulations
               </button>
+              <button
+                key="Ideathon Submission Form"
+                type="button"
+                onClick={() => {
+                  window.open(
+                    "https://forms.gle/pG4UdDqqLBNU5aL26",
+                    "_blank",
+                    "noopener,noreferrer",
+                  );
+                }}
+                className="flex-1 rounded-xl border border-white/30 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg bg-emerald-700 hover:bg-emerald-600"
+              >
+                Ideathon Submission Form
+              </button>
             </div>
 
             <div className="rounded-3xl border border-white/25 bg-white/10 p-6 text-sm text-white shadow-inner">

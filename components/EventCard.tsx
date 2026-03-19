@@ -9,6 +9,7 @@ export interface EventCardProps {
   title: string;
   description: string;
   href: string;
+  isRegistrationOpen?: boolean;
 }
 
 const EventCard: React.FC<EventCardProps> = ({
@@ -16,7 +17,12 @@ const EventCard: React.FC<EventCardProps> = ({
   title,
   description,
   href,
+  isRegistrationOpen = true,
 }) => {
+  const statusDotClass = isRegistrationOpen
+    ? "bg-emerald-400 shadow-[0_0_12px_2px_rgba(52,211,153,0.65)]"
+    : "bg-red-500 shadow-[0_0_12px_2px_rgba(239,68,68,0.65)]";
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -28,12 +34,12 @@ const EventCard: React.FC<EventCardProps> = ({
     >
       {/* Hover background glow overlay */}
       <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-        <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-transparent to-orange-500/10" />
+        <div className="absolute inset-0 bg-linear-to-br from-amber-500/10 via-transparent to-orange-500/10" />
         <div className="absolute -right-12 -top-12 h-48 w-48 rounded-full bg-amber-500/15 blur-3xl" />
         <div className="absolute -left-16 -bottom-16 h-56 w-56 rounded-full bg-orange-500/15 blur-3xl" />
       </div>
       {/* Image */}
-      <div className="relative w-full overflow-hidden aspect-[16/9] sm:aspect-[16/9]">
+      <div className="relative w-full overflow-hidden aspect-video sm:aspect-video">
         <Image
           src={imageUrl}
           alt={title}
@@ -43,12 +49,14 @@ const EventCard: React.FC<EventCardProps> = ({
           priority={false}
         />
         {/* Overlay + Title */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent" />
         <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between">
           <h3 className="text-3xl font-semibold text-white drop-shadow">
             {title}
           </h3>
-          <span className="inline-block h-2 w-2 rounded-full bg-amber-400 shadow-[0_0_12px_2px_rgba(251,191,36,0.6)]" />
+          <span
+            className={`inline-block h-2.5 w-2.5 rounded-full ${statusDotClass}`}
+          />
         </div>
       </div>
 

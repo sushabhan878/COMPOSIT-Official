@@ -2,6 +2,7 @@ import connectDb from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 import Accommodation from "@/models/accommodation.model";
 import User from "@/models/user.model";
+import Team from "@/models/team.model";
 import cloudinary from "@/lib/cloudinary";
 import { sendAccommodationApprovalEmail } from "@/lib/mail";
 
@@ -105,12 +106,40 @@ export async function GET(req: NextRequest) {
     .sort({ createdAt: -1 })
     .lean();
 
+  const normalizeCompositId = (value?: string | null) =>
+    String(value || "")
+      .trim()
+      .toUpperCase();
+
+  const escapeRegex = (value: string) =>
+    value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
   // enrich with user info if available
   const mapped = await Promise.all(
     accommodations.map(async (a: any) => {
       const user = await User.findOne({ compositId: a.compositId })
         .lean()
         .catch(() => null);
+
+      const normalizedCompositId = normalizeCompositId(a.compositId);
+      const compositIdPattern = new RegExp(
+        `^\\s*${escapeRegex(normalizedCompositId)}\\s*$`,
+        "i",
+      );
+
+      const teams = await Team.find({
+        $or: [
+          { leaderId: compositIdPattern },
+          { "members.compositId": compositIdPattern },
+        ],
+      })
+        .select("event")
+        .lean()
+        .catch(() => []);
+
+      const events = Array.from(
+        new Set(teams.map((team: any) => team?.event).filter(Boolean)),
+      );
 
       return {
         _id: a._id,
@@ -120,6 +149,7 @@ export async function GET(req: NextRequest) {
         screenshot: a.screenshot,
         createdAt: a.createdAt,
         name: user?.name || null,
+        events,
         hallName: a.hallName || null,
         isApproved: a.isApproved || false,
       };

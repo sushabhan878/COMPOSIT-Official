@@ -11,6 +11,7 @@ type Accom = {
   screenshot: string;
   createdAt?: string;
   name?: string | null;
+  events?: string[];
   hallName?: string | null;
   isApproved?: boolean;
 };
@@ -76,28 +77,34 @@ const ManageAccommodations = () => {
           <div className="text-white">Loading...</div>
         ) : (
           <div className="overflow-x-auto backdrop-blur-xl bg-white/5 border border-white/15 rounded-2xl">
-            <table className="w-full">
+            <table className="w-full table-fixed">
               <thead className="bg-white/10 border-b border-white/15">
                 <tr>
-                  <th className="px-4 py-3 text-left text-sm font-semibold text-white/90">
+                  <th className="w-16 px-4 py-3 text-left text-sm font-semibold text-white/90">
+                    S.No
+                  </th>
+                  <th className="w-40 px-4 py-3 text-left text-sm font-semibold text-white/90">
                     Name
                   </th>
-                  <th className="px-4 py-3 text-left text-sm font-semibold text-white/90">
+                  <th className="w-44 px-4 py-3 text-left text-sm font-semibold text-white/90">
                     COMPOSIT ID
                   </th>
-                  <th className="px-4 py-3 text-left text-sm font-semibold text-white/90">
+                  <th className="w-36 px-4 py-3 text-left text-sm font-semibold text-white/90">
                     Booking Period
                   </th>
-                  <th className="px-4 py-3 text-left text-sm font-semibold text-white/90">
+                  <th className="w-36 px-4 py-3 text-left text-sm font-semibold text-white/90">
                     Contact
                   </th>
-                  <th className="px-4 py-3 text-left text-sm font-semibold text-white/90">
+                  <th className="w-64 px-4 py-3 text-left text-sm font-semibold text-white/90">
+                    Events
+                  </th>
+                  <th className="w-28 px-4 py-3 text-left text-sm font-semibold text-white/90">
                     Hall
                   </th>
-                  <th className="px-4 py-3 text-left text-sm font-semibold text-white/90">
+                  <th className="w-28 px-4 py-3 text-left text-sm font-semibold text-white/90">
                     Screenshot
                   </th>
-                  <th className="px-4 py-3 text-left text-sm font-semibold text-white/90">
+                  <th className="w-40 px-4 py-3 text-left text-sm font-semibold text-white/90">
                     Verification
                   </th>
                 </tr>
@@ -106,30 +113,40 @@ const ManageAccommodations = () => {
                 {items.length === 0 ? (
                   <tr>
                     <td
-                      colSpan={7}
+                      colSpan={9}
                       className="px-4 py-6 text-center text-white/70"
                     >
                       No accommodation requests found
                     </td>
                   </tr>
                 ) : (
-                  items.map((a) => (
+                  items.map((a, index) => (
                     <tr
                       key={a._id}
                       className="border-b border-white/10 hover:bg-white/5 transition-colors"
                     >
-                      <td className="px-4 py-4 text-white font-semibold">
+                      <td className="px-4 py-4 text-white/80 align-top">
+                        {index + 1}
+                      </td>
+                      <td className="px-4 py-4 text-white font-semibold align-top truncate">
                         {a.name || "-"}
                       </td>
-                      <td className="px-4 py-4 text-white/90 font-mono">
+                      <td className="px-4 py-4 text-white/90 font-mono align-top truncate">
                         {a.compositId}
                       </td>
-                      <td className="px-4 py-4 text-white/80">{a.date}</td>
-                      <td className="px-4 py-4 text-white/80">{a.phone}</td>
-                      <td className="px-4 py-4 text-white/80">
+                      <td className="px-4 py-4 text-white/80 align-top">
+                        {a.date}
+                      </td>
+                      <td className="px-4 py-4 text-white/80 align-top">
+                        {a.phone}
+                      </td>
+                      <td className="px-4 py-4 text-white/80 align-top max-w-[16rem] whitespace-normal wrap-break-word leading-relaxed">
+                        {a.events?.length ? a.events.join(", ") : "-"}
+                      </td>
+                      <td className="px-4 py-4 text-white/80 align-top">
                         {a.hallName || "-"}
                       </td>
-                      <td className="px-4 py-4">
+                      <td className="px-4 py-4 align-top">
                         {a.screenshot ? (
                           <a
                             href={a.screenshot}
@@ -143,7 +160,7 @@ const ManageAccommodations = () => {
                           <span className="text-white/60">-</span>
                         )}
                       </td>
-                      <td className="px-4 py-4">
+                      <td className="px-4 py-4 align-top">
                         {a.isApproved ? (
                           <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-500/15 text-green-300 border border-green-500/25">
                             Verified

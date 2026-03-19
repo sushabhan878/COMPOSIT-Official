@@ -38,7 +38,21 @@ const Accommodations = async () => {
             experience truly complete.
           </p>
         </section>
-
+        <section className="mt-10 rounded-3xl border-2 border-red-500/50 bg-red-500/10 p-8 backdrop-blur-sm md:p-10">
+          <h3 className="text-xl font-bold text-red-300 md:text-2xl">
+            ⚠️ Important: Mandatory Accommodation Booking
+          </h3>
+          <p className="mt-4 text-gray-300 md:text-lg leading-relaxed">
+            <span className="font-semibold text-red-200">
+              Each and every participant must book their accommodation
+              individually.
+            </span>{" "}
+            Whether you are attending a single event or the entire fest,
+            accommodation booking is mandatory for all participants staying on
+            campus. Please ensure you complete your booking as early as possible
+            to secure your preferred stay duration.
+          </p>
+        </section>
         <section className="mt-10">
           <h2 className="text-2xl font-semibold text-white md:text-3xl text-center">
             Accommodation Pricing

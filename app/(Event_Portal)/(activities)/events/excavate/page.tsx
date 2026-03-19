@@ -640,7 +640,7 @@ const ExcavatePage = () => {
               </p>
             </div>
 
-            <div className="flex w-full flex-col gap-3 md:flex-row">
+            <div className="grid w-full grid-cols-1 gap-3 md:grid-cols-3">
               {/**
                * Modified button group to include onClick handlers
                */}
@@ -672,6 +672,47 @@ const ExcavatePage = () => {
                 className="flex-1 rounded-xl border border-white/30 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg bg-[#f4b000] hover:bg-[#ffbf1f]"
               >
                 Rules & Regulations
+              </button>
+              <button
+                key="Problem Statement"
+                type="button"
+                onClick={() => {
+                  const link = document.createElement("a");
+                  link.href = "/Excavate Problem Statement.pdf";
+                  link.download = "Excavate_Problem_Statement.pdf";
+                  link.click();
+                }}
+                className="flex-1 rounded-xl border border-white/30 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg bg-[#5c0a0a] hover:bg-[#7a0f0f]"
+              >
+                Problem Statement
+              </button>
+              <button
+                key="Download Datasets"
+                type="button"
+                onClick={() => {
+                  window.open(
+                    "https://drive.google.com/drive/folders/1axSq8vxivmLFXKTEPxxyLdNxXlxVChIV",
+                    "_blank",
+                    "noopener,noreferrer",
+                  );
+                }}
+                className="flex-1 rounded-xl border border-white/30 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg bg-blue-600 hover:bg-blue-500"
+              >
+                Download Datasets
+              </button>
+              <button
+                key="Excavate Submission Form"
+                type="button"
+                onClick={() => {
+                  window.open(
+                    "https://docs.google.com/forms/d/e/1FAIpQLSdhVLiiAStm4j0z-ld-6u6Ea0_eceDQqIN2FZzKim3XzZ6Y1w/viewform?usp=sharing&ouid=101154452819176600396",
+                    "_blank",
+                    "noopener,noreferrer",
+                  );
+                }}
+                className="flex-1 rounded-xl border border-white/30 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg bg-emerald-700 hover:bg-emerald-600"
+              >
+                Excavate Submission Form
               </button>
             </div>
 

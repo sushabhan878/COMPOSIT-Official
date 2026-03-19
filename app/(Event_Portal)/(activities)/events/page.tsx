@@ -10,6 +10,7 @@ const events = [
     description:
       "Solve engaging coding challenges that blend innovation, problem-solving, and computation.",
     href: "events/metacode",
+    isRegistrationOpen: false,
   },
   {
     imageUrl:
@@ -18,6 +19,7 @@ const events = [
     description:
       "Present groundbreaking research and innovative ideas in materials science and engineering to redefine the future.",
     href: "events/technova",
+    isRegistrationOpen: true,
   },
   {
     imageUrl:
@@ -26,6 +28,7 @@ const events = [
     description:
       "Test your knowledge in an exciting online quiz featuring diverse questions from engineering to general awareness.",
     href: "events/enigma",
+    isRegistrationOpen: false,
   },
   {
     imageUrl:
@@ -34,6 +37,7 @@ const events = [
     description:
       "Apply critical thinking and analytical skills to uncover data-driven insights and innovative solutions.",
     href: "events/excavate",
+    isRegistrationOpen: true,
   },
   {
     imageUrl:
@@ -42,6 +46,7 @@ const events = [
     description:
       "Analyze real-world challenges, craft strategic solutions, and showcase your problem-solving expertise.",
     href: "events/casestudy",
+    isRegistrationOpen: true,
   },
   {
     imageUrl:
@@ -50,6 +55,7 @@ const events = [
     description:
       "An event for aspiring entrepreneurs to pitch innovative ideas, receive expert feedback, and propel their vision into reality.",
     href: "events/ideathon",
+    isRegistrationOpen: true,
   },
   {
     imageUrl:
@@ -58,6 +64,7 @@ const events = [
     description:
       "Capture the beauty of science and technology through photography and compete in a dynamic contest.",
     href: "events/refract",
+    isRegistrationOpen: true,
   },
   // {
   //   imageUrl:
@@ -74,6 +81,7 @@ const events = [
     description:
       "A multi-round finance & economics event testing analytical ability, valuation logic and strategic presentation.",
     href: "events/ore2equity",
+    isRegistrationOpen: true,
   },
 ];
 
@@ -94,7 +102,7 @@ const Events = () => {
           <h1 className="text-3xl font-bold leading-tight text-white md:text-4xl lg:text-5xl">
             Events
           </h1>
-          <div className="mx-auto h-1 w-24 rounded-full bg-gradient-to-r from-amber-400 to-orange-500" />
+          <div className="mx-auto h-1 w-24 rounded-full bg-linear-to-r from-amber-400 to-orange-500" />
         </motion.header>
 
         <div className="grid grid-cols-1 gap-x-8 gap-y-14 md:gap-y-16 sm:grid-cols-2 xl:grid-cols-3 place-items-center">
@@ -105,6 +113,7 @@ const Events = () => {
               title={ev.title}
               description={ev.description}
               href={ev.href}
+              isRegistrationOpen={ev.isRegistrationOpen}
             />
           ))}
         </div>
