@@ -48,7 +48,6 @@ const Navbar = () => {
   ];
 
   const activitiesDropdown = [
-    { name: "Exhibitions", path: "/exhibitions" },
     { name: "Interactive Sessions", path: "/interactive-sessions" },
     { name: "Schedule", path: "/schedule" },
   ];

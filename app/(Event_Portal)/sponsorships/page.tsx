@@ -117,6 +117,40 @@ const sponsorLogos = [
   "https://res.cloudinary.com/dohx1bvom/image/upload/v1766922588/Screenshot_2025-12-28_170957_h2nwna.png",
 ];
 
+const titleSponsorLogos = [
+  "https://res.cloudinary.com/dohx1bvom/image/upload/v1774564077/12_kwbykw.jpg",
+  "https://res.cloudinary.com/dohx1bvom/image/upload/v1774564076/11_pyogd7.jpg",
+  "https://res.cloudinary.com/dohx1bvom/image/upload/v1774564076/10_ebg4m8.jpg",
+];
+
+const majorSponsorLogos = [
+  "https://res.cloudinary.com/dohx1bvom/image/upload/v1774564079/14_acdwdn.jpg",
+  "https://res.cloudinary.com/dohx1bvom/image/upload/v1774564079/13_nswabf.jpg",
+];
+
+const eventSponsorLogos = [
+  "https://res.cloudinary.com/dohx1bvom/image/upload/v1774564075/9_nmbbiu.jpg",
+  "https://res.cloudinary.com/dohx1bvom/image/upload/v1774564073/6_clmn4o.jpg",
+  "https://res.cloudinary.com/dohx1bvom/image/upload/v1774564073/1_wz59yc.jpg",
+  "https://res.cloudinary.com/dohx1bvom/image/upload/v1774564074/8_tjw7ba.jpg",
+  "https://res.cloudinary.com/dohx1bvom/image/upload/v1774564072/4_zhgm8h.jpg",
+];
+
+const mediaSponsorLogos = [
+  "https://res.cloudinary.com/dohx1bvom/image/upload/v1774564080/15_vocdzd.jpg",
+  "https://res.cloudinary.com/dohx1bvom/image/upload/v1774564073/3_evsu9c.jpg",
+  "https://res.cloudinary.com/dohx1bvom/image/upload/v1774564073/7_kpgkc3.jpg",
+  "https://res.cloudinary.com/dohx1bvom/image/upload/v1774564073/5_hfeqj7.jpg",
+];
+
+const platformPartnerLogos = [
+  "https://res.cloudinary.com/dohx1bvom/image/upload/v1774565663/16_zex0il.jpg",
+];
+
+const knowledgePartnerLogos = [
+  "https://res.cloudinary.com/dohx1bvom/image/upload/v1774564072/2_qkgs7n.jpg",
+];
+
 const Check = () => (
   <svg
     className="h-5 w-5 text-amber-400"
@@ -222,6 +256,202 @@ const Sponsorships = () => {
             </div>
           </motion.div>
         </div>
+
+        <section className="mb-16 rounded-[2rem] border border-white/10 bg-white/5 p-8 shadow-2xl backdrop-blur md:p-10">
+          <div className="rounded-[1.75rem] border border-amber-400/20 bg-[#111722] p-6 shadow-[0_20px_50px_rgba(0,0,0,0.25)] md:p-8">
+            <div className="max-w-3xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.35em] text-amber-300">
+                Title Sponsor
+              </p>
+              <h2 className="mt-4 text-4xl font-semibold text-white md:text-5xl">
+                Shyam Steel
+              </h2>
+              <p className="mt-6 text-base text-gray-300 md:text-lg">
+                Official title sponsor for COMPOSIT 2026.
+              </p>
+            </div>
+
+            <div className="mt-8 grid gap-6 lg:grid-cols-3">
+              {titleSponsorLogos.map((logo, index) => (
+                <div
+                  key={logo}
+                  className="overflow-hidden rounded-[1.25rem] border border-white/10 bg-white/95 p-4"
+                >
+                  <img
+                    src={logo}
+                    alt={`Shyam Steel logo variant ${index + 1}`}
+                    className="h-40 w-full object-contain"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="mb-16 rounded-[2rem] border border-white/10 bg-white/5 p-8 shadow-2xl backdrop-blur md:p-10">
+          <div className="rounded-[1.75rem] border border-amber-400/20 bg-[#111722] p-6 shadow-[0_20px_50px_rgba(0,0,0,0.25)] md:p-8">
+            <div className="max-w-3xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.35em] text-amber-300">
+                Major Sponsors
+              </p>
+              <h2 className="mt-4 text-4xl font-semibold text-white md:text-5xl">
+                COMPOSIT 2026
+              </h2>
+              <p className="mt-6 text-base text-gray-300 md:text-lg">
+                Major sponsor partners supporting COMPOSIT 2026.
+              </p>
+            </div>
+
+            <div className="mx-auto mt-8 grid max-w-5xl gap-6 lg:grid-cols-2">
+              {majorSponsorLogos.map((logo, index) => (
+                <div
+                  key={logo}
+                  className="overflow-hidden rounded-[1.25rem] border border-white/10 bg-white/95 p-4"
+                >
+                  <img
+                    src={logo}
+                    alt={`Major sponsor logo ${index + 1}`}
+                    className="h-40 w-full object-contain"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="mb-16 rounded-[2rem] border border-white/10 bg-white/5 p-8 shadow-2xl backdrop-blur md:p-10">
+          <div className="rounded-[1.75rem] border border-amber-400/20 bg-[#111722] p-6 shadow-[0_20px_50px_rgba(0,0,0,0.25)] md:p-8">
+            <div className="max-w-3xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.35em] text-amber-300">
+                Event Sponsors
+              </p>
+              <h2 className="mt-4 text-4xl font-semibold text-white md:text-5xl">
+                COMPOSIT 2026
+              </h2>
+              <p className="mt-6 text-base text-gray-300 md:text-lg">
+                Event sponsor partners supporting COMPOSIT 2026.
+              </p>
+            </div>
+
+            <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-5">
+              {eventSponsorLogos.map((logo, index) => (
+                <div
+                  key={logo}
+                  className="overflow-hidden rounded-[1.25rem] border border-white/10 bg-white/95 p-4"
+                >
+                  <img
+                    src={logo}
+                    alt={`Event sponsor logo ${index + 1}`}
+                    className="h-36 w-full object-contain"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="mb-16 rounded-[2rem] border border-white/10 bg-white/5 p-8 shadow-2xl backdrop-blur md:p-10">
+          <div className="rounded-[1.75rem] border border-amber-400/20 bg-[#111722] p-6 shadow-[0_20px_50px_rgba(0,0,0,0.25)] md:p-8">
+            <div className="max-w-3xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.35em] text-amber-300">
+                Media Sponsors
+              </p>
+              <h2 className="mt-4 text-4xl font-semibold text-white md:text-5xl">
+                COMPOSIT 2026
+              </h2>
+              <p className="mt-6 text-base text-gray-300 md:text-lg">
+                Media partners supporting outreach and visibility for COMPOSIT
+                2026.
+              </p>
+            </div>
+
+            {mediaSponsorLogos.length > 0 ? (
+              <div className="mx-auto mt-8 grid max-w-6xl gap-6 md:grid-cols-2 xl:grid-cols-4">
+                {mediaSponsorLogos.map((logo, index) => (
+                  <div
+                    key={logo}
+                    className="overflow-hidden rounded-[1.25rem] border border-white/10 bg-white/95 p-4"
+                  >
+                    <img
+                      src={logo}
+                      alt={`Media sponsor logo ${index + 1}`}
+                      className="h-36 w-full object-contain"
+                    />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="mx-auto mt-8 flex h-40 max-w-4xl items-center justify-center rounded-[1.25rem] border border-dashed border-white/20 bg-white/5 px-6 text-center text-sm text-gray-400">
+                Media sponsor logos will appear here.
+              </div>
+            )}
+          </div>
+        </section>
+
+        <section className="mb-16 grid gap-8 xl:grid-cols-2">
+          <div className="rounded-[2rem] border border-white/10 bg-white/5 p-8 shadow-2xl backdrop-blur md:p-10">
+            <div className="rounded-[1.75rem] border border-amber-400/20 bg-[#111722] p-6 shadow-[0_20px_50px_rgba(0,0,0,0.25)] md:p-8">
+              <div className="max-w-3xl">
+                <p className="text-sm font-semibold uppercase tracking-[0.35em] text-amber-300">
+                  Platform Partner
+                </p>
+                <h2 className="mt-4 text-4xl font-semibold text-white md:text-5xl">
+                  COMPOSIT 2026
+                </h2>
+                <p className="mt-6 text-base text-gray-300 md:text-lg">
+                  Platform partner supporting the COMPOSIT 2026 experience.
+                </p>
+              </div>
+
+              <div className="mx-auto mt-8 grid max-w-3xl gap-6">
+                {platformPartnerLogos.map((logo, index) => (
+                  <div
+                    key={logo}
+                    className="overflow-hidden rounded-[1.25rem] border border-white/10 bg-white/95 p-4"
+                  >
+                    <img
+                      src={logo}
+                      alt={`Platform partner logo ${index + 1}`}
+                      className="h-40 w-full object-contain"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="rounded-[2rem] border border-white/10 bg-white/5 p-8 shadow-2xl backdrop-blur md:p-10">
+            <div className="rounded-[1.75rem] border border-amber-400/20 bg-[#111722] p-6 shadow-[0_20px_50px_rgba(0,0,0,0.25)] md:p-8">
+              <div className="max-w-3xl">
+                <p className="text-sm font-semibold uppercase tracking-[0.35em] text-amber-300">
+                  Knowledge Partner
+                </p>
+                <h2 className="mt-4 text-4xl font-semibold text-white md:text-5xl">
+                  COMPOSIT 2026
+                </h2>
+                <p className="mt-6 text-base text-gray-300 md:text-lg">
+                  Knowledge partner contributing domain expertise to COMPOSIT
+                  2026.
+                </p>
+              </div>
+
+              <div className="mx-auto mt-8 grid max-w-3xl gap-6">
+                {knowledgePartnerLogos.map((logo, index) => (
+                  <div
+                    key={logo}
+                    className="overflow-hidden rounded-[1.25rem] border border-white/10 bg-white/95 p-4"
+                  >
+                    <img
+                      src={logo}
+                      alt={`Knowledge partner logo ${index + 1}`}
+                      className="h-40 w-full object-contain"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* Tiers */}
         {/* <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
