@@ -43,13 +43,11 @@ const Navbar = () => {
     { name: "Events", path: "/events" },
     { name: "Activities", path: "", hasDropdown: true },
     { name: "Accommodations", path: "/accommodations" },
-    { name: "Composit Merch", path: "/participation-merch" },
     { name: "Sponsorships", path: "/sponsorships" },
     { name: "Our Team", path: "/our-team" },
   ];
 
   const activitiesDropdown = [
-    { name: "Guest Lectures", path: "/guest-lectures" },
     { name: "Exhibitions", path: "/exhibitions" },
     { name: "Interactive Sessions", path: "/interactive-sessions" },
     { name: "Schedule", path: "/schedule" },
