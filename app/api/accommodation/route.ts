@@ -6,6 +6,10 @@ import Team from "@/models/team.model";
 import cloudinary from "@/lib/cloudinary";
 import { sendAccommodationApprovalEmail } from "@/lib/mail";
 
+type TeamRecord = {
+  event?: string | null;
+};
+
 // Upload Screenshot of payment and create accommodation request
 const uploadScreenshot = async (file: File) => {
   if (!file) {
@@ -99,7 +103,7 @@ export async function POST(req: NextRequest) {
   );
 }
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   await connectDb();
 
   const accommodations = await Accommodation.find()
@@ -116,7 +120,7 @@ export async function GET(req: NextRequest) {
 
   // enrich with user info if available
   const mapped = await Promise.all(
-    accommodations.map(async (a: any) => {
+    accommodations.map(async (a) => {
       const user = await User.findOne({ compositId: a.compositId })
         .lean()
         .catch(() => null);
@@ -134,11 +138,11 @@ export async function GET(req: NextRequest) {
         ],
       })
         .select("event")
-        .lean()
-        .catch(() => []);
+        .lean<TeamRecord[]>()
+        .catch((): TeamRecord[] => []);
 
       const events = Array.from(
-        new Set(teams.map((team: any) => team?.event).filter(Boolean)),
+        new Set(teams.map((team) => team?.event).filter(Boolean)),
       );
 
       return {
@@ -162,7 +166,15 @@ export async function GET(req: NextRequest) {
 export async function PATCH(req: NextRequest) {
   await connectDb();
 
-  const { accommodationId } = await req.json();
+  const {
+    accommodationId,
+    hallName,
+    approvePayment,
+  }: {
+    accommodationId?: string;
+    hallName?: string | null;
+    approvePayment?: boolean;
+  } = await req.json();
 
   if (!accommodationId) {
     return NextResponse.json(
@@ -180,17 +192,28 @@ export async function PATCH(req: NextRequest) {
     );
   }
 
+  const trimmedHallName =
+    typeof hallName === "string" ? hallName.trim() : undefined;
+
+  if (typeof hallName === "string") {
+    accommodation.hallName = trimmedHallName || undefined;
+  }
+
+  const shouldApprovePayment = Boolean(approvePayment);
   const wasAlreadyApproved = Boolean(accommodation.isApproved);
 
-  if (!wasAlreadyApproved) {
+  if (shouldApprovePayment && !wasAlreadyApproved) {
     accommodation.isApproved = true;
+  }
+
+  if (typeof hallName === "string" || (shouldApprovePayment && !wasAlreadyApproved)) {
     await accommodation.save();
   }
 
   let emailStatus: "sent" | "failed" | "skipped" = "skipped";
   let emailReason: string | null = null;
 
-  if (!wasAlreadyApproved) {
+  if (shouldApprovePayment && !wasAlreadyApproved) {
     const user = await User.findOne({ compositId: accommodation.compositId })
       .select("name email compositId")
       .lean()
@@ -217,15 +240,24 @@ export async function PATCH(req: NextRequest) {
     }
   }
 
-  if (wasAlreadyApproved) {
+  if (shouldApprovePayment && wasAlreadyApproved) {
     emailReason = "Already approved, mail not re-sent";
   }
 
+  const message =
+    shouldApprovePayment && typeof hallName === "string"
+      ? "Hall updated and payment processed successfully"
+      : shouldApprovePayment
+        ? wasAlreadyApproved
+          ? "Payment already approved"
+          : "Payment approved successfully"
+        : typeof hallName === "string"
+          ? "Hall updated successfully"
+          : "No changes made";
+
   return NextResponse.json(
     {
-      message: wasAlreadyApproved
-        ? "Payment already approved"
-        : "Payment approved successfully",
+      message,
       accommodation,
       emailStatus,
       emailReason,
