@@ -107,7 +107,7 @@ const Team = () => {
     <main className="relative min-h-screen bg-gradient-to-b lg:py-28">
       <div className="mx-auto max-w-10xl px-[5vw]">
         {/* Faculty Advisors */}
-        <section className="space-y-12 mt-16">
+        {/* <section className="space-y-12 mt-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -164,7 +164,7 @@ const Team = () => {
               </motion.div>
             ))}
           </motion.div>
-        </section>
+        </section> */}
 
         {/* Governors */}
         <section className="mt-20 space-y-12">
