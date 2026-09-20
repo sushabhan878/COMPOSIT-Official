@@ -1,6 +1,5 @@
 "use client";
 
-import RegistrationClosed from "@/components/RegistrationClosed";
 import { useState } from "react";
 
 const tabs = [
@@ -286,7 +285,6 @@ const MetacadePage = () => {
             </div>
 
             <div className="flex w-full flex-col gap-3 md:flex-row">
-              <RegistrationClosed message="MetaCode registrations are now closed. Event information and rules are still available below." />
               <button
                 type="button"
                 onClick={() => {

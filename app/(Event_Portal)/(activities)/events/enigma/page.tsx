@@ -1,6 +1,5 @@
 "use client";
 
-import RegistrationClosed from "@/components/RegistrationClosed";
 import { useState } from "react";
 
 const tabs = [
@@ -343,7 +342,6 @@ const EnigmaPage = () => {
             </div>
 
             <div className="flex w-full flex-col gap-3 md:flex-row">
-              <RegistrationClosed message="Enigma registrations are now closed. Event details and rules are still available below." />
               <button
                 type="button"
                 onClick={() => {

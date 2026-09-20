@@ -10,7 +10,7 @@ const events = [
     description:
       "Solve engaging coding challenges that blend innovation, problem-solving, and computation.",
     href: "events/metacode",
-    isRegistrationOpen: false,
+    isRegistrationOpen: true,
   },
   {
     imageUrl:
@@ -28,7 +28,7 @@ const events = [
     description:
       "Test your knowledge in an exciting online quiz featuring diverse questions from engineering to general awareness.",
     href: "events/enigma",
-    isRegistrationOpen: false,
+    isRegistrationOpen: true,
   },
   {
     imageUrl:
